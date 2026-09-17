@@ -3,416 +3,1067 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>SAL Giornaliero — Halaesa</title>
+<title>Halaesa — Controllo OS</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="config.js"></script>
 <style>
-  :root {
-    --green:#1F5C2E; --green-l:#E2EFDA;
-    --amber:#FF9900; --amber-l:#FFF3DC;
-    --blue:#0078D4;  --blue-l:#EEF4FC;
-    --sec1:#D9E1F2; --sec2:#FCE4D6; --sec3:#E2EFDA;
-    --sec4:#DEEBF7; --sec5:#EAD1DC; --sec6:#FFE0E0;
-    --border:#d0d0d0; --bg:#f5f5f5; --text:#1a1a1a; --muted:#666;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text)}
-  .app{max-width:600px;margin:0 auto;background:#fff;min-height:100vh;display:flex;flex-direction:column}
+:root{
+  --forest:#1F5C2E; --forest-d:#16441F; --moss:#6FA84A; --lime:#C6DFA3;
+  --gold:#E8A33D; --paper:#FAFAF7; --ink:#1A2418; --mut:#6B7565;
+  --line:#E2E5DC; --white:#FFFFFF; --red:#C0392B;
+  --r:12px; --r-s:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:var(--paper);color:var(--ink);font-size:16px;line-height:1.45;
+  padding-bottom:84px}
+h1,h2,h3{line-height:1.2}
+button{font-family:inherit;cursor:pointer;border:none}
+input,select,textarea{font-family:inherit;font-size:16px;width:100%;
+  padding:12px;border:1.5px solid var(--line);border-radius:var(--r-s);
+  background:var(--white);color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--moss);border-color:var(--moss)}
+label{display:block;font-size:13px;font-weight:600;color:var(--mut);
+  text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+.req::after{content:" •";color:var(--gold);font-weight:900}
 
-  .hdr{background:var(--green);padding:1rem;display:flex;align-items:center;gap:10px}
-  .hdr .ic{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-  .hdr h1{color:#fff;font-size:15px;font-weight:600;line-height:1.3}
-  .hdr p{color:rgba(255,255,255,.7);font-size:12px;margin-top:2px}
+/* ---------- struttura ---------- */
+.hdr{background:var(--forest);color:var(--white);padding:14px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50}
+.hdr .brand{font-weight:800;letter-spacing:.02em;font-size:17px}
+.hdr .brand small{display:block;font-weight:500;font-size:11px;opacity:.75;letter-spacing:.08em;text-transform:uppercase}
+.hdr .who{text-align:right;font-size:12px;opacity:.9}
+.hdr .who b{display:block;font-size:13px}
+.wrap{max-width:680px;margin:0 auto;padding:16px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--r);
+  padding:16px;margin-bottom:14px}
+.card h2{font-size:15px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--forest);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card h2 .n{background:var(--lime);color:var(--forest-d);width:24px;height:24px;
+  border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800}
+.field{margin-bottom:14px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.muted{color:var(--mut);font-size:13px}
+.btn{display:block;width:100%;padding:15px;border-radius:var(--r-s);
+  font-size:16px;font-weight:700;text-align:center}
+.btn-p{background:var(--forest);color:var(--white)}
+.btn-p:active{background:var(--forest-d)}
+.btn-g{background:var(--lime);color:var(--forest-d)}
+.btn-o{background:var(--white);color:var(--forest);border:1.5px solid var(--forest)}
+.btn-sm{width:auto;padding:8px 14px;font-size:13px;border-radius:7px}
+.btn[disabled]{opacity:.5}
 
-  .prog{height:4px;background:#e0e0e0}
-  .prog-f{height:4px;background:var(--amber);transition:width .3s}
+/* ---------- fasce discrete (elemento firma) ---------- */
+.fasce{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.fascia{padding:13px 2px;border-radius:var(--r-s);border:1.5px solid var(--line);
+  background:var(--white);font-weight:700;font-size:13px;text-align:center;
+  color:var(--mut);transition:all .12s}
+.fascia small{display:block;font-weight:500;font-size:10px;margin-top:1px}
+.fascia.on{background:var(--forest);border-color:var(--forest);color:var(--white)}
+.fascia.zero.on{background:var(--mut);border-color:var(--mut)}
 
-  .banner{background:var(--blue-l);border-left:4px solid var(--blue);padding:10px 14px;font-size:12.5px;color:#333;line-height:1.5}
-  .banner strong{color:var(--blue)}
+/* ---------- liste dinamiche ---------- */
+.dyn{border-top:1px dashed var(--line);padding-top:10px;margin-top:10px}
+.dyn-row{display:grid;gap:8px;margin-bottom:10px;align-items:end}
+.x{background:none;color:var(--red);font-size:20px;font-weight:800;padding:0 8px}
+.add{background:none;color:var(--moss);font-weight:700;font-size:14px;padding:6px 0}
 
-  .url-cfg{padding:10px 1rem;background:#f9f9f9;border-bottom:1px solid var(--border)}
-  .url-cfg label{font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
-  .url-cfg input{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff}
-  .url-cfg .hint{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4}
+/* ---------- checkbox grandi (macchine) ---------- */
+.chip{display:flex;align-items:center;gap:8px;padding:10px;border:1.5px solid var(--line);
+  border-radius:var(--r-s);background:var(--white);font-size:14px;font-weight:600}
+.chip input{width:22px;height:22px;accent-color:var(--forest)}
+.chip.gold input{accent-color:var(--gold)}
 
-  .ctx{padding:1rem;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .ctx .full{grid-column:1/-1}
+/* ---------- tab bar ---------- */
+.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--white);
+  border-top:1px solid var(--line);display:flex;z-index:60}
+.tab{flex:1;padding:10px 4px 12px;text-align:center;font-size:11px;font-weight:700;
+  color:var(--mut);background:none;text-transform:uppercase;letter-spacing:.03em}
+.tab .ic{display:block;font-size:20px;margin-bottom:2px}
+.tab.on{color:var(--forest)}
+.tab.on .ic{transform:scale(1.1)}
 
-  label{display:block;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
-  select,input[type=date],input[type=text],input[type=number]{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;background:#fff;color:var(--text);appearance:none;-webkit-appearance:none}
-  select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
-  input:focus,select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(31,92,46,.12)}
-  input[type=number]{-moz-appearance:textfield}
-  input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+/* ---------- viste / dashboard ---------- */
+.kpi{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+.kpi .k{background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.kpi .k b{font-size:22px;color:var(--forest);display:block}
+.kpi .k span{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+.bar{height:10px;background:var(--line);border-radius:5px;overflow:hidden;margin:6px 0}
+.bar i{display:block;height:100%;background:var(--moss);border-radius:5px}
+.bar i.over{background:var(--red)}
+.att-row{padding:12px 0;border-bottom:1px solid var(--line)}
+.att-row:last-child{border:none}
+.att-row .t{display:flex;justify-content:space-between;font-weight:700;font-size:14px}
+.att-row .s{display:flex;justify-content:space-between;font-size:12px;color:var(--mut)}
+.pill{font-size:11px;font-weight:800;padding:2px 8px;border-radius:99px}
+.pill.ok{background:var(--lime);color:var(--forest-d)}
+.pill.late{background:#FDEBD0;color:#9A6B1F}
+.pill.bad{background:#FADBD8;color:var(--red)}
+table.grid{width:100%;border-collapse:collapse;font-size:12px}
+table.grid th{background:var(--forest);color:var(--white);padding:7px 5px;text-align:right;font-weight:700}
+table.grid th:first-child{text-align:left}
+table.grid td{padding:7px 5px;border-bottom:1px solid var(--line);text-align:right}
+table.grid td:first-child{text-align:left;font-weight:600}
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch}
 
-  .tabs{display:flex;overflow-x:auto;background:#fff;border-bottom:1px solid var(--border);padding:0 6px;scrollbar-width:none}
-  .tabs::-webkit-scrollbar{display:none}
-  .tab{flex-shrink:0;padding:11px 13px;font-size:12px;font-weight:500;border:none;background:transparent;cursor:pointer;border-bottom:2.5px solid transparent;color:var(--muted);white-space:nowrap}
-  .tab.on{color:var(--green);border-bottom-color:var(--green)}
-  .bdg{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:var(--green-l);color:var(--green);font-size:10px;margin-left:4px;font-weight:700}
-  .tab.on .bdg{background:var(--green);color:#fff}
+/* ---------- login ---------- */
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,var(--forest) 0%,var(--forest-d) 100%);padding:20px}
+.login .box{background:var(--white);border-radius:16px;padding:28px 24px;width:100%;max-width:380px}
+.login .logo{text-align:center;margin-bottom:22px}
+.login .logo b{font-size:24px;color:var(--forest);letter-spacing:.01em}
+.login .logo span{display:block;font-size:11px;color:var(--mut);
+  text-transform:uppercase;letter-spacing:.14em;margin-top:2px}
+.err{background:#FADBD8;color:var(--red);padding:10px;border-radius:var(--r-s);
+  font-size:13px;margin-bottom:12px;display:none}
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);
+  background:var(--forest-d);color:var(--white);padding:12px 22px;border-radius:99px;
+  font-weight:700;font-size:14px;z-index:99;box-shadow:0 4px 16px rgba(0,0,0,.25);
+  opacity:0;transition:opacity .25s;pointer-events:none}
+.toast.show{opacity:1}
+.hide{display:none!important}
+.banner{background:var(--gold);color:#5B3D0E;padding:10px 14px;border-radius:var(--r-s);
+  font-size:13px;font-weight:600;margin-bottom:14px}
+.sitobar{position:sticky;top:56px;z-index:40;background:var(--lime);
+  display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:2px solid var(--moss)}
+.sitobar .sb-l{font-size:12px;font-weight:700;color:var(--forest-d);text-transform:uppercase;letter-spacing:.04em}
+.sitobar .sb-site{font-size:18px;font-weight:800;color:var(--forest-d)}
+.sitobar select{font-size:17px;font-weight:800;color:var(--forest-d);background:var(--white);
+  border:1.5px solid var(--moss);padding:8px 10px;width:auto;flex:1;max-width:340px}
+.cat-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.int-row{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:4px 0;border-top:1px solid var(--line)}
+.cost-r{display:flex;justify-content:space-between;padding:6px 0;font-size:14px;border-bottom:1px solid var(--line)}
+.cost-tot{font-size:16px;font-weight:800;color:var(--forest);border-bottom:none;border-top:2px solid var(--forest);margin-top:4px;padding-top:8px}
+.scad-row{padding:10px 0;border-bottom:1px solid #EEF1EA}
+.scad-row:last-of-type{border-bottom:none}
+.scad-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.scad-nome{font-weight:700;font-size:14px}
+.scad-badge{color:#fff;font-size:10px;font-weight:800;padding:3px 8px;border-radius:10px;white-space:nowrap;text-transform:uppercase;letter-spacing:.02em}
+.scad-meta{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--mut);margin:3px 0 6px}
+.scad-bar{position:relative;height:10px;background:var(--line);border-radius:5px;overflow:visible}
+.scad-fill{display:block;height:100%;background:var(--moss);border-radius:5px}
+.scad-today{position:absolute;top:-3px;width:2px;height:16px;background:var(--ink);border-radius:1px}
+.scad-today::after{content:"oggi";position:absolute;top:-13px;left:50%;transform:translateX(-50%);font-size:8px;color:var(--ink);font-weight:700}
+.rit-note{font-size:12px;color:#9A3B2C;margin-top:5px}
+.rit-fm{color:#B8841F}
+.fm-list{margin-top:4px}
+.fm-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:3px 0;font-size:12px}
+.fm-rev{opacity:.55;text-decoration:line-through}
+.rev-btn{border:1px solid #B8841F;color:#B8841F;background:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:600;white-space:nowrap;text-decoration:none}
+.scad-sco{font-size:12px;margin-top:5px}
+.sco{font-weight:600}
+.sco-bad{color:#C0392B}
+.sco-ok{color:#2E7D32}
+.banner-alert{background:#FBE9E5;border-left:4px solid #C0392B;color:#7A2418;font-weight:600}
+.cat-block{margin:14px 0}
+.cat-h{font-size:13px;font-weight:800;color:var(--forest);text-transform:uppercase;letter-spacing:.03em;
+  border-bottom:2px solid var(--lime);padding-bottom:5px;margin:0 0 10px}
+.int-block{margin:0 0 14px;padding-left:10px;border-left:3px solid #E3E7DD}
+.int-t{font-weight:700;font-size:14px;color:var(--ink);margin-bottom:7px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.sv-av{margin:0 0 10px}
+.sv-av>label{display:block;font-size:13px;color:var(--mut);margin-bottom:4px}
+.cp-piante{font-size:16px}
+.chk{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;margin:6px 0;cursor:pointer}
+.chk input{width:18px;height:18px}
+.chk2{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--mut)}
+.chk2 input{width:16px;height:16px}
+.int-head{display:flex;align-items:center;gap:8px;font-size:15px;cursor:pointer}
+.int-head input{width:18px;height:18px}
+.tag{font-size:10px;font-weight:800;background:var(--gold);color:#fff;padding:2px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.03em}
+.int-card{border:1px solid #E3E7DD}
+.sv-list{margin:6px 0}
+.effgrid{display:grid;gap:7px;min-width:560px}
+.effgrid .eh{font-size:10.5px;font-weight:800;color:var(--mut);text-transform:uppercase;
+  letter-spacing:.02em;text-align:center;align-self:end;padding-bottom:3px;line-height:1.15}
+.effgrid .es{font-size:12.5px;font-weight:700;color:var(--ink);display:flex;align-items:center}
+.effgrid .tile{border-radius:10px;padding:9px 4px;text-align:center;color:#fff}
+.effgrid .tile b{font-size:17px;font-weight:800;display:block;line-height:1}
+.effgrid .tile span{font-size:9.5px;opacity:.9;display:block;margin-top:2px}
+.effgrid .tile.nd{background:#E6E8E1!important;color:var(--mut)}
+.efflegend{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;font-size:11.5px;color:var(--mut)}
+.efflegend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}
+.modal{position:fixed;inset:0;background:rgba(20,30,18,.55);z-index:200;
+  display:flex;align-items:center;justify-content:center;padding:24px}
+.modal-box{background:var(--white);border-radius:14px;padding:22px;max-width:380px;width:100%}
+.modal-body{font-size:17px;color:var(--ink);line-height:1.5;margin-bottom:18px}
+.modal-body b{color:var(--forest)}
+.modal-act{display:flex;gap:10px}
+.modal-act .btn{flex:1}
+@media(min-width:700px){.fascia{font-size:14px}.dyn-row{gap:10px}}
 
-  .panel{display:none;padding:1rem;flex:1}
-  .panel.on{display:block}
-
-  .slbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
-  .slbl::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%}
-  .p0 .slbl::before{background:#4472C4}
-  .p1 .slbl::before{background:#ED7D31}
-  .p2 .slbl::before{background:#4472C4}
-  .p3 .slbl::before{background:#FFC000}
-  .p4 .slbl::before{background:#7030A0}
-  .p5 .slbl::before{background:#C00000}
-
-  .card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px}
-  .card h4{font-size:13px;font-weight:600;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #eee}
-  .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .g2 .full{grid-column:1/-1}
-
-  .mac-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .mac-item{border:1px solid var(--border);border-radius:8px;padding:10px}
-  .mac-item label{font-size:12px;font-weight:600;color:var(--text);text-transform:none;letter-spacing:0;margin-bottom:6px;display:block}
-  .mac-item .g2{margin-top:4px}
-
-  .dyn{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px;position:relative}
-  .dyn .rlbl{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:8px;display:block}
-  .dyn .rm{position:absolute;top:10px;right:10px;width:24px;height:24px;border-radius:50%;border:1px solid var(--border);background:#f5f5f5;color:#999;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
-
-  .add-btn{width:100%;padding:11px;border:1.5px dashed var(--border);border-radius:10px;background:#fafafa;color:var(--muted);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;font-weight:500}
-
-  .gas-box{background:var(--blue-l);border:1px solid var(--blue);border-radius:10px;padding:16px;margin-bottom:10px}
-  .gas-box label{color:var(--blue)}
-
-  .sum-blk{background:var(--green-l);border-radius:10px;padding:14px;margin-bottom:12px}
-  .sum-blk h3{font-size:12px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
-  .sum-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);padding:4px 0;border-bottom:1px solid rgba(0,0,0,.06)}
-  .sum-row:last-child{border-bottom:none}
-  .sum-row span{font-weight:600;color:var(--text)}
-
-  .sbox{border-radius:10px;padding:16px;text-align:center;margin-top:12px}
-  .sbox p{font-size:14px;font-weight:600;margin-top:6px}
-  .sbox small{font-size:12px;opacity:.8}
-  .s-snd{background:var(--blue-l);color:var(--blue)}
-  .s-ok{background:#DFFFEA;color:#1a7f3c}
-  .s-err{background:#FFE0E0;color:#c00000}
-
-  .spin{display:inline-block;width:20px;height:20px;border:2.5px solid var(--blue);border-top-color:transparent;border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle}
-  @keyframes sp{to{transform:rotate(360deg)}}
-
-  .bar{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--border);padding:12px 1rem;display:flex;gap:8px;z-index:10}
-  .btn{flex:1;padding:13px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;border:none}
-  .btn:active{opacity:.8}
-  .btn-bk{background:#f0f0f0;color:var(--text)}
-  .btn-nx{background:var(--green);color:#fff;flex:2}
-  .btn-iv{background:var(--blue);color:#fff;flex:2}
-  .btn-iv:disabled{background:#ccc;cursor:not-allowed}
+/* ---------- gantt visivo ---------- */
+.gantt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:6px}
+.gantt{min-width:520px}
+.g-axis{position:relative;height:15px;margin-left:40%;margin-bottom:4px;font-size:10px;color:var(--mut)}
+.g-axis .g-a0{position:absolute;left:0}
+.g-axis .g-aoggi{position:absolute;transform:translateX(-50%);color:var(--ink);font-weight:700}
+.g-row{display:grid;grid-template-columns:40% 60%;align-items:center;height:30px}
+.g-label{font-size:12px;font-weight:600;padding-right:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g-label .g-pct{color:var(--mut);font-weight:500;font-size:11px}
+.g-track{position:relative;height:16px;background:#EEF2E8;border-radius:5px}
+.g-bar{position:absolute;top:0;left:0;height:100%;background:#D7E3C6;border-radius:5px}
+.g-fill{position:absolute;top:0;left:0;height:100%;border-radius:5px}
+.g-cap{position:absolute;top:1px;transform:translateX(4px);font-size:9px;color:var(--mut);white-space:nowrap;line-height:14px}
+.g-today{position:absolute;top:-7px;height:30px;width:2px;background:var(--ink);border-radius:1px}
 </style>
 </head>
 <body>
-<div class="app">
-  <div class="hdr">
-    <div class="ic">🥑</div>
-    <div><h1>SAL Giornaliero — Halaesa</h1><p>Operazioni Straordinarie</p></div>
-  </div>
-  <div class="prog"><div class="prog-f" id="pg" style="width:14.3%"></div></div>
-  <div class="banner"><strong>Connesso a Power Automate</strong> — dati scritti direttamente nelle tabelle Excel su OneDrive.</div>
 
-  <div id="urlStatus" style="padding:8px 1rem;font-size:12px;display:none;align-items:center;gap:6px;border-bottom:1px solid var(--border)"></div>
-  <input type="hidden" id="paUrl">
-
-  <div class="ctx">
-    <div class="full"><label>Sito</label>
-      <select id="sito">
-        <option value="">— Seleziona sito —</option>
-        <option>Baglio di Pianetto</option><option>Garbinogara</option>
-        <option>Di Marco</option><option>De Marco</option>
-        <option>Orlando</option><option>Pistavecchia</option>
-        <option>Salamone</option>
-      </select>
-    </div>
-    <div><label>Data</label><input type="date" id="data"></div>
-    <div><label>Nome PM</label><input type="text" id="pm" placeholder="Nome e cognome"></div>
-  </div>
-
-  <div class="tabs">
-    <button class="tab on p0" onclick="go(0)">Avanzamento <span class="bdg">1</span></button>
-    <button class="tab p1" onclick="go(1)">Ore uomo <span class="bdg" id="b1">+</span></button>
-    <button class="tab p2" onclick="go(2)">Macchine <span class="bdg" id="b2">+</span></button>
-    <button class="tab p3" onclick="go(3)">Gasolio <span class="bdg" id="b3">–</span></button>
-    <button class="tab p4" onclick="go(4)">Terzisti <span class="bdg" id="b4">+</span></button>
-    <button class="tab p5" onclick="go(5)">Ritardi <span class="bdg" id="b5">+</span></button>
-    <button class="tab" onclick="go(6)">Invia</button>
-  </div>
-
-  <!-- P0: Avanzamento -->
-  <div class="panel on p0" id="p0">
-    <div class="slbl">Ha coperti oggi per ogni attività in corso</div>
-    <div id="avR"></div>
-  </div>
-
-  <!-- P1: Ore uomo -->
-  <div class="panel p1" id="p1">
-    <div class="slbl">Ore lavorate per operaio e attività</div>
-    <div id="oeR"></div>
-    <button class="add-btn" onclick="add('oe')">+ Aggiungi riga ore uomo</button>
-  </div>
-
-  <!-- P2: Macchine -->
-  <div class="panel p2" id="p2">
-    <div class="slbl">Macchine usate oggi — attività e flag (tariffa giornaliera forfettaria)</div>
-    <div id="mcR"></div>
-  </div>
-
-  <!-- P3: Gasolio -->
-  <div class="panel p3" id="p3">
-    <div class="slbl">Litri di gasolio totali consumati oggi</div>
-    <div class="gas-box">
-      <label>Litri gasolio totali</label>
-      <input type="number" id="gasL" min="0" step="0.5" placeholder="0.0" style="max-width:200px;margin-top:4px">
-    </div>
-  </div>
-
-  <!-- P4: Terzisti -->
-  <div class="panel p4" id="p4">
-    <div class="slbl">Terzisti impiegati oggi (1 = usato, la tariffa è predeterminata)</div>
-    <div id="tzR"></div>
-    <button class="add-btn" onclick="add('tz')">+ Aggiungi riga terzista</button>
-  </div>
-
-  <!-- P5: Ritardi -->
-  <div class="panel p5" id="p5">
-    <div class="slbl">Ritardi e fermi lavori</div>
-    <div id="rtR"></div>
-    <button class="add-btn" onclick="add('rt')">+ Aggiungi ritardo</button>
-  </div>
-
-  <!-- P6: Invia -->
-  <div class="panel" id="p6">
-    <div id="sumC"></div>
-    <div id="stC"></div>
-  </div>
-
-  <div class="bar">
-    <button class="btn btn-bk" id="btnB" style="display:none" onclick="go(cur-1)">← Indietro</button>
-    <button class="btn btn-nx" id="btnN" onclick="go(cur+1)">Avanti →</button>
-    <button class="btn btn-iv" id="btnI" style="display:none" onclick="invia()">Invia a OneDrive</button>
+<!-- ======================= LOGIN ======================= -->
+<div id="v-login" class="login">
+  <div class="box">
+    <div class="logo"><b>HALAESA</b><span>Controllo Operazioni Straordinarie</span></div>
+    <div class="err" id="login-err"></div>
+    <div class="field"><label>Email</label><input type="email" id="l-email" autocomplete="username"></div>
+    <div class="field"><label>Password</label><input type="password" id="l-pass" autocomplete="current-password"></div>
+    <button class="btn btn-p" id="l-go">Entra</button>
+    <p class="muted" style="text-align:center;margin-top:14px">Accesso riservato. Per credenziali contattare la direzione.</p>
   </div>
 </div>
 
+<!-- ======================= APP ======================= -->
+<div id="v-app" class="hide">
+  <div class="hdr">
+    <div class="brand">HALAESA<small>Controllo OS</small></div>
+    <div class="who"><b id="who-nome"></b><span id="who-ruolo"></span> · <a href="#" id="logout" style="color:var(--lime)">esci</a></div>
+  </div>
+  <div id="sitobar" class="sitobar hide"></div>
+  <div class="wrap">
+    <div id="pane-compila"></div>
+    <div id="pane-gasolio" class="hide"></div>
+    <div id="pane-sito" class="hide"></div>
+    <div id="pane-dash" class="hide"></div>
+    <div id="pane-gantt" class="hide"></div>
+    <div id="pane-setup" class="hide"></div>
+  </div>
+  <nav class="tabs" id="tabs"></nav>
+</div>
+<div class="toast" id="toast"></div>
+<div id="modal" class="modal hide"><div class="modal-box">
+  <div class="modal-body"></div>
+  <div class="modal-act"><button class="btn btn-o" id="m-no">Annulla</button><button class="btn btn-p" id="m-ok">Conferma</button></div>
+</div></div>
+
 <script>
-const ATTIVITA=["Progettazione","Movimento terra","Preparazione del terreno","Drenaggi",
-  "Piantumazione","Installazione impianto irrigazione","Recinzioni","Opere edili","Viabilità"];
-const OPERAI=["Operaio 1","Operaio 2","Operaio 3","Operaio 4","Operaio 5","Operaio 6","Operaio 7","Operaio 8"];
-const MACCHINE=["Macchina 1","Macchina 2","Macchina 3","Macchina 4","Macchina 5","Macchina 6",
-  "Macchina 7","Macchina 8","Macchina 9","Macchina 10","Macchina 11","Macchina 12"];
-const CAUSALI=["Maltempo / Avversità climatica","Attesa materiali / Approvvigionamento",
-  "Guasto meccanico","Attesa autorizzazioni","Mancanza manodopera","Condizioni terreno avverse",
-  "Problemi fornitori / contoterzisti","Festività / Forza maggiore"];
-const STATI=["Non iniziata","In corso","Completata","Sospesa"];
-const TOTALPANELS=7;
-let cur=0, cntr={oe:0,tz:0,rt:0};
+/* Le chiavi vivono in config.js (caricato una volta, mai più toccato). */
+const sb = supabase.createClient(window.HALAESA_CONFIG.url, window.HALAESA_CONFIG.key);
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = t => String(t??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const eur = n => (n??0).toLocaleString("it-IT",{maximumFractionDigits:0})+" €";
+const oggi = () => new Date().toISOString().slice(0,10);
+let P = null;          // profilo: {id,nome,ruolo,super_user,sito_id,email}
+const isSuper = () => !!P?.super_user;
+const isReadOnly = () => !!P?.sola_lettura;
+let DB = {};           // anagrafiche in cache: siti, attivita, operai, macchine, terzisti
+const FASCE = [25,50,75,100];
 
-function sel(arr,ph='— Seleziona —'){return`<option value="">${ph}</option>`+arr.map(v=>`<option>${v}</option>`).join('')}
-function attSel(){return sel(ATTIVITA,'— Attività —')}
-function gv(id){const e=document.getElementById(id);return e?e.value:''}
-function gn(id){return parseFloat(gv(id))||0}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2600)}
+function err(sel,m){const e=$(sel);e.textContent=m;e.style.display="block"}
 
-// Build avanzamento cards
-function buildAv(){
-  document.getElementById('avR').innerHTML=ATTIVITA.map((a,i)=>`
-    <div class="card">
-      <h4>${a}</h4>
-      <div class="g2">
-        <div><label>Esecutore</label>
-          <select id="av_e${i}"><option value="">—</option><option>Interno</option><option>Contoterzista</option></select></div>
-        <div><label>Stato</label>
-          <select id="av_s${i}">${sel(STATI)}</select></div>
-        <div><label>% Avanzamento cumulativo</label>
-          <input type="number" id="av_p${i}" min="0" max="100" step="1" placeholder="0–100"></div>
-        <div><label>Ha coperti oggi</label>
-          <input type="number" id="av_h${i}" min="0" step="0.1" placeholder="0.0"></div>
-        <div class="full"><label>Note</label>
-          <input type="text" id="av_n${i}" placeholder="Facoltativo"></div>
-      </div>
-    </div>`).join('');
-}
-
-// Build macchine grid (checkbox-style)
-function buildMac(){
-  document.getElementById('mcR').innerHTML=`<div class="mac-grid">`+
-    MACCHINE.map((m,i)=>`
-      <div class="mac-item">
-        <label>${m}</label>
-        <div class="g2">
-          <div><label>Attività</label>
-            <select id="mc_a${i}">${attSel()}</select></div>
-          <div><label>Usata oggi</label>
-            <select id="mc_u${i}"><option value="0">No</option><option value="1">Sì ✓</option></select></div>
-        </div>
-      </div>`).join('')+`</div>`;
-  // Update badge
-  updateMacBadge();
-}
-
-function updateMacBadge(){
-  const n=MACCHINE.filter((_,i)=>gv(`mc_u${i}`)==='1').length;
-  document.getElementById('b2').textContent=n||'+';
-}
-
-// Dynamic rows
-function add(type){
-  const n=++cntr[type]; const id=`${type}${n}`; let html='';
-  if(type==='oe') html=`<div class="g2">
-    <div class="full"><label>Attività</label><select id="${id}_a">${attSel()}</select></div>
-    <div><label>Operaio</label><select id="${id}_o">${sel(OPERAI)}</select></div>
-    <div><label>Ore lavorate</label><input type="number" id="${id}_h" min="0" step="0.5" placeholder="0.0"></div>
-  </div>`;
-  else if(type==='tz') html=`<div class="g2">
-    <div><label>Attività</label><select id="${id}_a">${attSel()}</select></div>
-    <div><label>Nome terzista</label><input type="text" id="${id}_n" placeholder="Nome terzista"></div>
-    <div class="full"><label>Giornate (inserire 1 se usato oggi)</label>
-      <input type="number" id="${id}_g" min="0" step="1" value="1" placeholder="1"></div>
-  </div>`;
-  else if(type==='rt') html=`<div class="g2">
-    <div><label>Attività</label><select id="${id}_a">${attSel()}</select></div>
-    <div><label>Causale</label><select id="${id}_c">${sel(CAUSALI,'— Causale —')}</select></div>
-    <div><label>Ore fermo</label><input type="number" id="${id}_h" min="0" step="0.5" placeholder="0.0"></div>
-    <div><label>Impatto %</label><input type="number" id="${id}_i" min="0" max="100" step="1" placeholder="0"></div>
-    <div class="full"><label>Note</label><input type="text" id="${id}_no" placeholder="Descrizione"></div>
-  </div>`;
-  const d=document.createElement('div'); d.className='dyn'; d.id=`row_${id}`;
-  d.innerHTML=`<span class="rlbl">Riga ${n}</span><button class="rm" onclick="rm('row_${id}','${type}')">×</button>${html}`;
-  document.getElementById(`${type}R`).appendChild(d);
-  badge(type);
-}
-
-function rm(rowId,type){document.getElementById(rowId).remove();badge(type);}
-function badge(type){
-  const map={oe:'b1',tz:'b4',rt:'b5'};
-  const c=document.getElementById(`${type}R`).children.length;
-  const b=document.getElementById(map[type]); if(b)b.textContent=c||'+';
-}
-
-function payload(){
-  const avanzamento=ATTIVITA.map((att,i)=>({
-    attivita:att, esecutore:gv(`av_e${i}`), stato:gv(`av_s${i}`),
-    percentuale:gn(`av_p${i}`), haOggi:gn(`av_h${i}`), note:gv(`av_n${i}`)
-  })).filter(r=>r.stato||r.haOggi>0);
-
-  const oreUomo=[...document.querySelectorAll('#oeR .dyn')].map(row=>{
-    const id=row.id.replace('row_','');
-    return{attivita:gv(`${id}_a`),operaio:gv(`${id}_o`),ore:gn(`${id}_h`)};
-  }).filter(r=>r.attivita&&r.operaio&&r.ore>0);
-
-  const macchine=MACCHINE.map((m,i)=>({
-    macchina:m, attivita:gv(`mc_a${i}`), giornate:parseInt(gv(`mc_u${i}`))||0
-  })).filter(r=>r.giornate===1);
-
-  const gasolio={litri:gn('gasL')};
-
-  const terzisti=[...document.querySelectorAll('#tzR .dyn')].map(row=>{
-    const id=row.id.replace('row_','');
-    return{attivita:gv(`${id}_a`),terzista:gv(`${id}_n`),giornate:gn(`${id}_g`)||1};
-  }).filter(r=>r.attivita&&r.terzista);
-
-  const ritardi=[...document.querySelectorAll('#rtR .dyn')].map(row=>{
-    const id=row.id.replace('row_','');
-    return{attivita:gv(`${id}_a`),causale:gv(`${id}_c`),ore:gn(`${id}_h`),impatto:gn(`${id}_i`),note:gv(`${id}_no`)};
-  }).filter(r=>r.attivita&&r.causale);
-
-  return{sito:gv('sito'),data:gv('data'),pm:gv('pm'),avanzamento,oreUomo,macchine,gasolio,terzisti,ritardi};
-}
-
-function buildSum(){
-  const p=payload();
-  document.getElementById('sumC').innerHTML=`
-    <div class="sum-blk"><h3>Intestazione</h3>
-      <div class="sum-row">Sito <span>${p.sito||'—'}</span></div>
-      <div class="sum-row">Data <span>${p.data||'—'}</span></div>
-      <div class="sum-row">PM <span>${p.pm||'—'}</span></div>
-    </div>
-    <div class="sum-blk"><h3>Dati da inviare</h3>
-      <div class="sum-row">Attività con dati <span>${p.avanzamento.length} / ${ATTIVITA.length}</span></div>
-      <div class="sum-row">Righe ore uomo <span>${p.oreUomo.length}</span></div>
-      <div class="sum-row">Macchine usate oggi <span>${p.macchine.length}</span></div>
-      <div class="sum-row">Gasolio <span>${p.gasolio.litri} L</span></div>
-      <div class="sum-row">Righe terzisti <span>${p.terzisti.length}</span></div>
-      <div class="sum-row">Righe ritardi <span>${p.ritardi.length}</span></div>
-    </div>`;
-  document.getElementById('stC').innerHTML='';
-}
-
-async function invia(){
-  const url=document.getElementById('paUrl').value.trim();
-  const p=payload();
-  if(!p.sito||!p.data){
-    document.getElementById('stC').innerHTML=`<div class="sbox s-err"><p>Seleziona sito e data.</p></div>`; return;
-  }
-  if(!url){
-    document.getElementById('stC').innerHTML=`<div class="sbox s-err"><p>Seleziona un sito valido — flusso non configurato.</p></div>`; return;
-  }
-  document.getElementById('btnI').disabled=true;
-  document.getElementById('stC').innerHTML=`<div class="sbox s-snd"><span class="spin"></span><p>Invio in corso...</p></div>`;
-  try{
-    const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)});
-    if(res.ok||res.status===202){
-      document.getElementById('stC').innerHTML=`<div class="sbox s-ok"><p>Dati inviati!</p><small>Le tabelle SAL su OneDrive sono aggiornate.</small></div>`;
-      document.getElementById('btnI').textContent='Inviato ✓';
-    } else throw new Error(`HTTP ${res.status}`);
-  } catch(e){
-    document.getElementById('stC').innerHTML=`<div class="sbox s-err"><p>Errore: ${e.message}</p><small>Controlla l'URL e lo stato del flusso.</small></div>`;
-    document.getElementById('btnI').disabled=false;
-  }
-}
-
-function go(step){
-  if(step<0||step>=TOTALPANELS)return;
-  if(step===6)buildSum();
-  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('on',i===step));
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('on',i===step));
-  cur=step;
-  document.getElementById('pg').style.width=((step+1)/TOTALPANELS*100)+'%';
-  document.getElementById('btnB').style.display=step>0?'flex':'none';
-  document.getElementById('btnN').style.display=step<TOTALPANELS-1?'flex':'none';
-  document.getElementById('btnI').style.display=step===TOTALPANELS-1?'flex':'none';
-  if(step===TOTALPANELS-1)document.getElementById('btnI').disabled=false;
-  window.scrollTo(0,0);
-}
-
-// Init
-buildAv();
-buildMac();
-// Listen for machine toggles to update badge
-document.addEventListener('change',function(e){if(e.target&&e.target.id&&e.target.id.startsWith('mc_u'))updateMacBadge();});
-document.getElementById('data').valueAsDate=new Date();
-
-try{const pm=localStorage.getItem('pm_h');if(pm)document.getElementById('pm').value=pm;}catch(e){}
-document.getElementById('pm').addEventListener('change',function(){try{localStorage.setItem('pm_h',this.value);}catch(e){}});
-
-// Auto-set PA URL when sito changes
-const PA_URLS = {
-  "Salamone": "https://default604dd46b04ae4e378cf4325163dfee.3a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/d8436b8dc67346eba0a6c63108485bc7/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=mAGlVojv5SHq0yqZJHj-9ELBE7PPgC22HAz1jNrM_AY",
-  "Pistavecchia": "https://default604dd46b04ae4e378cf4325163dfee.3a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/9b8de063997441b7877a5a7eb3fa5141/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xZVHSZca_5_6h0Lv9x_Np2_n3MVlSGMs6qT5E6BJ3Ww",
-  "De Marco": "https://default604dd46b04ae4e378cf4325163dfee.3a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/fac07223ddfe4aa5ad704bc26aa125bc/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Wmpc-feXB5rMl0PLf5eX6T4TpvCWYum9tmnJNfy7t7M",
-  "Di Marco": "https://default604dd46b04ae4e378cf4325163dfee.3a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/872037af945241928ae3f155814973c4/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6J1NGyJudX662MNhWB9tox3ug7tHqPEjdi9pFx3aLrI",
-  "Garbinogara": "https://default604dd46b04ae4e378cf4325163dfee.3a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/0d84182c2d9f4b5481b256abfec3e801/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=-nEAEaWm57_pAytW4S_DTmPalEL1UJF8ij3H2Kzhqg4",
-  "Orlando": "https://default604dd46b04ae4e378cf4325163dfee.3a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/c994d32974f04de4a24989c043f6e040/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Z352bKjdg31ampLpJJYrL3OyGy1wk-GjL06VsSK9oI4",
-  "Baglio di Pianetto": "https://default604dd46b04ae4e378cf4325163dfee.3a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/da06f8eff1734c6c887c716eaf395ce8/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vrT7hs5H9zoAq1MyPZrylXiGPOztAAIQZP1JVc_ya3Y",
+/* ---------------- AUTH ---------------- */
+$("#l-go").onclick = async () => {
+  $("#login-err").style.display="none";
+  const {error} = await sb.auth.signInWithPassword({email:$("#l-email").value.trim(),password:$("#l-pass").value});
+  if(error){err("#login-err","Credenziali non valide.");return}
+  start();
 };
-document.getElementById('sito').addEventListener('change', function() {
-  const sito = this.value;
-  const url = PA_URLS[sito] || '';
-  document.getElementById('paUrl').value = url;
-  const status = document.getElementById('urlStatus');
-  if (url) {
-    status.style.display = 'flex';
-    status.innerHTML = '<span style="width:8px;height:8px;border-radius:50%;background:#1a7f3c;flex-shrink:0;display:inline-block"></span>' +
-      '<span style="color:#1a7f3c;font-weight:600">Flusso configurato: ' + sito + '</span>';
-  } else {
-    status.style.display = 'none';
-  }
-});
-// Trigger on load if sito already set
-(function(){ const s=document.getElementById('sito'); if(s.value) s.dispatchEvent(new Event('change')); })();
+$("#logout").onclick = async e => {e.preventDefault(); await sb.auth.signOut(); location.reload()};
 
+async function start(){
+  const {data:{session}} = await sb.auth.getSession();
+  if(!session){$("#v-login").classList.remove("hide");$("#v-app").classList.add("hide");return}
+  const {data:prof} = await sb.from("profili").select("*").eq("id",session.user.id).single();
+  if(!prof){err("#login-err","Utente senza profilo: contattare la direzione.");await sb.auth.signOut();return}
+  P = prof;
+  // anagrafiche + lista master della gerarchia (categorie/interventi)
+  const [si,ca,inv,op,ma,pa,cr] = await Promise.all([
+    sb.from("siti").select("*").order("id"),
+    sb.from("categorie").select("*").order("ordine"),
+    sb.from("interventi").select("*").order("ordine"),
+    sb.from("operai").select("*").eq("attivo",true).order("nome"),
+    sb.from("macchine").select("*").eq("attivo",true).order("nome"),
+    sb.from("parametri").select("*"),
+    sb.from("causali_ritardo").select("*").order("ordine"),
+  ]);
+  DB = {siti:si.data||[], categorie:ca.data||[], interventi:inv.data||[],
+        operai:op.data||[], macchine:ma.data||[], causali:cr.data||[],
+        par:Object.fromEntries((pa.data||[]).map(p=>[p.chiave,+p.valore]))};
+  $("#v-login").classList.add("hide");$("#v-app").classList.remove("hide");
+  $("#who-nome").textContent = P.nome;
+  const sitoNome = DB.siti.find(s=>s.id===P.sito_id)?.nome || "Tutti i siti";
+  $("#who-ruolo").textContent = P.ruolo + " · " + sitoNome;
+  buildTabs(); show((isSuper()||isReadOnly()) ? "dash" : "compila");
+}
+
+/* ---------------- TABS / ROUTING ---------------- */
+const TABS = {
+  compila:{ic:"📝",l:"Compila",who:p=>!isReadOnly()},
+  gasolio:{ic:"⛽",l:"Gasolio",who:p=>!isReadOnly()},
+  sito:{ic:"📍",l:"Il mio sito",who:p=>!isReadOnly()&&!isSuper()&&p.sito_id},
+  gantt:{ic:"📅",l:"Gantt",who:p=>true},
+  dash:{ic:"📊",l:"Dashboard",who:p=>isSuper()||isReadOnly()},
+  setup:{ic:"⚙️",l:"Setup",who:p=>isSuper()&&!isReadOnly()},
+};
+function buildTabs(){
+  $("#tabs").innerHTML = Object.entries(TABS)
+    .filter(([k,t])=>t.who(P))
+    .map(([k,t])=>`<button class="tab" data-t="${k}"><span class="ic">${t.ic}</span>${t.l}</button>`).join("");
+  $$(".tab").forEach(b=>b.onclick=()=>show(b.dataset.t));
+}
+function show(k){
+  CURRENT_TAB=k;
+  $$(".tab").forEach(b=>b.classList.toggle("on",b.dataset.t===k));
+  ["compila","gasolio","sito","gantt","dash","setup"].forEach(p=>$("#pane-"+p).classList.toggle("hide",p!==k));
+  renderSitoBar(k==="compila"||k==="gasolio");
+  ({compila:rCompila,gasolio:rGasolio,sito:rSito,gantt:rGantt,dash:rDash,setup:rSetup})[k]();
+}
+
+/* ---------------- MOTORE COSTI (logica validata) ----------------
+   - % discreta: ultimo valore (limite alto fascia)
+   - Piantumazione: piante cumulative (ultimo valore) / previste
+   - materiali = Σ importi attività × frazione avanzamento
+   - ore uomo = ore × tariffa; macchine = presenza × tariffa/g
+   - gasolio = litri × prezzo sito; terzisti = ore × tariffa
+   - ha completati = ettari_totali × Σ(peso × %)/10000           */
+/* ---------------- DATI PER SITO + MOTORE COSTI GERARCHICO (Blocco 2) ---------------- */
+async function datiSito(sito_id){
+  const q = t => sb.from(t).select("*").eq("sito_id",sito_id);
+  const [si_int, sc, av, ap, ou, mg, ga, ri] = await Promise.all([
+    q("sito_interventi"), q("sito_categorie"),
+    q("avanzamenti"), q("avanz_piante"), q("ore_uomo"),
+    q("macchine_giorno"), q("gasolio"), q("ritardi"),
+  ]);
+  const siIds = (si_int.data||[]).map(x=>x.id);
+  let sv = [];
+  if(siIds.length){
+    const r = await sb.from("sottovoci").select("*").in("sito_intervento_id",siIds).order("ordine");
+    sv = r.data||[];
+  }
+  return {sito_interventi:si_int.data||[], sito_categorie:sc.data||[], sottovoci:sv,
+          avanzamenti:av.data||[], avanz_piante:ap.data||[], ore_uomo:ou.data||[],
+          macchine_giorno:mg.data||[], gasolio:ga.data||[], ritardi:ri.data||[]};
+}
+const MAXV = arr => arr.length ? Math.max(...arr) : 0;
+function calcSito(sito_id, D){
+  const sito = DB.siti.find(s=>s.id===sito_id) || {ettari_totali:0};
+  const prezzoGasolio = DB.par?.prezzo_gasolio || 0;
+  const tariffaOp = id => (DB.operai.find(o=>o.id===id)||{}).tariffa_ora || 0;
+  const tariffaMa = id => (DB.macchine.find(m=>m.id===id)||{}).tariffa_giorno || 0;
+  const attivi = D.sito_interventi.filter(si=>si.attivo);
+  // ---- INTERVENTO ----
+  const perInt = attivi.map(si=>{
+    const intv = DB.interventi.find(i=>i.id===si.intervento_id) || {};
+    let avz=0, budgetEff=0;
+    if(intv.tipo==="piante"){
+      const prev=+si.piante_previste||0;
+      const messe=MAXV(D.avanz_piante.filter(a=>a.sito_intervento_id===si.id).map(a=>+a.piante||0));
+      avz = prev>0?Math.min(messe/prev,1):0;
+      budgetEff = prev*(+si.costo_unitario||0);
+    } else {
+      const svs=D.sottovoci.filter(sv=>sv.sito_intervento_id===si.id);
+      if(svs.length){
+        let sum=0;
+        for(const sv of svs) sum += MAXV(D.avanzamenti.filter(a=>a.sottovoce_id===sv.id).map(a=>+a.pct||0))/100;
+        avz=sum/svs.length;
+      } else {
+        // nessuna sotto-voce: l'avanzamento si segna sull'intervento stesso
+        avz = MAXV(D.avanzamenti.filter(a=>a.sito_intervento_id===si.id).map(a=>+a.pct||0))/100;
+      }
+      budgetEff=+si.budget||0;
+    }
+    const costoBudget=budgetEff*avz;
+    const ore=D.ore_uomo.filter(o=>o.sito_intervento_id===si.id)
+                .reduce((s,o)=>s+(+o.ore||0)*tariffaOp(o.operaio_id),0);
+    return {si_id:si.id,intervento_id:si.intervento_id,categoria_id:intv.categoria_id,
+            nome:intv.nome,modalita:si.modalita,tipo:intv.tipo,avz,budgetEff,costoBudget,ore,costoInt:costoBudget+ore};
+  });
+  // ---- CATEGORIA (media interventi presenti) ----
+  const catMap={};
+  for(const p of perInt){(catMap[p.categoria_id]=catMap[p.categoria_id]||{sum:0,n:0}).sum+=p.avz;catMap[p.categoria_id].n++;}
+  const perCat=Object.entries(catMap).map(([cid,v])=>({categoria_id:+cid,avz:v.n?v.sum/v.n:0,nInt:v.n}));
+  // ---- SITO (pesi categoria, ricalibrati sui presenti) ----
+  let avzPesato=0,pesoTot=0;
+  for(const c of perCat){
+    const w=(D.sito_categorie.find(x=>x.categoria_id===c.categoria_id)||{}).peso_pct||0;
+    avzPesato+=(w/100)*c.avz; pesoTot+=w/100;
+  }
+  const avz=pesoTot>0?avzPesato/pesoTot:0;
+  const ettari=(+sito.ettari_totali||0)*avz;
+  // ---- COSTI ----
+  let bIn=0,bTe=0,cIn=0,cTe=0,ore=0;
+  for(const p of perInt){
+    if(p.modalita==="conto_terzi"){bTe+=p.budgetEff;cTe+=p.costoBudget;}
+    else{bIn+=p.budgetEff;cIn+=p.costoBudget;}
+    ore+=p.ore;
+  }
+  const macchine=D.macchine_giorno.filter(m=>m.presente).reduce((s,m)=>s+tariffaMa(m.macchina_id),0);
+  const gasolio=D.gasolio.reduce((s,g)=>s+(+g.litri||0),0)*prezzoGasolio;
+  const gg_fermo=D.ritardi.reduce((s,r)=>s+(+r.giorni||0),0);
+  const interno=cIn+ore+macchine+gasolio, terzisti=cTe, totale=interno+terzisti, budgetTot=bIn+bTe;
+  return {avz,avzPesato,pesoTot,ettari,perInt,perCat,gg_fermo,
+    costi:{costoMatInhouse:cIn,costoMatTerzi:cTe,ore,macchine,gasolio,interno,terzisti,totale,budgetTot,budgetInhouse:bIn,budgetTerzi:bTe}};
+}
+
+/* ---------------- COMPILAZIONE GIORNALIERA ---------------- */
+let C = null; // stato compilazione corrente
+let SITO_SEL = null;
+let CURRENT_TAB = "compila";
+function mieiSiti(){ return isSuper() ? DB.siti : DB.siti.filter(s=>s.id===P.sito_id); }
+function sitoCorrente(){ return SITO_SEL || (mieiSiti()[0]&&mieiSiti()[0].id) || P.sito_id; }
+function reRenderCurrent(){ if(CURRENT_TAB==="compila") rCompila(); else if(CURRENT_TAB==="gasolio") rGasolio(); }
+function renderSitoBar(showIt){
+  const bar=$("#sitobar");
+  if(!showIt){bar.classList.add("hide");return;}
+  bar.classList.remove("hide");
+  const siti=mieiSiti(), cur=sitoCorrente();
+  if(siti.length>1){
+    bar.innerHTML=`<span class="sb-l">Stai compilando per</span>
+      <select id="sb-sel">${siti.map(s=>`<option value="${s.id}" ${s.id===cur?"selected":""}>${esc(s.nome)}</option>`).join("")}</select>`;
+    $("#sb-sel").onchange=e=>{SITO_SEL=+e.target.value;renderSitoBar(true);reRenderCurrent();};
+  } else {
+    bar.innerHTML=`<span class="sb-l">Stai compilando per</span><span class="sb-site">📍 ${esc(siti[0]?siti[0].nome:"—")}</span>`;
+  }
+}
+function dataIt(iso){ if(!iso)return ""; const[a,m,g]=iso.split("-"); return `${g}/${m}/${a}`; }
+function confermaSito(sito_id,data){
+  const nome=DB.siti.find(s=>s.id===sito_id)?.nome||"?";
+  return new Promise(res=>{
+    const m=$("#modal");
+    m.querySelector(".modal-body").innerHTML=`Stai registrando per il sito:<br><b style="font-size:21px">📍 ${esc(nome)}</b><br>del <b>${dataIt(data)}</b>.<br><br>È corretto?`;
+    m.classList.remove("hide");
+    m.querySelector("#m-ok").onclick=()=>{m.classList.add("hide");res(true)};
+    m.querySelector("#m-no").onclick=()=>{m.classList.add("hide");res(false)};
+  });
+}
+/* ---------------- COMPILA / GASOLIO / SITO / DASH (ricostruiti nei Blocchi 4-5) ---------------- */
+function stubPane(pane,titolo,blocco){
+  $(pane).innerHTML=`<div class="card"><h2>${titolo}</h2>
+    <p class="muted">Questa sezione viene ricostruita sul nuovo modello gerarchico nel <b>${blocco}</b>.
+    Per ora è disponibile il <b>Setup</b>, dove si definisce la struttura di ogni sito.</p></div>`;
+}
+/* ====================== VISTE & DASHBOARD (Blocco 5) ====================== */
+const catNome = id => (DB.categorie.find(x=>x.id===id)||{}).nome || "?";
+const pillCol = f => f>=0.75?"ok":f>=0.25?"late":"bad";
+const costRow = (l,v,tot) => `<div class="cost-r ${tot?'cost-tot':''}"><span>${l}</span><b>${eur(v)}</b></div>`;
+/* ---- Scadenze / gantt a scadenze ---- */
+function statoScadenza(avvio, scadenza, oggiStr, avz, prorogaGiorni){
+  if(avz>=1) return {stato:"completato", proroga:prorogaGiorni||0};
+  if(!scadenza) return {stato:"nd"};
+  const D=d=>new Date(d+"T00:00:00"), gg=(a,b)=>Math.round((D(a)-D(b))/86400000);
+  const addgg=(d,n)=>{const x=D(d);x.setDate(x.getDate()+n);return x.toISOString().slice(0,10);};
+  const P=prorogaGiorni||0;
+  const scadEff = P>0 ? addgg(scadenza,P) : scadenza;
+  const rim=gg(scadEff,oggiStr);
+  let stato, frac=null;
+  if(rim<0) stato="scaduto";
+  else if(!avvio) stato="nd_tempo";
+  else { const tot=gg(scadEff,avvio); frac=tot>0?rim/tot:0;
+    stato = frac<=0.05?"5": frac<=0.10?"10": frac<=0.20?"20":"ok"; }
+  // scostamento reale (forecast lineare): giorni oltre/sotto la scadenza rettificata
+  let scostamento=null;
+  if(avvio && avz>0 && avz<1){
+    const elapsed=gg(oggiStr,avvio);
+    if(elapsed>0){ const totForecast=elapsed/avz, totEff=gg(scadEff,avvio);
+      scostamento=Math.round(totForecast-totEff); }
+  }
+  return {stato, rim, ritardoGiorni:rim<0?-rim:0, frac, scadEff, proroga:P, scostamento};
+}
+const STATI = {
+  scaduto:{l:"SCADUTO",c:"#8E2820"}, "5":{l:"≤5% tempo",c:"#C0392B"},
+  "10":{l:"≤10% tempo",c:"#E07B39"}, "20":{l:"≤20% tempo",c:"#E8A33D"},
+  ok:{l:"in tempo",c:"#1F5C2E"}, completato:{l:"completato",c:"#8CBF66"},
+  nd_tempo:{l:"manca avvio sito",c:"#6B7565"}, nd:{l:"—",c:"#9aa39a"}
+};
+function scadenzeSito(sitoId, D, R){
+  const avvio=(DB.siti.find(s=>s.id===sitoId)||{}).data_avvio;
+  const ord={scaduto:0,"5":1,"10":2,"20":3,nd_tempo:4,ok:5,completato:6,nd:7};
+  const items=[];
+  for(const si of D.sito_interventi.filter(x=>x.attivo)){
+    const intv=DB.interventi.find(i=>i.id===si.intervento_id)||{};
+    const p=R.perInt.find(x=>x.si_id===si.id)||{avz:0};
+    const rit=D.ritardi.filter(r=>r.sito_intervento_id===si.id);
+    const proroga=rit.filter(r=>r.forza_maggiore && !r.proroga_revocata).reduce((s,r)=>s+(+r.giorni||0),0);
+    const ritFM=rit.filter(r=>r.forza_maggiore);
+    const ritImput=rit.filter(r=>!r.forza_maggiore);
+    const st=statoScadenza(avvio, si.scadenza, oggi(), p.avz, proroga);
+    items.push(Object.assign({nome:intv.nome, categoria:catNome(intv.categoria_id), avz:p.avz,
+      scadenza:si.scadenza, ritardi:rit, ritFM, ritImput}, st));
+  }
+  items.sort((a,b)=>(ord[a.stato]-ord[b.stato])||((a.rim??1e9)-(b.rim??1e9)));
+  return items;
+}
+function renderScadenze(items, titolo, mostraSito, consentiRevoca){
+  const dIt=iso=>{const[a,m,g]=iso.split("-");return `${g}/${m}/${a}`;};
+  if(!items.length) return `<div class="card"><h2>${titolo}</h2>
+    <p class="muted" style="margin:6px 0">Nessun intervento attivo da mostrare. Qui compariranno gli interventi del Setup: imposta avvio lavori e scadenze per attivare gli avvisi sui tempi.</p></div>`;
+  const allarmi=items.filter(i=>["scaduto","5","10","20"].includes(i.stato)).length;
+  const rows=items.map(i=>{
+    const st=STATI[i.stato]||STATI.nd;
+    const elapsed=(i.frac!=null)?Math.min(Math.max(1-i.frac,0),1):(i.stato==="scaduto"?1:0);
+    const tempo = i.stato==="scaduto"?`scaduto da ${i.ritardoGiorni} gg`
+               : i.stato==="completato"?"completato"
+               : i.rim!=null?`tra ${i.rim} gg`:"";
+    const pror = i.proroga>0 ? ` · <span style="color:#B8841F">+${i.proroga}gg proroga → ${dIt(i.scadEff)}</span>` : "";
+    const sco = i.scostamento;
+    const scoTxt = sco==null ? "" :
+      sco>2 ? `<span class="sco sco-bad">ritardo reale stimato +${sco} gg</span>` :
+      sco<-2 ? `<span class="sco sco-ok">margine stimato ${-sco} gg</span>` :
+               `<span class="sco">in linea col passo</span>`;
+    const ritFM=i.ritFM||[];
+    const ritImp=i.ritImput||[];
+    let ritHtml="";
+    if(ritFM.length){
+      const voci=ritFM.map(r=>{
+        const rev=r.proroga_revocata;
+        const btn=consentiRevoca?`<button class="rev-btn" onclick="revocaProroga(${r.id},${rev?'false':'true'})">${rev?'ripristina':'revoca'}</button>`:'';
+        return `<div class="fm-item${rev?' fm-rev':''}"><span>${esc(r.causa||'forza maggiore')} · ${r.giorni} gg${rev?' — proroga revocata':''}</span>${btn}</div>`;
+      }).join("");
+      ritHtml+=`<div class="rit-note rit-fm">↪ Proroga forza maggiore attiva: ${i.proroga} gg<div class="fm-list">${voci}</div></div>`;
+    }
+    if(ritImp.length){ const g=ritImp.reduce((s,r)=>s+(+r.giorni||0),0);
+      const cs=[...new Set(ritImp.map(r=>r.causa).filter(Boolean))].join(", ");
+      ritHtml+=`<div class="rit-note">⚠ Ritardo imputabile: ${g} gg${cs?` — ${esc(cs)}`:''}</div>`; }
+    return `<div class="scad-row">
+      <div class="scad-top">
+        <span class="scad-nome">${esc(i.nome)}${mostraSito&&i.sito?` <span class="muted">· ${esc(i.sito)}</span>`:''}</span>
+        <span class="scad-badge" style="background:${st.c}">${st.l}</span></div>
+      <div class="scad-meta"><span class="muted">${esc(i.categoria)}</span>
+        <span>Avanz. ${Math.round(i.avz*100)}% · scad. ${i.scadenza?dIt(i.scadenza):"—"}${pror}${tempo?" · "+tempo:""}</span></div>
+      <div class="scad-bar"><i class="scad-fill" style="width:${Math.round(i.avz*100)}%"></i>
+        ${(i.frac!=null||i.stato==="scaduto")?`<span class="scad-today" style="left:${Math.round(elapsed*100)}%"></span>`:''}</div>
+      ${scoTxt?`<div class="scad-sco">${scoTxt}</div>`:''}
+      ${ritHtml}</div>`;
+  }).join("");
+  const banner=allarmi?`<div class="banner banner-alert">⏰ ${allarmi} ${allarmi===1?"intervento richiede attenzione sulle scadenze":"interventi richiedono attenzione sulle scadenze"}</div>`:'';
+  return `<div class="card"><h2>${titolo}</h2>${banner}${rows}
+    <p class="muted" style="font-size:11.5px;margin-top:8px">Barra = avanzamento; segno verticale = "oggi" sulla finestra avvio→scadenza (rettificata con le proroghe). Lo scostamento reale stima la fine al ritmo attuale.</p></div>`;
+}
+
+window.revocaProroga = async (id, val) => {
+  const {error}=await sb.from("ritardi").update({proroga_revocata:val}).eq("id",id);
+  if(error) return toast("Errore");
+  toast(val?"Proroga revocata":"Proroga ripristinata");
+  rDash();
+};
+async function calcTutti(){
+  const out=[];
+  for(const s of DB.siti){ const D=await datiSito(s.id); out.push({sito:s, D, R:calcSito(s.id,D)}); }
+  return out;
+}
+
+async function rSito(){
+  const sito = (!isSuper() && P.sito_id) ? P.sito_id : sitoCorrente();
+  const s = DB.siti.find(x=>x.id===sito) || {nome:"—",ettari_totali:0};
+  const D = await datiSito(sito); const R = calcSito(sito,D); const c=R.costi;
+  const scad = scadenzeSito(sito, D, R);
+  const catsHtml = R.perCat.slice().sort((a,b)=>a.categoria_id-b.categoria_id).map(pc=>{
+    const ints=R.perInt.filter(p=>p.categoria_id===pc.categoria_id);
+    return `<div class="card" style="padding:12px">
+      <div class="cat-row"><b>${esc(catNome(pc.categoria_id))}</b><span class="pill ${pillCol(pc.avz)}">${Math.round(pc.avz*100)}%</span></div>
+      ${ints.map(p=>`<div class="int-row"><span>${esc(p.nome)}${p.modalita==="conto_terzi"?' <span class="tag">terzi</span>':''}</span>
+        <span class="muted">${Math.round(p.avz*100)}% · ${eur(p.costoInt)}</span></div>`).join("")}
+    </div>`;}).join("");
+  $("#pane-sito").innerHTML=`
+   <div class="kpi">
+     <div class="k"><b>${Math.round(R.avz*100)}%</b><span>Avanzamento sito</span></div>
+     <div class="k"><b>${(R.ettari||0).toLocaleString("it-IT",{maximumFractionDigits:1})}</b><span>Ettari completati / ${s.ettari_totali}</span></div>
+     <div class="k"><b>${eur(c.totale)}</b><span>Costo a oggi</span></div>
+     <div class="k"><b>${eur(c.budgetTot)}</b><span>Budget materiali/preventivi</span></div>
+   </div>
+   <div class="card"><h2>📍 ${esc(s.nome)} — avanzamento per categoria</h2>
+     ${R.pesoTot && Math.abs(R.pesoTot-1)>0.001?`<div class="banner">I pesi delle categorie sommano ${Math.round(R.pesoTot*100)}% (ricalibrati automaticamente sui presenti).</div>`:""}
+     ${catsHtml||'<p class="muted">Nessun intervento attivo: configura il sito nel Setup.</p>'}
+   </div>
+   ${renderScadenze(scad,"Scadenze e ritardi",false)}
+   <div class="card"><h2>Costi</h2>
+     ${costRow("Materiali (in house)",c.costoMatInhouse)}
+     ${costRow("Conto terzi (preventivi)",c.costoMatTerzi)}
+     ${costRow("Ore personale",c.ore)}
+     ${costRow("Macchine",c.macchine)}
+     ${costRow("Gasolio",c.gasolio)}
+     ${costRow("TOTALE",c.totale,true)}
+     <p class="muted" style="margin-top:8px">Budget pianificato (materiali + preventivi): <b>${eur(c.budgetTot)}</b>. Ore, macchine e gasolio sono consuntivo che si aggiunge al budget.</p>
+     <p class="muted">Giorni fermo cumulati: <b>${R.gg_fermo}</b></p>
+   </div>`;
+}
+
+let chRef=null;
+async function rDash(){
+  const all = await calcTutti();
+  let T={totale:0,interno:0,terzisti:0,ettari:0,budget:0,fermo:0,ettariTot:0};
+  let scadAll=[];
+  for(const {sito,D,R} of all){ scadenzeSito(sito.id,D,R).forEach(i=>scadAll.push(Object.assign({sito:sito.nome},i))); }
+  const ordS={scaduto:0,'5':1,'10':2,'20':3,nd_tempo:4,ok:5,completato:6,nd:7};
+  scadAll.sort((a,b)=>(ordS[a.stato]-ordS[b.stato])||((a.rim??1e9)-(b.rim??1e9)));
+  for(const {sito,R} of all){const c=R.costi;T.totale+=c.totale;T.interno+=c.interno;T.terzisti+=c.terzisti;T.ettari+=R.ettari;T.budget+=c.budgetTot;T.fermo+=R.gg_fermo;T.ettariTot+=(+sito.ettari_totali||0);}
+  // consolidamento
+  const cons = all.map(({sito,R})=>`<tr><td>${esc(sito.nome)}</td>
+    <td>${Math.round(R.avz*100)}%</td><td>${R.ettari.toLocaleString("it-IT",{maximumFractionDigits:1})}</td>
+    <td>${eur(R.costi.interno)}</td><td>${eur(R.costi.terzisti)}</td>
+    <td title="materiali interni e preventivi maturati">${eur(R.costi.totale)}</td><td>${eur(R.costi.budgetTot)}</td></tr>`).join("");
+  // categorie presenti in almeno un sito (per heatmap avanzamento sito×categoria)
+  const catAvz = {}; // sito_id -> {cat_id: avz}
+  all.forEach(({sito,R})=>{catAvz[sito.id]={};R.perCat.forEach(pc=>catAvz[sito.id][pc.categoria_id]=pc.avz);});
+  let catCols = DB.categorie.filter(c=>all.some(({sito})=>catAvz[sito.id][c.id]!==undefined));
+  if(!catCols.length) catCols = DB.categorie; // nessun intervento attivo: mostra comunque la griglia
+  const heatCell=f=>{ if(f===undefined) return `<td style="background:#E6E8E1;color:var(--mut)">—</td>`;
+    const v=Math.round(f*100); const bg=f>=0.75?"#1F5C2E":f>=0.5?"#4E8A3A":f>=0.25?"#8CBF66":f>0?"#CFE3B4":"#EEE";
+    const col=f>=0.5?"#fff":"#1A2418"; return `<td style="background:${bg};color:${col};text-align:center;font-weight:700">${v}%</td>`;};
+  const heat = `<table class="grid"><tr><th>Sito</th>${catCols.map(c=>`<th title="${esc(c.nome)}" style="text-align:center">${esc(c.nome.slice(0,9))}</th>`).join("")}</tr>
+    ${all.map(({sito})=>`<tr><td>${esc(sito.nome)}</td>${catCols.map(c=>heatCell(catAvz[sito.id][c.id])).join("")}</tr>`).join("")}</table>`;
+  // EFFICIENZA (indicatori onesti nel nuovo modello)
+  const eff=all.map(({sito,R})=>({nome:sito.nome,avz:R.avz,eurHa:R.ettari>0?R.costi.totale/R.ettari:null,fermo:R.gg_fermo}));
+  const haV=eff.map(e=>e.eurHa).filter(v=>v!=null); const haMin=Math.min(...haV,0),haMax=Math.max(...haV,1);
+  const fMax=Math.max(1,...eff.map(e=>e.fermo));
+  const C={ott:"#1F5C2E",buono:"#8CBF66",att:"#E8A33D",crit:"#C0392B"};
+  const colScala=(v,lo,hi,inv)=>{if(v==null||!isFinite(v))return null;let t=(v-lo)/((hi-lo)||1);t=Math.min(Math.max(t,0),1);if(inv)t=1-t;return t>=0.75?C.ott:t>=0.5?C.buono:t>=0.25?C.att:C.crit;};
+  const tile=(val,bg,sub)=>bg==null?`<div class="tile nd"><b>n/d</b><span>${sub||""}</span></div>`:`<div class="tile" style="background:${bg}"><b>${val}</b><span>${sub||""}</span></div>`;
+  const effHead=`<div class="effgrid" style="grid-template-columns:1.3fr repeat(3,1fr)">`+
+    ["Sito","Avanz.","€/ha","Giorni<br>fermo"].map((h,i)=>`<div class="eh" style="${i==0?'text-align:left':''}">${h}</div>`).join("");
+  const effBody=eff.map(e=>`<div class="es">${esc(e.nome)}</div>`
+    +tile(Math.round(e.avz*100)+"%",colScala(e.avz*100,0,100,false))
+    +tile(e.eurHa!=null?Math.round(e.eurHa).toLocaleString("it-IT"):null,colScala(e.eurHa,haMin,haMax,true),"€")
+    +tile(e.fermo,colScala(e.fermo,0,fMax,true),"gg")).join("");
+  $("#pane-dash").innerHTML=`
+   <div class="kpi">
+     <div class="k"><b>${eur(T.totale)}</b><span>Costo totale portfolio</span></div>
+     <div class="k"><b>${eur(T.terzisti)}</b><span>di cui conto terzi</span></div>
+     <div class="k"><b>${T.ettari.toLocaleString("it-IT",{maximumFractionDigits:1})}/${T.ettariTot}</b><span>Ettari completati</span></div>
+     <div class="k"><b>${eur(T.budget)}</b><span>Budget materiali/preventivi</span></div>
+   </div>
+   ${renderScadenze(scadAll,"Scadenze portfolio (gantt a scadenze)",true,!isReadOnly())}
+   <div class="card"><h2>Consolidamento 7 siti</h2><div class="scroll-x">
+     <table class="grid"><tr><th>Sito</th><th>Avz.</th><th>Ettari</th><th>Interno</th><th>Conto terzi</th><th>Totale</th><th>Budget</th></tr>${cons}</table>
+   </div><p class="muted" style="margin-top:8px">Il totale include ore/macchine/gasolio; il budget è solo materiali e preventivi.</p></div>
+   <div class="card"><h2>Heatmap avanzamento (sito × categoria)</h2><div class="scroll-x">${heat}</div></div>
+   <div class="card"><h2>Efficienza dei siti a confronto</h2>
+     <p class="muted" style="margin-bottom:12px">Indicatori confrontabili tra siti. Verde = buono, rosso = critico. €/ha e giorni fermo: colore relativo al portfolio (più basso = meglio).</p>
+     <div class="scroll-x"><div id="eff-box">${effHead}${effBody}</div></div>
+     <div class="efflegend"><span><span class="sw" style="background:#1F5C2E"></span>ottimo</span><span><span class="sw" style="background:#8CBF66"></span>buono</span><span><span class="sw" style="background:#E8A33D"></span>attenzione</span><span><span class="sw" style="background:#C0392B"></span>critico</span><span><span class="sw" style="background:#E6E8E1"></span>n/d</span></div>
+   </div>
+   ${isReadOnly()?"":`<div class="card"><h2>Esporta dati (CSV)</h2><div class="row2">
+     ${["categorie","interventi","sito_interventi","sottovoci","sito_categorie","avanzamenti","avanz_piante","ore_uomo","macchine_giorno","gasolio","ritardi"].map(t=>`<button class="btn btn-o btn-sm" data-csv="${t}" style="margin-bottom:8px">${t.replace(/_/g," ")}</button>`).join("")}
+     <button class="btn btn-g btn-sm" id="csv-consol" style="margin-bottom:8px">consolidamento</button></div></div>`}`;
+  $$("[data-csv]").forEach(b=>b.onclick=()=>exportCsv(b.dataset.csv));
+  if($("#csv-consol"))$("#csv-consol").onclick=()=>{
+    const rows=[["sito","avanzamento_pct","ettari_completati","costo_interno","costo_conto_terzi","costo_totale","budget"]];
+    all.forEach(({sito,R})=>rows.push([sito.nome,Math.round(R.avz*100),R.ettari.toFixed(2),R.costi.interno,R.costi.terzisti,R.costi.totale,R.costi.budgetTot]));
+    dlCsv("consolidamento.csv",rows.map(r=>r.join(",")).join("\n"));
+  };
+}
+async function exportCsv(table){
+  const {data}=await sb.from(table).select("*");
+  if(!data||!data.length)return toast("Nessun dato da esportare");
+  const cols=Object.keys(data[0]);
+  const csv=[cols.join(","),...data.map(r=>cols.map(c=>JSON.stringify(r[c]??"")).join(","))].join("\n");
+  dlCsv(table+".csv",csv);
+}
+function dlCsv(name,content){
+  const blob=new Blob([content],{type:"text/csv"});const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);a.download=name;a.click();
+}
+
+
+/* ====================== COMPILAZIONE (Blocco 4) ====================== */
+let CC = null; // contesto: {sito, D}
+function fasceWidget(cur){
+  return `<div class="fasce">
+    <button type="button" class="fascia zero ${!cur?'on':''}" data-v="0">n/d</button>
+    ${FASCE.map(v=>`<button type="button" class="fascia ${cur===v?'on':''}" data-v="${v}">${v}%<small>${v-25}–${v}</small></button>`).join("")}
+  </div>`;
+}
+async function rCompila(){
+  const sito = sitoCorrente();
+  const D = await datiSito(sito);
+  CC = {sito, D};
+  const attivi = D.sito_interventi.filter(si=>si.attivo);
+  const maxPct = svid => MAXV(D.avanzamenti.filter(a=>a.sottovoce_id===svid).map(a=>+a.pct||0));
+  const maxPiante = siid => MAXV(D.avanz_piante.filter(a=>a.sito_intervento_id===siid).map(a=>+a.piante||0));
+  const maxPctInt = siid => MAXV(D.avanzamenti.filter(a=>a.sito_intervento_id===siid).map(a=>+a.pct||0));
+  const intDi = c => attivi.filter(si=>{const i=DB.interventi.find(x=>x.id===si.intervento_id);return i&&i.categoria_id===c.id;});
+  const cats = DB.categorie.filter(c=>intDi(c).length);
+  const avzHtml = cats.map(c=>`<div class="cat-block"><h3 class="cat-h">${esc(c.nome)}</h3>`+
+    intDi(c).map(si=>{
+      const intv=DB.interventi.find(x=>x.id===si.intervento_id);
+      if(intv.tipo==="piante"){
+        const prev=+si.piante_previste||0, cur=maxPiante(si.id);
+        return `<div class="int-block" data-piante="${si.id}">
+          <div class="int-t">${esc(intv.nome)} <span class="muted">— piante messe / ${prev||"?"}</span></div>
+          <input type="number" class="cp-piante" value="${cur||""}" placeholder="totale piante messe a dimora"></div>`;
+      }
+      const svs=D.sottovoci.filter(s=>s.sito_intervento_id===si.id);
+      return `<div class="int-block">
+        <div class="int-t">${esc(intv.nome)}${si.modalita==="conto_terzi"?' <span class="tag">conto terzi</span>':''}</div>
+        ${svs.length? svs.map(sv=>`<div class="sv-av" data-svid="${sv.id}"><label>${esc(sv.nome)}</label>${fasceWidget(maxPct(sv.id))}</div>`).join("")
+                    : `<div class="sv-av" data-iav="${si.id}"><label class="muted">Avanzamento dell'intervento</label>${fasceWidget(maxPctInt(si.id))}</div>`}
+      </div>`;
+    }).join("")+`</div>`).join("");
+  const intOpts = attivi.map(si=>{const i=DB.interventi.find(x=>x.id===si.intervento_id);return `<option value="${si.id}">${esc(i?i.nome:'?')}</option>`}).join("");
+  $("#pane-compila").innerHTML = `
+  <div class="card"><h2><span class="n">1</span>Giornata</h2>
+    <div class="row2">
+      <div class="field"><label>Data</label><input type="date" id="c-data" value="${oggi()}"></div>
+      <div class="field"><label>Compilatore</label><input id="c-comp" value="${esc(P.nome)}"></div>
+    </div></div>
+  <div class="card"><h2><span class="n">2</span>Avanzamento</h2>
+    <p class="muted">Per ogni sotto-voce indica la fascia raggiunta (cumulativa). Lascia n/d se non c'è avanzamento.</p>
+    ${avzHtml||'<p class="muted">Nessun intervento attivo in questo sito: configuralo nel Setup.</p>'}
+  </div>
+  <div class="card"><h2><span class="n">3</span>Ore personale <span class="muted">— obbligatorio (anche 0)</span></h2>
+    <label class="chk"><input type="checkbox" id="c-ou-zero"> Nessuna ora personale oggi</label>
+    <div id="c-ou-list"></div>
+    <button class="add" id="c-ou-add">+ Aggiungi operaio</button>
+  </div>
+  <div class="card"><h2><span class="n">4</span>Macchine <span class="muted">— obbligatorio</span></h2>
+    <label class="chk"><input type="checkbox" id="c-mg-zero"> Nessuna macchina presente oggi</label>
+    <div id="c-mg-list">${DB.macchine.map(m=>`<div class="mg-row dyn-row" data-ma="${m.id}" style="grid-template-columns:1.4fr auto auto">
+      <b style="align-self:center;font-size:13px">${esc(m.nome)}</b>
+      <label class="chk2"><input type="checkbox" class="mg-pres"> presente</label>
+      <label class="chk2"><input type="checkbox" class="mg-usata"> usata</label></div>`).join("")}</div>
+  </div>
+  <div class="card"><h2><span class="n">5</span>Ritardi / fermi</h2>
+    <div id="c-ri-list"></div>
+    <button class="add" id="c-ri-add">+ Segnala ritardo</button>
+  </div>
+  <div class="err" id="c-err"></div>
+  <button class="btn btn-p" id="c-invia">Invia compilazione</button>`;
+  // fasce
+  $$("#pane-compila .fasce").forEach(g=>g.querySelectorAll(".fascia").forEach(btn=>btn.onclick=()=>{
+    g.querySelectorAll(".fascia").forEach(b=>b.classList.remove("on"));btn.classList.add("on");}));
+  // ore
+  const ouRow=()=>`<div class="dyn-row" style="grid-template-columns:1.3fr 1fr .7fr auto">
+    <select class="ou-int">${intOpts}</select>
+    <select class="ou-op">${DB.operai.map(o=>`<option value="${o.id}">${esc(o.nome)}</option>`).join("")}</select>
+    <input type="number" class="ou-ore" placeholder="ore"><button class="x" onclick="this.parentNode.remove()">×</button></div>`;
+  $("#c-ou-add").onclick=()=>$("#c-ou-list").insertAdjacentHTML("beforeend",ouRow());
+  // ritardi
+  const causaliOpts=DB.causali.map(c=>`<option value="${c.id}">${esc(c.nome)}${c.forza_maggiore?" (forza maggiore)":""}</option>`).join("");
+  const riRow=()=>`<div class="dyn-row" style="grid-template-columns:1.2fr .5fr 1.3fr auto">
+    <select class="ri-int"><option value="">— intero sito —</option>${intOpts}</select>
+    <input type="number" class="ri-gg" placeholder="giorni">
+    <select class="ri-causa"><option value="">causale…</option>${causaliOpts}</select>
+    <button class="x" onclick="this.parentNode.remove()">×</button></div>`;
+  $("#c-ri-add").onclick=()=>$("#c-ri-list").insertAdjacentHTML("beforeend",riRow());
+  $("#c-invia").onclick=inviaCompilazione;
+}
+async function inviaCompilazione(){
+  $("#c-err").style.display="none";
+  const sito=CC.sito, data=$("#c-data").value, comp=$("#c-comp").value.trim()||P.nome;
+  if(!data) return err("#c-err","Indica la data.");
+  const ouZero=$("#c-ou-zero").checked, mgZero=$("#c-mg-zero").checked;
+  const ouRows=$$("#c-ou-list .dyn-row");
+  if(!ouZero && ouRows.length===0) return err("#c-err","Aggiungi le ore personale o spunta «Nessuna ora personale oggi».");
+  const mgPres=$$("#c-mg-list .mg-pres").some(c=>c.checked);
+  if(!mgZero && !mgPres) return err("#c-err","Indica le macchine presenti o spunta «Nessuna macchina presente oggi».");
+  if(!await confermaSito(sito,data)) return;
+  await sb.from("compilazioni").upsert({sito_id:sito,data,compilatore:comp},{onConflict:"sito_id,data"});
+  for(const r of $$("#pane-compila .sv-av")){
+    const on=r.querySelector(".fascia.on"); const pct=+(on?on.dataset.v:0)||0;
+    if(pct<=0) continue;
+    if(r.dataset.svid) await sb.from("avanzamenti").insert({sito_id:sito,sottovoce_id:+r.dataset.svid,data,compilatore:comp,pct});
+    else if(r.dataset.iav) await sb.from("avanzamenti").insert({sito_id:sito,sito_intervento_id:+r.dataset.iav,data,compilatore:comp,pct});
+  }
+  for(const r of $$("#pane-compila [data-piante]")){
+    const v=+r.querySelector(".cp-piante").value||0;
+    if(v>0) await sb.from("avanz_piante").insert({sito_id:sito,sito_intervento_id:+r.dataset.piante,data,compilatore:comp,piante:v});
+  }
+  if(!ouZero) for(const r of ouRows){
+    const si=+r.querySelector(".ou-int").value, op=+r.querySelector(".ou-op").value, ore=+r.querySelector(".ou-ore").value||0;
+    if(ore>0) await sb.from("ore_uomo").insert({sito_id:sito,sito_intervento_id:si,operaio_id:op,data,ore});
+  }
+  if(!mgZero) for(const r of $$("#c-mg-list .mg-row")){
+    if(r.querySelector(".mg-pres").checked)
+      await sb.from("macchine_giorno").insert({sito_id:sito,macchina_id:+r.dataset.ma,data,presente:true,usata:r.querySelector(".mg-usata").checked});
+  }
+  for(const r of $$("#c-ri-list .dyn-row")){
+    const gg=+r.querySelector(".ri-gg").value||0; if(gg<=0)continue;
+    const si=r.querySelector(".ri-int").value;
+    const cid=+r.querySelector(".ri-causa").value||0;
+    const caus=DB.causali.find(c=>c.id===cid);
+    await sb.from("ritardi").insert({sito_id:sito,sito_intervento_id:si?+si:null,data,giorni:gg,
+      causa:caus?caus.nome:null, forza_maggiore:caus?!!caus.forza_maggiore:false});
+  }
+  toast("Compilazione inviata ✓"); rCompila();
+}
+
+/* ---------------- GASOLIO (livello sito) ---------------- */
+function rGasolio(){
+  const sito=sitoCorrente();
+  $("#pane-gasolio").innerHTML=`
+  <div class="card"><h2>⛽ Gasolio</h2>
+    <p class="muted">Dichiarazione giornaliera obbligatoria per il sito.</p>
+    <div class="field"><label>Data</label><input type="date" id="g-data" value="${oggi()}"></div>
+    <button class="btn btn-g" id="g-zero" style="width:100%">Nessun rifornimento oggi</button>
+    <hr style="margin:16px 0;border:none;border-top:1px solid #E3E7DD">
+    <div class="row2">
+      <div class="field"><label>Litri prelevati</label><input type="number" id="g-litri" placeholder="litri"></div>
+      <div class="field"><label>Operatore</label><input id="g-op" value="${esc(P.nome)}"></div>
+    </div>
+    <button class="btn btn-p" id="g-invia" style="width:100%">Registra rifornimento</button>
+    <div class="err" id="g-err"></div>
+  </div>`;
+  const gsito=()=>sitoCorrente();
+  $("#g-zero").onclick=async()=>{
+    if(!await confermaSito(gsito(),$("#g-data").value)) return;
+    const {error}=await sb.from("gasolio").insert({sito_id:gsito(),data:$("#g-data").value,litri:0,operatore:$("#g-op").value.trim()||P.nome});
+    if(error)return toast("Errore di salvataggio");toast("Registrato: nessun rifornimento ✓");
+  };
+  $("#g-invia").onclick=async()=>{
+    $("#g-err").style.display="none";
+    const litri=+$("#g-litri").value||0;
+    if(litri<=0)return err("#g-err","Inserisci i litri, oppure usa «Nessun rifornimento oggi».");
+    if(!await confermaSito(gsito(),$("#g-data").value)) return;
+    const {error}=await sb.from("gasolio").insert({sito_id:gsito(),data:$("#g-data").value,litri,operatore:$("#g-op").value.trim()||P.nome});
+    if(error)return toast("Errore di salvataggio");toast("Rifornimento registrato ✓");$("#g-litri").value="";
+  };
+}
+
+
+/* ====================== GANTT VISIVO PER SITO ====================== */
+let GANTT_SITO=null;
+function ganttSiti(){ return (isSuper()||isReadOnly()) ? DB.siti : DB.siti.filter(s=>s.id===P.sito_id); }
+function rGantt(){
+  const siti=ganttSiti();
+  const sito = GANTT_SITO || (siti[0]&&siti[0].id) || P.sito_id;
+  const selHtml = siti.length>1
+    ? `<div class="field"><label>Sito</label><select id="g-sito">${siti.map(s=>`<option value="${s.id}" ${s.id===sito?"selected":""}>${esc(s.nome)}</option>`).join("")}</select></div>`
+    : (siti[0]?`<p class="muted" style="margin-bottom:8px">📍 ${esc(siti[0].nome)}</p>`:"");
+  $("#pane-gantt").innerHTML=`<div class="card"><h2>📅 Gantt del sito</h2>${selHtml}<div id="gantt-body"><p class="muted">Carico\u2026</p></div></div>`;
+  if($("#g-sito")) $("#g-sito").onchange=e=>{GANTT_SITO=+e.target.value; rGantt();};
+  renderGanttBody(sito);
+}
+async function renderGanttBody(sito){
+  const body=$("#gantt-body");
+  const D=await datiSito(sito); const R=calcSito(sito,D);
+  const s=DB.siti.find(x=>x.id===sito)||{};
+  const avvio=s.data_avvio;
+  const items=scadenzeSito(sito,D,R).filter(i=>i.scadenza);
+  if(!avvio){ body.innerHTML=`<p class="muted">Imposta l'<b>avvio lavori</b> del sito nel Setup per disegnare il gantt.</p>`; return; }
+  if(!items.length){ body.innerHTML=`<p class="muted">Nessun intervento attivo con scadenza in questo sito. Attiva gli interventi e imposta le scadenze nel Setup.</p>`; return; }
+  const D0=d=>new Date(d+"T00:00:00").getTime(), day=86400000;
+  const start=D0(avvio), today=D0(oggi());
+  let end=Math.max(today, ...items.map(i=>D0(i.scadEff||i.scadenza)));
+  let span=(end-start)||day; end=end+span*0.06; span=end-start;
+  const fr=t=>Math.min(Math.max((t-start)/span,0),1);
+  const tf=fr(today)*100;
+  const dIt=iso=>{const[a,m,g]=iso.split("-");return `${g}/${m}`;};
+  items.sort((a,b)=>D0(a.scadEff||a.scadenza)-D0(b.scadEff||b.scadenza));
+  const rows=items.map(i=>{
+    const st=STATI[i.stato]||STATI.nd;
+    const sc=i.scadEff||i.scadenza;
+    const wf=fr(D0(sc))*100;
+    const fill=wf*(i.avz||0);
+    return `<div class="g-row">
+      <div class="g-label" title="${esc(i.nome)}">${esc(i.nome)} <span class="g-pct">${Math.round((i.avz||0)*100)}%</span></div>
+      <div class="g-track">
+        <div class="g-bar" style="width:${wf}%"></div>
+        <div class="g-fill" style="width:${fill}%;background:${st.c}"></div>
+        <div class="g-cap" style="left:${wf}%">${dIt(sc)}</div>
+        <div class="g-today" style="left:${tf}%"></div>
+      </div></div>`;
+  }).join("");
+  body.innerHTML=`<div class="gantt-wrap"><div class="gantt">
+    <div class="g-axis"><span class="g-a0">${dIt(avvio)}</span><span class="g-aoggi" style="left:${tf}%">oggi</span></div>
+    <div class="g-rows">${rows}</div>
+  </div></div>
+  <p class="muted" style="font-size:11px;margin-top:8px">Ogni barra va dall'avvio lavori alla scadenza (rettificata con le proroghe); la parte colorata \u00e8 l'avanzamento, la linea verticale \u00e8 oggi.</p>`;
+}
+
+/* ====================== SETUP (Blocco 3) ====================== */
+async function rSetup(){
+  $("#pane-setup").innerHTML = `
+  <div class="card"><h2>⚙️ Setup</h2>
+    <div class="row2">
+      <button class="btn btn-o btn-sm" data-s="siti">Siti e parametri</button>
+      <button class="btn btn-o btn-sm" data-s="operai">Operai</button>
+      <button class="btn btn-o btn-sm" data-s="macchine">Macchine</button>
+      <button class="btn btn-o btn-sm" data-s="interventi">Interventi e sotto-voci</button>
+      <button class="btn btn-o btn-sm" data-s="pesi">Pesi categorie</button>
+    </div></div>
+  <div id="setup-body"></div>`;
+  $$("[data-s]").forEach(b=>b.onclick=()=>SETUP[b.dataset.s]());
+  SETUP.interventi();
+}
+
+function svRow(id,nome){
+  return `<div class="sv-row dyn-row" style="grid-template-columns:1fr auto" data-svid="${id||""}">
+    <input class="sv-nome" value="${esc(nome||"")}" placeholder="es. Accesso nord">
+    <button class="x sv-del">×</button></div>`;
+}
+
+const SETUP = {
+ /* ---- Siti e parametri ---- */
+ async siti(){
+  const {data}= await sb.from("siti").select("*").order("id");
+  $("#setup-body").innerHTML=`<div class="card"><h2>Parametri aziendali</h2>
+   <div class="field"><label>Prezzo gasolio €/litro (unico per tutta l'azienda)</label>
+   <input type="number" step="0.01" id="par-pg" value="${DB.par?.prezzo_gasolio??0}"></div>
+   <button class="btn btn-p" id="par-save">Salva parametri</button></div>
+   <div class="card"><h2>Siti — ettari e avvio lavori</h2>
+   <p class="muted">La data di avvio lavori è la base per calcolare il tempo residuo alle scadenze degli interventi.</p>
+   ${data.map(s=>`<div class="dyn-row" style="grid-template-columns:1.2fr .7fr 1fr" data-id="${s.id}">
+     <b style="align-self:center">${esc(s.nome)}</b>
+     <div><label>Ettari</label><input type="number" class="s-ha" value="${s.ettari_totali}"></div>
+     <div><label>Avvio lavori</label><input type="date" class="s-avvio" value="${s.data_avvio||""}"></div>
+   </div>`).join("")}
+   <button class="btn btn-p" id="s-save">Salva siti</button></div>`;
+  $("#par-save").onclick=async()=>{
+    const v=+$("#par-pg").value||0;
+    const {error}=await sb.from("parametri").upsert({chiave:"prezzo_gasolio",valore:v});
+    if(error)return toast("Errore di salvataggio");
+    DB.par.prezzo_gasolio=v;toast("Parametri salvati ✓")};
+  $("#s-save").onclick=async()=>{
+    for(const r of $$("#setup-body [data-id]"))
+      await sb.from("siti").update({ettari_totali:+r.querySelector(".s-ha").value,data_avvio:r.querySelector(".s-avvio").value||null}).eq("id",+r.dataset.id);
+    toast("Siti salvati ✓");DB.siti=(await sb.from("siti").select("*").order("id")).data||DB.siti;
+  };
+ },
+ async operai(){ anag("operai","Operai",[["nome","Nome",null],["tariffa_ora","€/ora","number"]]) },
+ async macchine(){ anag("macchine","Macchine — elenco unico aziendale",[["nome","Nome",null],["tariffa_giorno","€/giorno","number"]]) },
+
+ /* ---- Interventi e sotto-voci (cuore della gerarchia) ---- */
+ async interventi(){
+  const sid=+($("#i-sito")?.value||DB.siti[0].id);
+  const cat=+($("#i-cat")?.value||DB.categorie[0].id);
+  const {data:siAll}=await sb.from("sito_interventi").select("*").eq("sito_id",sid);
+  const siIds=(siAll||[]).map(x=>x.id);
+  let svAll=[];
+  if(siIds.length){const r=await sb.from("sottovoci").select("*").in("sito_intervento_id",siIds).order("ordine");svAll=r.data||[];}
+  const intsCat=DB.interventi.filter(i=>i.categoria_id===cat);
+  const rows=intsCat.map(intv=>{
+    const si=(siAll||[]).find(x=>x.intervento_id===intv.id)||{};
+    const attivo=!!si.attivo, mod=si.modalita||intv.modalita||"in_house";
+    const svs=svAll.filter(s=>s.sito_intervento_id===si.id);
+    const isP=intv.tipo==="piante";
+    return `<div class="card int-card" data-int="${intv.id}" data-si="${si.id||""}" style="padding:12px">
+      <label class="int-head"><input type="checkbox" class="i-attivo" ${attivo?"checked":""}> <b>${esc(intv.nome)}</b>
+        ${isP?'<span class="tag">piante</span>':''}</label>
+      <div class="i-body ${attivo?"":"hide"}">
+        <div class="row2" style="margin-top:8px">
+          <div><label>Modalità</label><select class="i-mod">
+            <option value="in_house" ${mod==="in_house"?"selected":""}>In house</option>
+            <option value="conto_terzi" ${mod==="conto_terzi"?"selected":""}>Conto terzi</option></select></div>
+          ${isP
+            ? `<div><label>Piante previste</label><input type="number" class="i-pp" value="${si.piante_previste||""}"></div>
+               <div><label>Costo €/pianta</label><input type="number" step="0.01" class="i-cu" value="${si.costo_unitario||""}"></div>`
+            : `<div><label>Budget € (materiali o preventivo terzista)</label><input type="number" class="i-bud" value="${si.budget||0}"></div>`}
+          <div><label>Scadenza (deadline)</label><input type="date" class="i-scad" value="${si.scadenza||""}"></div>
+        </div>
+        ${isP?"":`<div style="margin-top:10px">
+          <label class="muted">Sotto-voci (col C) — la quantità = numero di sotto-voci; il budget si ripartisce tra esse</label>
+          <div class="sv-list">${svs.map(s=>svRow(s.id,s.nome)).join("")}</div>
+          <button class="add sv-add">+ Aggiungi sotto-voce</button></div>`}
+      </div></div>`;
+  }).join("");
+  $("#setup-body").innerHTML=`<div class="card"><h2>Interventi e sotto-voci</h2>
+    <div class="row2">
+      <div><label>Sito</label><select id="i-sito">${DB.siti.map(s=>`<option value="${s.id}" ${s.id===sid?"selected":""}>${esc(s.nome)}</option>`).join("")}</select></div>
+      <div><label>Categoria</label><select id="i-cat">${DB.categorie.map(c=>`<option value="${c.id}" ${c.id===cat?"selected":""}>${esc(c.nome)}</option>`).join("")}</select></div>
+    </div>
+    <p class="muted">Attiva gli interventi presenti in questo sito (gli altri non contano nell'avanzamento). Imposta budget e modalità, ed espandi le sotto-voci della colonna C.</p></div>
+    ${rows||'<div class="card"><p class="muted">Nessun intervento in questa categoria.</p></div>'}
+    <button class="btn btn-p" id="i-save">Salva categoria</button>`;
+  $("#i-sito").onchange=()=>SETUP.interventi();
+  $("#i-cat").onchange=()=>SETUP.interventi();
+  $$(".i-attivo").forEach(ch=>ch.onchange=()=>ch.closest(".int-card").querySelector(".i-body").classList.toggle("hide",!ch.checked));
+  function bindDel(){$$(".sv-del").forEach(x=>x.onclick=()=>x.closest(".sv-row").remove());}
+  $$(".sv-add").forEach(b=>b.onclick=()=>{b.previousElementSibling.insertAdjacentHTML("beforeend",svRow("",""));bindDel();});
+  bindDel();
+  $("#i-save").onclick=async()=>{
+    for(const card of $$(".int-card")){
+      const intId=+card.dataset.int, intv=DB.interventi.find(i=>i.id===intId);
+      const attivo=card.querySelector(".i-attivo").checked;
+      const rec={sito_id:sid,intervento_id:intId,attivo,modalita:card.querySelector(".i-mod").value,scadenza:card.querySelector(".i-scad").value||null};
+      if(intv.tipo==="piante"){rec.piante_previste=+card.querySelector(".i-pp").value||0;rec.costo_unitario=+card.querySelector(".i-cu").value||0;rec.budget=0;}
+      else rec.budget=+card.querySelector(".i-bud").value||0;
+      const {data:up}=await sb.from("sito_interventi").upsert(rec,{onConflict:"sito_id,intervento_id"}).select().single();
+      const siId=(up&&up.id)||+card.dataset.si||null;
+      if(intv.tipo!=="piante" && siId){
+        const present=[];
+        for(const r of card.querySelectorAll(".sv-row")){
+          const nome=r.querySelector(".sv-nome").value.trim(); if(!nome)continue;
+          const svid=r.dataset.svid;
+          if(svid){await sb.from("sottovoci").update({nome}).eq("id",+svid);present.push(+svid);}
+          else{const {data:ins}=await sb.from("sottovoci").insert({sito_intervento_id:siId,nome}).select().single();if(ins)present.push(ins.id);}
+        }
+        const existing=(await sb.from("sottovoci").select("id").eq("sito_intervento_id",siId)).data||[];
+        for(const e of existing) if(!present.includes(e.id)) await sb.from("sottovoci").delete().eq("id",e.id);
+      }
+    }
+    toast("Categoria salvata ✓");SETUP.interventi();
+  };
+ },
+
+ /* ---- Pesi categorie (per sito) ---- */
+ async pesi(){
+  const sid=+($("#w-sito")?.value||DB.siti[0].id);
+  const {data:sc}=await sb.from("sito_categorie").select("*").eq("sito_id",sid);
+  const {data:siAtt}=await sb.from("sito_interventi").select("intervento_id").eq("sito_id",sid).eq("attivo",true);
+  const catPresenti=new Set((siAtt||[]).map(x=>{const i=DB.interventi.find(j=>j.id===x.intervento_id);return i&&i.categoria_id;}));
+  const rows=DB.categorie.map(c=>{
+    const w=(sc||[]).find(x=>x.categoria_id===c.id)||{};
+    const pres=catPresenti.has(c.id);
+    return `<div class="dyn-row" style="grid-template-columns:1.5fr .6fr" data-cat="${c.id}">
+      <b style="align-self:center;${pres?"":"opacity:.45"}">${esc(c.nome)}${pres?"":' <span class="muted">(nessun intervento attivo)</span>'}</b>
+      <div><label>Peso %</label><input type="number" class="w-val" value="${w.peso_pct||0}"></div></div>`;
+  }).join("");
+  $("#setup-body").innerHTML=`<div class="card"><h2>Pesi delle categorie</h2>
+    <div class="field"><label>Sito</label><select id="w-sito">${DB.siti.map(s=>`<option value="${s.id}" ${s.id===sid?"selected":""}>${esc(s.nome)}</option>`).join("")}</select></div>
+    <p class="muted" id="w-sum"></p>
+    <p class="muted">I pesi dicono quanto ogni categoria incide sull'avanzamento del sito (e quindi sugli ettari). Il sistema <b>ricalibra automaticamente</b> sulle categorie presenti, quindi non devono per forza sommare 100 — ma è la situazione ideale.</p></div>
+    ${rows}<button class="btn btn-p" id="w-save">Salva pesi</button>`;
+  const upd=()=>{const t=$$(".w-val").reduce((s,i)=>s+(+i.value||0),0);
+    $("#w-sum").innerHTML=`Somma pesi: <b style="color:${t===100?'var(--forest)':'var(--gold)'}">${t}%</b>`;};
+  $$(".w-val").forEach(i=>i.oninput=upd);upd();
+  $("#w-sito").onchange=()=>SETUP.pesi();
+  $("#w-save").onclick=async()=>{
+    for(const r of $$("#setup-body [data-cat]"))
+      await sb.from("sito_categorie").upsert({sito_id:sid,categoria_id:+r.dataset.cat,peso_pct:+r.querySelector(".w-val").value||0},{onConflict:"sito_id,categoria_id"});
+    toast("Pesi salvati ✓");};
+ },
+};
+
+async function anag(table,titolo,campi,perSito=false){
+  const {data}=await sb.from(table).select("*").order("id");
+  $("#setup-body").innerHTML=`<div class="card"><h2>${titolo}</h2>
+   <div id="an-list">${(data||[]).map(r=>`<div class="dyn-row" style="grid-template-columns:${perSito?"1fr ":""}1.2fr .8fr auto" data-id="${r.id}">
+     ${perSito?`<select class="an-sito">${DB.siti.map(s=>`<option value="${s.id}" ${s.id===r.sito_id?"selected":""}>${esc(s.nome)}</option>`).join("")}</select>`:""}
+     ${campi.map(([k,l,t])=>`<input class="an-${k}" type="${t||"text"}" value="${esc(r[k])}" placeholder="${l}">`).join("")}
+     <button class="x an-off" title="disattiva">×</button></div>`).join("")}</div>
+   <button class="add" id="an-add">+ Aggiungi</button>
+   <button class="btn btn-p" id="an-save" style="margin-top:10px">Salva</button></div>`;
+  $("#an-add").onclick=()=>{$("#an-list").insertAdjacentHTML("beforeend",
+    `<div class="dyn-row" style="grid-template-columns:${perSito?"1fr ":""}1.2fr .8fr auto" data-id="">
+     ${perSito?`<select class="an-sito">${DB.siti.map(s=>`<option value="${s.id}">${esc(s.nome)}</option>`).join("")}</select>`:""}
+     ${campi.map(([k,l,t])=>`<input class="an-${k}" type="${t||"text"}" placeholder="${l}">`).join("")}
+     <button class="x an-off">×</button></div>`);bindOff()};
+  function bindOff(){$$(".an-off").forEach(x=>x.onclick=async()=>{
+    const row=x.parentNode,id=row.dataset.id;
+    if(id) await sb.from(table).update({attivo:false}).eq("id",+id);
+    row.remove()})}
+  bindOff();
+  $("#an-save").onclick=async()=>{
+    for(const r of $$("#an-list .dyn-row")){
+      const rec={};
+      for(const [k] of campi){const v=r.querySelector(".an-"+k).value;rec[k]=isNaN(+v)||v===""?v:+v}
+      if(perSito)rec.sito_id=+r.querySelector(".an-sito").value;
+      if(!rec[campi[0][0]])continue;
+      const id=r.dataset.id;
+      if(id)await sb.from(table).update(rec).eq("id",+id);
+      else await sb.from(table).insert(rec);
+    }
+    toast("Salvato ✓");
+    const fresh=await sb.from(table).select("*").eq("attivo",true).order("nome");
+    DB[table]=fresh.data||[];
+    anag(table,titolo,campi,perSito)};
+}
+
+/* ---------------- avvio ---------------- */
+start();
 </script>
 </body>
 </html>
