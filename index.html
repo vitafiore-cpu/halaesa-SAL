@@ -192,22 +192,68 @@ table.grid td:first-child{text-align:left;font-weight:600}
 .modal-body b{color:var(--forest)}
 .modal-act{display:flex;gap:10px}
 .modal-act .btn{flex:1}
+.flag-r{display:inline-block;font-size:12px;font-weight:800;background:#FADBD8;color:#C0392B;
+  padding:2px 7px;border-radius:10px;margin-left:6px;white-space:nowrap}
+.flag-y{display:inline-block;font-size:12px;font-weight:800;background:#FCF3CF;color:#9A6B1F;
+  padding:2px 7px;border-radius:10px;margin-left:6px;white-space:nowrap}
+.int-card.has-r{border-left:4px solid #C0392B}
+.int-card.has-y{border-left:4px solid #E8A33D}
+.int-card.appena{box-shadow:0 0 0 3px var(--moss);animation:pulse 1.6s ease-out 2}
+@keyframes pulse{0%{box-shadow:0 0 0 3px var(--moss)}50%{box-shadow:0 0 0 7px rgba(111,168,74,.35)}100%{box-shadow:0 0 0 3px var(--moss)}}
+.int-card.annull{opacity:.5}
+.int-card.annull .int-head b{text-decoration:line-through}
+.miss{font-size:11.5px;color:#9A6B1F;margin-top:6px}
+.miss b{color:#7A5310}
+.switch{display:flex;gap:0;border:1.5px solid var(--forest);border-radius:var(--r-s);overflow:hidden;margin-bottom:12px}
+.switch button{flex:1;padding:10px 6px;font-size:13px;font-weight:700;background:var(--white);color:var(--forest)}
+.switch button.on{background:var(--forest);color:var(--white)}
+.lotto-tag{font-size:10px;font-weight:800;background:#E3E7DD;color:var(--forest-d);padding:2px 7px;
+  border-radius:10px;text-transform:uppercase;letter-spacing:.03em}
+.lotto-tag.urg{background:#C0392B;color:#fff}
+.gt-head{display:grid;grid-template-columns:1.9fr 3.4fr;gap:10px;font-size:10px;font-weight:800;
+  color:var(--mut);text-transform:uppercase;letter-spacing:.04em;padding:0 0 6px;border-bottom:1px solid var(--line)}
+.gt-row{display:grid;grid-template-columns:1.9fr 3.4fr;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid #F0F2EC}
+.gt-row:last-child{border-bottom:none}
+.gt-nome{font-size:12.5px;font-weight:700}
+.gt-sub{font-size:10.5px;color:var(--mut);margin-top:1px}
+.gt-track{position:relative;height:26px;background:#F2F4EE;border-radius:6px}
+.gt-bar{position:absolute;top:4px;height:18px;border-radius:5px;opacity:.35}
+.gt-done{position:absolute;top:4px;height:18px;border-radius:5px}
+.gt-dl{position:absolute;top:-2px;width:2px;height:30px;background:#8E2820}
+.gt-dl::after{content:"scad.";position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:800;color:#8E2820}
+.gt-today{position:absolute;top:-2px;width:2px;height:30px;background:var(--ink)}
+.gt-today::after{content:"oggi";position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:700;color:var(--ink)}
+.gt-pct{position:absolute;right:6px;top:5px;font-size:10px;font-weight:800;color:var(--mut)}
+.gt-al{font-size:11px;font-weight:700;margin-top:3px}
+.gt-scale{display:flex;justify-content:space-between;font-size:9.5px;color:var(--mut);padding-top:6px}
+.gt-dep{font-size:10.5px;color:var(--moss);margin-top:1px}
+@media(max-width:620px){.gt-head,.gt-row{grid-template-columns:1fr}.gt-head div:last-child{display:none}}
+.sg-tot{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.sg-tot span{background:#EEF1EA;border-radius:8px;padding:6px 10px;font-size:12px;color:var(--mut)}
+.sg-tot b{color:var(--forest);font-size:14px}
+.sg-sito{border:1px solid var(--line);border-radius:var(--r-s);margin-bottom:8px;background:var(--white)}
+.sg-sito summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;
+  padding:11px 12px;font-weight:800;font-size:14px;color:var(--forest-d)}
+.sg-sito summary::-webkit-details-marker{display:none}
+.sg-sito summary::before{content:"▸";color:var(--moss);font-size:14px;transition:transform .15s}
+.sg-sito[open] summary::before{content:"▾"}
+.sg-sito[open] summary{border-bottom:1px solid var(--line)}
+.sg-nome{flex:1}
+.sg-apri{font-size:10px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+.sg-body{padding:4px 12px 10px}
+.sg-sub{margin-top:4px}
+.sg-sub summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px;padding:7px 0}
+.sg-sub summary::-webkit-details-marker{display:none}
+.sg-sub summary::before{content:"▸";color:var(--gold);font-size:12px}
+.sg-sub[open] summary::before{content:"▾"}
+.sg-tit{font-size:10.5px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.04em;margin:9px 0 3px}
+.sg-row{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid #F0F2EC;font-size:12.5px}
+.sg-row:last-child{border-bottom:none}
+.sg-n{font-weight:600;color:var(--ink)}
+.sg-t{color:var(--mut);text-align:right;flex-shrink:0;max-width:52%}
+@media(max-width:620px){.sg-row{flex-direction:column;gap:2px}.sg-t{text-align:left;max-width:100%}}
 @media(min-width:700px){.fascia{font-size:14px}.dyn-row{gap:10px}}
-
-/* ---------- gantt visivo ---------- */
-.gantt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:6px}
-.gantt{min-width:520px}
-.g-axis{position:relative;height:15px;margin-left:40%;margin-bottom:4px;font-size:10px;color:var(--mut)}
-.g-axis .g-a0{position:absolute;left:0}
-.g-axis .g-aoggi{position:absolute;transform:translateX(-50%);color:var(--ink);font-weight:700}
-.g-row{display:grid;grid-template-columns:40% 60%;align-items:center;height:30px}
-.g-label{font-size:12px;font-weight:600;padding-right:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.g-label .g-pct{color:var(--mut);font-weight:500;font-size:11px}
-.g-track{position:relative;height:16px;background:#EEF2E8;border-radius:5px}
-.g-bar{position:absolute;top:0;left:0;height:100%;background:#D7E3C6;border-radius:5px}
-.g-fill{position:absolute;top:0;left:0;height:100%;border-radius:5px}
-.g-cap{position:absolute;top:1px;transform:translateX(4px);font-size:9px;color:var(--mut);white-space:nowrap;line-height:14px}
-.g-today{position:absolute;top:-7px;height:30px;width:2px;background:var(--ink);border-radius:1px}
+input[type=date]:invalid,input.bad{border-color:var(--red);background:#FDF1EF}
 </style>
 </head>
 <body>
@@ -235,8 +281,8 @@ table.grid td:first-child{text-align:left;font-weight:600}
     <div id="pane-compila"></div>
     <div id="pane-gasolio" class="hide"></div>
     <div id="pane-sito" class="hide"></div>
-    <div id="pane-dash" class="hide"></div>
     <div id="pane-gantt" class="hide"></div>
+    <div id="pane-dash" class="hide"></div>
     <div id="pane-setup" class="hide"></div>
   </div>
   <nav class="tabs" id="tabs"></nav>
@@ -254,7 +300,30 @@ const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const esc = t => String(t??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const eur = n => (n??0).toLocaleString("it-IT",{maximumFractionDigits:0})+" €";
-const oggi = () => new Date().toISOString().slice(0,10);
+const oggi = () => { const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
+/* ---- date: una data è valida solo se AAAA-MM-GG, esistente e tra ANNO_MIN e ANNO_MAX ---- */
+const ANNO_MIN=2020, ANNO_MAX=2040;
+const dataValida = iso => {
+  if(typeof iso!=="string" || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return false;
+  const [a,m,g]=iso.split("-").map(Number); const u=new Date(Date.UTC(a,m-1,g));
+  return a>=ANNO_MIN && a<=ANNO_MAX && u.getUTCMonth()===m-1 && u.getUTCDate()===g;
+};
+const DATA_ATTR = `min="${ANNO_MIN}-01-01" max="${ANNO_MAX}-12-31"`;
+// una data illeggibile non deve bloccare le viste: la tolgo dai calcoli e ricordo il valore originale
+function pulisciDate(obj, campi){
+  for(const c of campi){
+    const v=obj[c];
+    if(v!==null && v!==undefined && v!=="" && !dataValida(v)){ obj["_err_"+c]=v; obj[c]=null; }
+  }
+  return obj;
+}
+// controllo prima del salvataggio: evidenzia i campi errati e restituisce l'elenco
+function dateErrate(inputs){
+  const bad=[];
+  for(const el of inputs){ if(!el) continue; el.classList.remove("bad");
+    if(el.value!=="" && !dataValida(el.value)){ el.classList.add("bad"); bad.push(el); } }
+  return bad;
+}
 let P = null;          // profilo: {id,nome,ruolo,super_user,sito_id,email}
 const isSuper = () => !!P?.super_user;
 const isReadOnly = () => !!P?.sola_lettura;
@@ -280,7 +349,7 @@ async function start(){
   if(!prof){err("#login-err","Utente senza profilo: contattare la direzione.");await sb.auth.signOut();return}
   P = prof;
   // anagrafiche + lista master della gerarchia (categorie/interventi)
-  const [si,ca,inv,op,ma,pa,cr] = await Promise.all([
+  const [si,ca,inv,op,ma,pa,cr,pz,lo,co] = await Promise.all([
     sb.from("siti").select("*").order("id"),
     sb.from("categorie").select("*").order("ordine"),
     sb.from("interventi").select("*").order("ordine"),
@@ -288,10 +357,14 @@ async function start(){
     sb.from("macchine").select("*").eq("attivo",true).order("nome"),
     sb.from("parametri").select("*"),
     sb.from("causali_ritardo").select("*").order("ordine"),
+    sb.from("categorie_perizia").select("*").order("ordine"),
+    sb.from("lotti").select("*").order("ordine"),
+    sb.from("comuni").select("*").order("ordine"),
   ]);
   DB = {siti:si.data||[], categorie:ca.data||[], interventi:inv.data||[],
-        operai:op.data||[], macchine:ma.data||[], causali:cr.data||[],
+        operai:op.data||[], macchine:ma.data||[], causali:cr.data||[], perizie:pz.data||[], lotti:lo.data||[], comuni:co.data||[],
         par:Object.fromEntries((pa.data||[]).map(p=>[p.chiave,+p.valore]))};
+  DB.siti.forEach(x=>pulisciDate(x,["data_avvio"]));
   $("#v-login").classList.add("hide");$("#v-app").classList.remove("hide");
   $("#who-nome").textContent = P.nome;
   const sitoNome = DB.siti.find(s=>s.id===P.sito_id)?.nome || "Tutti i siti";
@@ -343,26 +416,111 @@ async function datiSito(sito_id){
     const r = await sb.from("sottovoci").select("*").in("sito_intervento_id",siIds).order("ordine");
     sv = r.data||[];
   }
+  (si_int.data||[]).forEach(x=>pulisciDate(x,["scadenza","data_inizio"]));
   return {sito_interventi:si_int.data||[], sito_categorie:sc.data||[], sottovoci:sv,
           avanzamenti:av.data||[], avanz_piante:ap.data||[], ore_uomo:ou.data||[],
           macchine_giorno:mg.data||[], gasolio:ga.data||[], ritardi:ri.data||[]};
 }
 const MAXV = arr => arr.length ? Math.max(...arr) : 0;
+/* ---- dati mancanti (cartello giallo) e bandierina rossa ---- */
+const VUOTO = v => v===null || v===undefined || v==="";
+function mancanti(si, intv){
+  if(si.annullato) return [];
+  const m=[];
+  if(intv.tipo==="piante"){
+    if(VUOTO(si.piante_previste)) m.push("piante previste");
+    if(VUOTO(si.costo_unitario))  m.push("costo per pianta");
+  } else {
+    if(VUOTO(si.budget)) m.push("budget");
+    if(VUOTO(si.costo_unitario_voce)) m.push("costo unitario");
+    if(VUOTO(si.unita_misura)) m.push("unità di misura");
+    if(VUOTO(si.quantita))     m.push("quantità");
+  }
+  const errata = c => si["_err_"+c] || (!VUOTO(si[c]) && !dataValida(si[c]));
+  if(VUOTO(si.durata_giorni))m.push("durata");
+  if(!si.dipende_da){ if(errata("data_inizio")) m.push("data inizio non valida"); else if(VUOTO(si.data_inizio)) m.push("data inizio"); }
+  if(si.modalita==="da_definire") m.push("modalità");
+  if(errata("scadenza")) m.push("scadenza non valida"); else if(VUOTO(si.scadenza)) m.push("scadenza");
+  return m;
+}
+/* ---- pianificazione: risolve la catena delle dipendenze ---- */
+const DAY=86400000;
+const toD = iso => { if(!iso) return null; const d=new Date(iso+"T00:00:00Z"); return isNaN(d)?null:d; };
+const toIso = d => (d && !isNaN(d)) ? d.toISOString().slice(0,10) : null;
+const addGG = (iso,n) => { const d=toD(iso); if(!d || !isFinite(n)) return null; d.setUTCDate(d.getUTCDate()+n); return toIso(d); };
+const diffGG = (a,b) => { const x=toD(a), y=toD(b); return (x&&y) ? Math.round((x-y)/DAY) : NaN; };
+
+// per ogni riga: inizio effettivo, fine, ritardo sulla scadenza, catena e anelli
+function pianifica(righe){
+  const byId=new Map(righe.map(r=>[r.id,r]));
+  const out=new Map();
+  function calc(r,visti){
+    if(out.has(r.id)) return out.get(r.id);
+    if(visti.has(r.id)){ const c={ciclo:true}; out.set(r.id,c); return c; }
+    visti.add(r.id);
+    const durata = r.durata_giorni==null ? null : +r.durata_giorni;
+    let inizio = r.data_inizio || null, pred=null, predMancante=false;
+    if(r.dipende_da){
+      pred = byId.get(r.dipende_da);
+      if(!pred || pred.annullato){ predMancante=true; }
+      else {
+        const p=calc(pred,visti);
+        if(p.ciclo){ const c={ciclo:true}; out.set(r.id,c); return c; }
+        if(p.fine) inizio = addGG(p.fine,1);
+      }
+    }
+    const fine = (inizio && durata) ? addGG(inizio, durata-1) : null;
+    const res = {inizio, fine, durata, predMancante,
+      predNome: pred ? (DB.interventi.find(i=>i.id===pred.intervento_id)||{}).nome : null,
+      ritardo: (fine && r.scadenza) ? diffGG(fine, r.scadenza) : null, ciclo:false};
+    out.set(r.id,res); return res;
+  }
+  righe.forEach(r=>calc(r,new Set()));
+  return out;
+}
+// verifica se collegare figlio -> padre crea un anello
+function creaCiclo(righe, figlioId, padreId){
+  const byId=new Map(righe.map(r=>[r.id,r]));
+  let cur=byId.get(padreId), n=0;
+  while(cur && n++<200){
+    if(cur.id===figlioId) return true;
+    cur = cur.dipende_da ? byId.get(cur.dipende_da) : null;
+  }
+  return false;
+}
+// stato di una riga pianificata rispetto alla scadenza e all'avanzamento
+function statoGantt(p, avz, scadenza, oggiStr){
+  if(p.ciclo) return {k:"ciclo", l:"dipendenza circolare", c:"#8E2820"};
+  if(!p.durata) return {k:"nodurata", l:"durata da inserire", c:"#6B7565"};
+  if(avz>=1) return {k:"fatto", l:"completato", c:"#8CBF66"};
+  if(!scadenza) return {k:"noscad", l:"scadenza da inserire", c:"#6B7565"};
+  const disp = diffGG(scadenza, oggiStr);
+  const residua = Math.ceil(p.durata*(1-avz));
+  if(p.inizio && diffGG(scadenza,p.inizio)+1 < p.durata)
+    return {k:"impossibile", l:"non ci sta", c:"#8E2820", disp, residua, scoperto:residua-disp};
+  if(residua > disp) return {k:"tardi", l:"in ritardo", c:"#C0392B", disp, residua, scoperto:residua-disp};
+  if(disp>0 && (disp-residua)/disp < 0.2) return {k:"stretto", l:"margine stretto", c:"#E8A33D", disp, residua};
+  return {k:"ok", l:"in tempo", c:"#1F5C2E", disp, residua};
+}
+
+const budgetEffDi = (si,intv) => intv.tipo==="piante"
+  ? (+si.piante_previste||0)*(+si.costo_unitario||0) : (+si.budget||0);
+
 function calcSito(sito_id, D){
-  const sito = DB.siti.find(s=>s.id===sito_id) || {ettari_totali:0};
+  const sito = DB.siti.find(s=>s.id===sito_id) || {};
   const prezzoGasolio = DB.par?.prezzo_gasolio || 0;
   const tariffaOp = id => (DB.operai.find(o=>o.id===id)||{}).tariffa_ora || 0;
   const tariffaMa = id => (DB.macchine.find(m=>m.id===id)||{}).tariffa_giorno || 0;
-  const attivi = D.sito_interventi.filter(si=>si.attivo);
+  const attivi = D.sito_interventi.filter(si=>si.attivo && !si.annullato);
   // ---- INTERVENTO ----
   const perInt = attivi.map(si=>{
     const intv = DB.interventi.find(i=>i.id===si.intervento_id) || {};
-    let avz=0, budgetEff=0;
+    let avz=0;
+    const budgetEff = budgetEffDi(si,intv);
     if(intv.tipo==="piante"){
       const prev=+si.piante_previste||0;
       const messe=MAXV(D.avanz_piante.filter(a=>a.sito_intervento_id===si.id).map(a=>+a.piante||0));
       avz = prev>0?Math.min(messe/prev,1):0;
-      budgetEff = prev*(+si.costo_unitario||0);
     } else {
       const svs=D.sottovoci.filter(sv=>sv.sito_intervento_id===si.id);
       if(svs.length){
@@ -370,28 +528,43 @@ function calcSito(sito_id, D){
         for(const sv of svs) sum += MAXV(D.avanzamenti.filter(a=>a.sottovoce_id===sv.id).map(a=>+a.pct||0))/100;
         avz=sum/svs.length;
       } else {
-        // nessuna sotto-voce: l'avanzamento si segna sull'intervento stesso
         avz = MAXV(D.avanzamenti.filter(a=>a.sito_intervento_id===si.id).map(a=>+a.pct||0))/100;
       }
-      budgetEff=+si.budget||0;
     }
     const costoBudget=budgetEff*avz;
     const ore=D.ore_uomo.filter(o=>o.sito_intervento_id===si.id)
                 .reduce((s,o)=>s+(+o.ore||0)*tariffaOp(o.operaio_id),0);
     return {si_id:si.id,intervento_id:si.intervento_id,categoria_id:intv.categoria_id,
-            nome:intv.nome,modalita:si.modalita,tipo:intv.tipo,avz,budgetEff,costoBudget,ore,costoInt:costoBudget+ore};
+            perizia_id:intv.categoria_perizia_id, lotto:si.lotto||"Intero sito",
+            nome:intv.nome,modalita:si.modalita,tipo:intv.tipo,avz,budgetEff,costoBudget,ore,
+            costoInt:costoBudget+ore, mancanti:mancanti(si,intv), daVerificare:!!si.da_verificare,
+            nota:si.nota_verifica, priorita:si.priorita};
   });
-  // ---- CATEGORIA (media interventi presenti) ----
-  const catMap={};
-  for(const p of perInt){(catMap[p.categoria_id]=catMap[p.categoria_id]||{sum:0,n:0}).sum+=p.avz;catMap[p.categoria_id].n++;}
-  const perCat=Object.entries(catMap).map(([cid,v])=>({categoria_id:+cid,avz:v.n?v.sum/v.n:0,nInt:v.n}));
-  // ---- SITO (pesi categoria, ricalibrati sui presenti) ----
-  let avzPesato=0,pesoTot=0;
-  for(const c of perCat){
-    const w=(D.sito_categorie.find(x=>x.categoria_id===c.categoria_id)||{}).peso_pct||0;
-    avzPesato+=(w/100)*c.avz; pesoTot+=w/100;
+  // ---- aggregazione generica pesata sul budget (fallback: media semplice) ----
+  function aggrega(items,chiave){
+    const m={};
+    for(const p of items){
+      const k=p[chiave]??0;
+      (m[k]=m[k]||{sum:0,n:0,b:0,bs:0}).sum+=p.avz; m[k].n++;
+      m[k].b+=p.budgetEff; m[k].bs+=p.budgetEff*p.avz;
+    }
+    return Object.entries(m).map(([k,v])=>({id:+k,
+      avz: v.b>0 ? v.bs/v.b : (v.n?v.sum/v.n:0), nInt:v.n, budget:v.b}));
   }
-  const avz=pesoTot>0?avzPesato/pesoTot:0;
+  const perCat = aggrega(perInt,"categoria_id").map(x=>({categoria_id:x.id,...x}));
+  const perPz  = aggrega(perInt,"perizia_id").map(x=>({perizia_id:x.id,...x}));
+  // ---- SITO: pesato sui budget; se non ci sono budget, pesi di categoria ----
+  const budTot = perInt.reduce((s,p)=>s+p.budgetEff,0);
+  let avz, pesoTot=0, avzPesato=0;
+  if(budTot>0){
+    avz = perInt.reduce((s,p)=>s+p.budgetEff*p.avz,0)/budTot;
+  } else {
+    for(const c of perCat){
+      const w=(D.sito_categorie.find(x=>x.categoria_id===c.categoria_id)||{}).peso_pct||0;
+      avzPesato+=(w/100)*c.avz; pesoTot+=w/100;
+    }
+    avz = pesoTot>0?avzPesato/pesoTot:0;
+  }
   const ettari=(+sito.ettari_totali||0)*avz;
   // ---- COSTI ----
   let bIn=0,bTe=0,cIn=0,cTe=0,ore=0;
@@ -404,7 +577,12 @@ function calcSito(sito_id, D){
   const gasolio=D.gasolio.reduce((s,g)=>s+(+g.litri||0),0)*prezzoGasolio;
   const gg_fermo=D.ritardi.reduce((s,r)=>s+(+r.giorni||0),0);
   const interno=cIn+ore+macchine+gasolio, terzisti=cTe, totale=interno+terzisti, budgetTot=bIn+bTe;
-  return {avz,avzPesato,pesoTot,ettari,perInt,perCat,gg_fermo,
+  // ---- segnalazioni ----
+  const nMancanti = perInt.filter(p=>p.mancanti.length).length + (VUOTO(sito.ettari_totali)?1:0);
+  const nRosse    = perInt.filter(p=>p.daVerificare).length;
+  const lotti     = [...new Set(D.sito_interventi.filter(x=>x.attivo&&!x.annullato).map(x=>x.lotto||"Intero sito"))];
+  return {avz,avzPesato,pesoTot,ettari,perInt,perCat,perPz,gg_fermo,nMancanti,nRosse,lotti,budTot,
+    ettariMancanti:VUOTO(sito.ettari_totali),
     costi:{costoMatInhouse:cIn,costoMatTerzi:cTe,ore,macchine,gasolio,interno,terzisti,totale,budgetTot,budgetInhouse:bIn,budgetTerzi:bTe}};
 }
 
@@ -429,6 +607,15 @@ function renderSitoBar(showIt){
   }
 }
 function dataIt(iso){ if(!iso)return ""; const[a,m,g]=iso.split("-"); return `${g}/${m}/${a}`; }
+function confermaTesto(msg){
+  return new Promise(res=>{
+    const m=$("#modal");
+    m.querySelector(".modal-body").innerHTML=esc(msg);
+    m.classList.remove("hide");
+    m.querySelector("#m-ok").onclick=()=>{m.classList.add("hide");res(true)};
+    m.querySelector("#m-no").onclick=()=>{m.classList.add("hide");res(false)};
+  });
+}
 function confermaSito(sito_id,data){
   const nome=DB.siti.find(s=>s.id===sito_id)?.nome||"?";
   return new Promise(res=>{
@@ -446,15 +633,31 @@ function stubPane(pane,titolo,blocco){
     Per ora è disponibile il <b>Setup</b>, dove si definisce la struttura di ogni sito.</p></div>`;
 }
 /* ====================== VISTE & DASHBOARD (Blocco 5) ====================== */
+// macchine del comune del sito; se il sito non ha comune, tutte
+function macchinePerSito(sitoId){
+  const cs=(DB.siti.find(x=>x.id===sitoId)||{}).comune_id;
+  if(!cs) return DB.macchine;
+  return DB.macchine.filter(m=>m.comune_id===cs);
+}
+const nomeSito = s => (s && (s.nome_breve || s.nome)) || "—";
+const nomeSitoId = id => nomeSito(DB.siti.find(x=>x.id===id));
 const catNome = id => (DB.categorie.find(x=>x.id===id)||{}).nome || "?";
+const pzNome  = id => (DB.perizie.find(x=>x.id===id)||{}).nome || "non classificato";
+let VISTA = "categorie";   // "categorie" | "perizia"
+const vistaNome = id => VISTA==="perizia" ? pzNome(id) : catNome(id);
+const vistaCols = () => VISTA==="perizia" ? DB.perizie : DB.categorie;
+const vistaPer  = R => VISTA==="perizia"
+  ? R.perPz.map(x=>({id:x.perizia_id,avz:x.avz,budget:x.budget,nInt:x.nInt}))
+  : R.perCat.map(x=>({id:x.categoria_id,avz:x.avz,budget:x.budget,nInt:x.nInt}));
+window.setVista = v => { VISTA=v; rDash(); };
 const pillCol = f => f>=0.75?"ok":f>=0.25?"late":"bad";
 const costRow = (l,v,tot) => `<div class="cost-r ${tot?'cost-tot':''}"><span>${l}</span><b>${eur(v)}</b></div>`;
 /* ---- Scadenze / gantt a scadenze ---- */
 function statoScadenza(avvio, scadenza, oggiStr, avz, prorogaGiorni){
   if(avz>=1) return {stato:"completato", proroga:prorogaGiorni||0};
   if(!scadenza) return {stato:"nd"};
-  const D=d=>new Date(d+"T00:00:00"), gg=(a,b)=>Math.round((D(a)-D(b))/86400000);
-  const addgg=(d,n)=>{const x=D(d);x.setDate(x.getDate()+n);return x.toISOString().slice(0,10);};
+  const D=d=>new Date(d+"T00:00:00Z"), gg=(a,b)=>Math.round((D(a)-D(b))/86400000);
+  const addgg=(d,n)=>{const x=D(d);x.setUTCDate(x.getUTCDate()+n);return x.toISOString().slice(0,10);};
   const P=prorogaGiorni||0;
   const scadEff = P>0 ? addgg(scadenza,P) : scadenza;
   const rim=gg(scadEff,oggiStr);
@@ -491,17 +694,14 @@ function scadenzeSito(sitoId, D, R){
     const ritImput=rit.filter(r=>!r.forza_maggiore);
     const st=statoScadenza(avvio, si.scadenza, oggi(), p.avz, proroga);
     items.push(Object.assign({nome:intv.nome, categoria:catNome(intv.categoria_id), avz:p.avz,
-      scadenza:si.scadenza, ritardi:rit, ritFM, ritImput}, st));
+      perizia:(DB.perizie.find(x=>x.id===intv.categoria_perizia_id)||{}).nome,
+      lotto:si.lotto||"Intero sito", scadenza:si.scadenza, ritardi:rit, ritFM, ritImput}, st));
   }
   items.sort((a,b)=>(ord[a.stato]-ord[b.stato])||((a.rim??1e9)-(b.rim??1e9)));
   return items;
 }
-function renderScadenze(items, titolo, mostraSito, consentiRevoca){
-  const dIt=iso=>{const[a,m,g]=iso.split("-");return `${g}/${m}/${a}`;};
-  if(!items.length) return `<div class="card"><h2>${titolo}</h2>
-    <p class="muted" style="margin:6px 0">Nessun intervento attivo da mostrare. Qui compariranno gli interventi del Setup: imposta avvio lavori e scadenze per attivare gli avvisi sui tempi.</p></div>`;
-  const allarmi=items.filter(i=>["scaduto","5","10","20"].includes(i.stato)).length;
-  const rows=items.map(i=>{
+function rigaScadenza(i, consentiRevoca){
+    const dIt=iso=>{const[a,m,g]=iso.split("-");return `${g}/${m}/${a}`;};
     const st=STATI[i.stato]||STATI.nd;
     const elapsed=(i.frac!=null)?Math.min(Math.max(1-i.frac,0),1):(i.stato==="scaduto"?1:0);
     const tempo = i.stato==="scaduto"?`scaduto da ${i.ritardoGiorni} gg`
@@ -529,7 +729,7 @@ function renderScadenze(items, titolo, mostraSito, consentiRevoca){
       ritHtml+=`<div class="rit-note">⚠ Ritardo imputabile: ${g} gg${cs?` — ${esc(cs)}`:''}</div>`; }
     return `<div class="scad-row">
       <div class="scad-top">
-        <span class="scad-nome">${esc(i.nome)}${mostraSito&&i.sito?` <span class="muted">· ${esc(i.sito)}</span>`:''}</span>
+        <span class="scad-nome">${esc(i.nome)}${i.sito?` <span class="muted">· ${esc(i.sito)}</span>`:''}${i.lotto&&i.lotto!=="Intero sito"?` <span class="lotto-tag urg">${esc(i.lotto)}</span>`:''}</span>
         <span class="scad-badge" style="background:${st.c}">${st.l}</span></div>
       <div class="scad-meta"><span class="muted">${esc(i.categoria)}</span>
         <span>Avanz. ${Math.round(i.avz*100)}% · scad. ${i.scadenza?dIt(i.scadenza):"—"}${pror}${tempo?" · "+tempo:""}</span></div>
@@ -537,10 +737,65 @@ function renderScadenze(items, titolo, mostraSito, consentiRevoca){
         ${(i.frac!=null||i.stato==="scaduto")?`<span class="scad-today" style="left:${Math.round(elapsed*100)}%"></span>`:''}</div>
       ${scoTxt?`<div class="scad-sco">${scoTxt}</div>`:''}
       ${ritHtml}</div>`;
-  }).join("");
+}
+
+function renderScadenze(items, titolo, mostraSito, consentiRevoca){
+  const dIt=iso=>{const[a,m,g]=iso.split("-");return `${g}/${m}/${a}`;};
+  if(!items.length) return `<div class="card"><h2>${titolo}</h2>
+    <p class="muted" style="margin:6px 0">Nessun intervento attivo da mostrare. Qui compariranno gli interventi del Setup: imposta avvio lavori e scadenze per attivare gli avvisi sui tempi.</p></div>`;
+  const allarmi=items.filter(i=>["scaduto","5","10","20"].includes(i.stato)).length;
+  const rows=items.map(i=>rigaScadenza(i,consentiRevoca)).join("");
   const banner=allarmi?`<div class="banner banner-alert">⏰ ${allarmi} ${allarmi===1?"intervento richiede attenzione sulle scadenze":"interventi richiedono attenzione sulle scadenze"}</div>`:'';
   return `<div class="card"><h2>${titolo}</h2>${banner}${rows}
     <p class="muted" style="font-size:11.5px;margin-top:8px">Barra = avanzamento; segno verticale = "oggi" sulla finestra avvio→scadenza (rettificata con le proroghe). Lo scostamento reale stima la fine al ritmo attuale.</p></div>`;
+}
+
+/* ---- scadenze raggruppate (sito / categoria perizia) ---- */
+let SC_GRUPPO="sito", SC_LOTTO="";
+window.setScad = (k,v) => { if(k==="g") SC_GRUPPO=v; else SC_LOTTO=v; rDash(); };
+
+function renderScadenzeRaggruppate(items, consentiRevoca){
+  let vis = SC_LOTTO ? items.filter(i=>(i.lotto||"Intero sito")===SC_LOTTO) : items;
+  const lotti=[...new Set(items.map(i=>i.lotto||"Intero sito"))].sort();
+  const conScad = vis.filter(i=>i.stato!=="nd");
+  const senza   = vis.filter(i=>i.stato==="nd");
+  const urgenti = conScad.filter(i=>["scaduto","5","10","20"].includes(i.stato));
+  const ordS={scaduto:0,"5":1,"10":2,"20":3,nd_tempo:4,ok:5,completato:6,nd:7};
+  urgenti.sort((a,b)=>(ordS[a.stato]-ordS[b.stato])||((a.rim??1e9)-(b.rim??1e9)));
+  const chiave = i => SC_GRUPPO==="perizia" ? (i.perizia||"non classificato") : (i.sito||"—");
+  const gruppi={};
+  conScad.forEach(i=>(gruppi[chiave(i)]=gruppi[chiave(i)]||[]).push(i));
+  const nAl = g => g.filter(i=>["scaduto","5","10","20"].includes(i.stato)).length;
+  const blocchi=Object.entries(gruppi).sort((a,b)=>nAl(b[1])-nAl(a[1])).map(([k,v])=>{
+    v.sort((a,b)=>(ordS[a.stato]-ordS[b.stato])||((a.rim??1e9)-(b.rim??1e9)));
+    const al=nAl(v), fatti=v.filter(i=>i.stato==="completato").length;
+    return `<details class="sg-sito"${al?" open":""}>
+      <summary><span class="sg-nome">${esc(k)}</span>
+        ${al?`<span class="flag-r">⏰ ${al}</span>`:""}
+        ${fatti?`<span class="flag-y" style="background:#E4F0D8;color:#2E7D32">✓ ${fatti}</span>`:""}
+        <span class="sg-apri">${v.length} voci</span></summary>
+      <div class="sg-body">${v.map(i=>rigaScadenza(i,consentiRevoca)).join("")}</div></details>`;
+  }).join("");
+  const lottiOpt=lotti.map(l=>`<option ${SC_LOTTO===l?"selected":""}>${esc(l)}</option>`).join("");
+  return `<div class="card"><h2>Scadenze portfolio</h2>
+    <div class="row2" style="margin-bottom:10px">
+      <div><label>Raggruppa per</label><select onchange="setScad('g',this.value)">
+        <option value="sito" ${SC_GRUPPO==="sito"?"selected":""}>Sito</option>
+        <option value="perizia" ${SC_GRUPPO==="perizia"?"selected":""}>Categoria perizia</option></select></div>
+      <div><label>Lotto</label><select onchange="setScad('l',this.value)">
+        <option value="">— tutti —</option>${lottiOpt}</select></div></div>
+    ${urgenti.length?`<div class="banner banner-alert">⏰ ${urgenti.length} ${urgenti.length===1?"intervento richiede":"interventi richiedono"} attenzione</div>
+      ${urgenti.map(i=>rigaScadenza(i,consentiRevoca)).join("")}`
+     :`<p class="muted" style="margin-bottom:10px">Nessun intervento in allarme sulle scadenze.</p>`}
+    ${blocchi?`<p class="muted" style="margin:14px 0 8px;font-size:11.5px">Tutte le scadenze, raggruppate. I gruppi con allarmi sono aperti.</p>${blocchi}`:""}
+    ${senza.length?`<details class="sg-sito" style="margin-top:8px"><summary>
+      <span class="sg-nome">⚠️ ${senza.length} interventi senza scadenza</span>
+      <span class="sg-apri">impostala nel Setup</span></summary>
+      <div class="sg-body">${senza.slice(0,60).map(i=>`<div class="sg-row">
+        <span class="sg-n">${esc(i.nome)}</span><span class="sg-t">${esc(i.sito||"")}${
+        i.lotto&&i.lotto!=="Intero sito"?" · "+esc(i.lotto):""}</span></div>`).join("")}
+        ${senza.length>60?`<p class="muted">…e altri ${senza.length-60}.</p>`:""}</div></details>`:""}
+  </div>`;
 }
 
 window.revocaProroga = async (id, val) => {
@@ -549,6 +804,42 @@ window.revocaProroga = async (id, val) => {
   toast(val?"Proroga revocata":"Proroga ripristinata");
   rDash();
 };
+function segnalazioni(all){
+  const perSito=[];
+  let totR=0, totY=0;
+  for(const {sito,R} of all){
+    const rosse=[], gialle=[];
+    if(R.ettariMancanti) gialle.push({nome:"Ettari del sito",txt:"ettari totali non inseriti"});
+    for(const p of R.perInt){
+      if(p.daVerificare) rosse.push({nome:p.nome,lotto:p.lotto,txt:p.nota||"cifre da verificare"});
+      if(p.mancanti.length) gialle.push({nome:p.nome,lotto:p.lotto,txt:p.mancanti.join(", ")});
+    }
+    totR+=rosse.length; totY+=gialle.length;
+    if(rosse.length||gialle.length) perSito.push({nome:nomeSito(sito),rosse,gialle});
+  }
+  if(!perSito.length) return `<div class="card"><h2>Dati da verificare</h2>
+    <p class="muted">Nessuna segnalazione: tutti i dati del setup sono compilati e nessuna cifra è in dubbio.</p></div>`;
+  // i siti con bandierine rosse vengono prima
+  perSito.sort((a,b)=>(b.rosse.length-a.rosse.length)||(b.gialle.length-a.gialle.length));
+  const voce=(x,t)=>`<div class="sg-row"><span class="sg-n">${t==="r"?"🚩":"⚠️"} ${esc(x.nome)}${
+      x.lotto&&x.lotto!=="Intero sito"?` <span class="lotto-tag urg">${esc(x.lotto)}</span>`:""}</span>
+    <span class="sg-t">${esc(x.txt)}</span></div>`;
+  const blocchi=perSito.map(s=>`<details class="sg-sito"${s.rosse.length?" open":""}>
+    <summary><span class="sg-nome">${esc(s.nome)}</span>
+      ${s.rosse.length?`<span class="flag-r">🚩 ${s.rosse.length}</span>`:""}
+      ${s.gialle.length?`<span class="flag-y">⚠️ ${s.gialle.length}</span>`:""}
+      <span class="sg-apri">apri / chiudi</span></summary>
+    <div class="sg-body">
+      ${s.rosse.length?`<div class="sg-tit">Cifre da verificare</div>${s.rosse.map(x=>voce(x,"r")).join("")}`:""}
+      ${s.gialle.length?`<details class="sg-sub"><summary><span class="sg-tit" style="margin:0">Dati da inserire nel Setup — ${s.gialle.length}</span></summary>
+        <div>${s.gialle.map(x=>voce(x,"y")).join("")}</div></details>`:""}
+    </div></details>`).join("");
+  return `<div class="card"><h2>Dati da verificare</h2>
+    <div class="sg-tot"><span><b>${totR}</b> cifre da verificare</span><span><b>${totY}</b> voci da completare</span>
+      <span><b>${perSito.length}</b> siti coinvolti</span></div>
+    <p class="muted" style="margin:2px 0 10px">I siti con cifre in dubbio sono aperti; gli altri si aprono con un tocco.</p>
+    ${blocchi}</div>`;
+}
 async function calcTutti(){
   const out=[];
   for(const s of DB.siti){ const D=await datiSito(s.id); out.push({sito:s, D, R:calcSito(s.id,D)}); }
@@ -564,13 +855,13 @@ async function rSito(){
     const ints=R.perInt.filter(p=>p.categoria_id===pc.categoria_id);
     return `<div class="card" style="padding:12px">
       <div class="cat-row"><b>${esc(catNome(pc.categoria_id))}</b><span class="pill ${pillCol(pc.avz)}">${Math.round(pc.avz*100)}%</span></div>
-      ${ints.map(p=>`<div class="int-row"><span>${esc(p.nome)}${p.modalita==="conto_terzi"?' <span class="tag">terzi</span>':''}</span>
+      ${ints.map(p=>`<div class="int-row"><span>${esc(p.nome)}${p.modalita==="conto_terzi"?' <span class="tag">terzi</span>':''}${p.lotto&&p.lotto!=="Intero sito"?` <span class="lotto-tag urg">${esc(p.lotto)}</span>`:''}${p.daVerificare?' 🚩':''}${p.mancanti.length?' ⚠️':''}</span>
         <span class="muted">${Math.round(p.avz*100)}% · ${eur(p.costoInt)}</span></div>`).join("")}
     </div>`;}).join("");
   $("#pane-sito").innerHTML=`
    <div class="kpi">
      <div class="k"><b>${Math.round(R.avz*100)}%</b><span>Avanzamento sito</span></div>
-     <div class="k"><b>${(R.ettari||0).toLocaleString("it-IT",{maximumFractionDigits:1})}</b><span>Ettari completati / ${s.ettari_totali}</span></div>
+     <div class="k"><b>${(R.ettari||0).toLocaleString("it-IT",{maximumFractionDigits:1})}</b><span>Ettari completati / ${s.ettari_totali??"—"}</span></div>
      <div class="k"><b>${eur(c.totale)}</b><span>Costo a oggi</span></div>
      <div class="k"><b>${eur(c.budgetTot)}</b><span>Budget materiali/preventivi</span></div>
    </div>
@@ -591,32 +882,142 @@ async function rSito(){
    </div>`;
 }
 
+/* ====================== GANTT ====================== */
+let GT_GRUPPO="sito", GT_LOTTO="";
+window.setGantt = (k,v) => { if(k==="g") GT_GRUPPO=v; else GT_LOTTO=v; rGantt(); };
+
+async function rGantt(){
+  const siti = isSuper()||isReadOnly() ? DB.siti : DB.siti.filter(x=>x.id===P.sito_id);
+  const dati=[];
+  for(const s of siti){ const D=await datiSito(s.id); dati.push({sito:s,D,R:calcSito(s.id,D)}); }
+  const oggiStr=oggi();
+  // righe con la pianificazione risolta
+  let righe=[];
+  const lotti=new Set();
+  for(const {sito,D,R} of dati){
+    const attive=D.sito_interventi.filter(x=>x.attivo&&!x.annullato);
+    const plan=pianifica(attive);
+    for(const si of attive){
+      const intv=DB.interventi.find(i=>i.id===si.intervento_id)||{};
+      const p=plan.get(si.id)||{};
+      const avz=(R.perInt.find(x=>x.si_id===si.id)||{avz:0}).avz;
+      lotti.add(si.lotto||"Intero sito");
+      righe.push({si,intv,sito,p,avz,lotto:si.lotto||"Intero sito",
+        st:statoGantt(p,avz,si.scadenza,oggiStr)});
+    }
+  }
+  if(GT_LOTTO) righe=righe.filter(r=>r.lotto===GT_LOTTO);
+  const pian = righe.filter(r=>r.p.inizio && r.p.fine && r.si.scadenza);
+  const senza = righe.filter(r=>!(r.p.inizio && r.p.fine && r.si.scadenza));
+  const allarmi = pian.filter(r=>["impossibile","tardi","ciclo"].includes(r.st.k));
+  // finestra temporale: da oggi (o dal primo inizio) alla fine piu' lontana
+  const dts=[oggiStr,...pian.map(r=>r.p.inizio),...pian.map(r=>r.p.fine),...pian.map(r=>r.si.scadenza)].filter(d=>d && toD(d));
+  const t0 = dts.length?dts.reduce((a,b)=>a<b?a:b):oggiStr;
+  const t1 = dts.length?dts.reduce((a,b)=>a>b?a:b):addGG(oggiStr,30);
+  const span = Math.max(diffGG(t1,t0),1);
+  const pos = iso => Math.min(Math.max(diffGG(iso,t0)/span*100,0),100);
+  const dIt = iso => { const[a,m,g]=iso.split("-"); return `${g}/${m}`; };
+
+  const riga = r => {
+    const st=r.st, x=pos(r.p.inizio), w=Math.max(pos(r.p.fine)-x,1.2);
+    const dep = r.si.dipende_da
+      ? `<div class="gt-dep">↳ dopo «${esc(r.p.predNome||"?")}»${r.p.predMancante?' <span class="flag-y">⚠️ predecessore rimosso</span>':''}</div>` : "";
+    let al="";
+    if(st.k==="impossibile") al=`⚠ Finisce il ${dIt(r.p.fine)}, ${r.p.ritardo} ${r.p.ritardo===1?"giorno":"giorni"} dopo la scadenza`;
+    else if(st.k==="tardi")  al=`⚠ Servono ancora ${st.residua} gg, ne restano ${st.disp} — ${st.scoperto} ${st.scoperto===1?"giorno":"giorni"} di scoperto`;
+    else if(st.k==="stretto")al=`Margine stretto: ${st.residua} gg necessari su ${st.disp} disponibili`;
+    else if(st.k==="ciclo")  al=`⚠ Dipendenza circolare: correggila nel Setup`;
+    return `<div class="gt-row">
+      <div><div class="gt-nome">${esc(r.intv.nome)}</div>
+        <div class="gt-sub">${r.p.durata} gg · ${dIt(r.p.inizio)}→${dIt(r.p.fine)} · ${esc(r.si.priorita||"")}${
+          r.lotto!=="Intero sito"?` · <span class="lotto-tag urg">${esc(r.lotto)}</span>`:""}</div>${dep}</div>
+      <div><div class="gt-track">
+        <div class="gt-bar" style="left:${x}%;width:${w}%;background:${st.c}"></div>
+        <div class="gt-done" style="left:${x}%;width:${(w*r.avz).toFixed(1)}%;background:${st.c}"></div>
+        <span class="gt-pct">${Math.round(r.avz*100)}%</span>
+        <span class="gt-today" style="left:${pos(oggiStr)}%"></span>
+        <span class="gt-dl" style="left:${pos(r.si.scadenza)}%"></span></div>
+        ${al?`<div class="gt-al" style="color:${st.c}">${al}</div>`:""}</div></div>`;
+  };
+  const scala = `<div class="gt-scale"><span>${dIt(t0)}</span><span>${dIt(addGG(t0,Math.round(span/2)))}</span><span>${dIt(t1)}</span></div>`;
+  // raggruppamento
+  const chiave = r => GT_GRUPPO==="perizia"
+    ? ((DB.perizie.find(x=>x.id===r.intv.categoria_perizia_id)||{}).nome||"non classificato")
+    : nomeSito(r.sito);
+  const gruppi={};
+  pian.forEach(r=>(gruppi[chiave(r)]=gruppi[chiave(r)]||[]).push(r));
+  const ordSt={ciclo:0,impossibile:1,tardi:2,stretto:3,ok:4,fatto:5};
+  const blocchi=Object.entries(gruppi)
+    .sort((a,b)=>b[1].filter(r=>["impossibile","tardi","ciclo"].includes(r.st.k)).length
+                -a[1].filter(r=>["impossibile","tardi","ciclo"].includes(r.st.k)).length)
+    .map(([k,v])=>{
+      v.sort((a,b)=>(ordSt[a.st.k]-ordSt[b.st.k])||a.p.inizio.localeCompare(b.p.inizio));
+      const nAl=v.filter(r=>["impossibile","tardi","ciclo"].includes(r.st.k)).length;
+      return `<div class="card"><h2>${esc(k)} ${nAl?`<span class="flag-r">${nAl} in allarme</span>`:""}</h2>
+        <div class="gt-head"><div>Lavorazione</div><div>${dIt(t0)} → ${dIt(t1)}</div></div>
+        ${v.map(riga).join("")}${scala}</div>`;
+    }).join("");
+  const lottiOpt=[...lotti].sort().map(l=>`<option ${GT_LOTTO===l?"selected":""}>${esc(l)}</option>`).join("");
+  $("#pane-gantt").innerHTML=`
+   <div class="card"><h2>📅 Gantt</h2>
+     <div class="row2">
+       <div><label>Raggruppa per</label><select onchange="setGantt('g',this.value)">
+         <option value="sito" ${GT_GRUPPO==="sito"?"selected":""}>Sito</option>
+         <option value="perizia" ${GT_GRUPPO==="perizia"?"selected":""}>Categoria perizia</option></select></div>
+       <div><label>Lotto</label><select onchange="setGantt('l',this.value)">
+         <option value="">— tutti —</option>${lottiOpt}</select></div>
+     </div>
+     <p class="muted">Barra piena = avanzamento. Segno nero = oggi, segno rosso = scadenza. L'allarme confronta i giorni ancora necessari con quelli rimasti.</p></div>
+   ${(()=>{const n=righe.filter(r=>r.si._err_scadenza||r.si._err_data_inizio).length;
+      return n?`<div class="banner banner-alert">📅 ${n===1?"1 lavorazione ha una data non valida":n+" lavorazioni hanno una data non valida"} (anno fuori da ${ANNO_MIN}–${ANNO_MAX}): ${n===1?"resta fuori":"restano fuori"} dal Gantt finché non la correggi nel Setup. Dettaglio in fondo, tra le non pianificate.</div>`:"";})()}
+   ${allarmi.length?`<div class="banner banner-alert">⏰ ${allarmi.length} ${allarmi.length===1?"lavorazione non sta":"lavorazioni non stanno"} nei tempi</div>`:""}
+   ${blocchi||'<div class="card"><p class="muted">Nessuna lavorazione pianificabile: servono durata, data di inizio e scadenza. Impostale nel Setup.</p></div>'}
+   ${senza.length?`<div class="card"><details><summary style="cursor:pointer;font-weight:800;color:var(--forest-d);font-size:14px">
+      ⚠️ ${senza.length} ${senza.length===1?"lavorazione non pianificata":"lavorazioni non pianificate"} — dati mancanti</summary>
+      <p class="muted" style="margin:8px 0">Compaiono qui finché non hanno durata, data di inizio e scadenza valide. Le date in rosso hanno un refuso: correggile nel Setup.</p>
+      ${senza.slice(0,60).map(r=>`<div class="sg-row"><span class="sg-n">${esc(r.intv.nome)} <span class="muted">· ${esc(nomeSito(r.sito))}</span></span>
+        <span class="sg-t">${[!r.p.durata?"durata":null,
+          r.si._err_data_inizio?`<b style="color:var(--red)">data inizio non valida (${esc(r.si._err_data_inizio)})</b>`:(!r.p.inizio?"data inizio":null),
+          r.si._err_scadenza?`<b style="color:var(--red)">scadenza non valida (${esc(r.si._err_scadenza)})</b>`:(!r.si.scadenza?"scadenza":null)].filter(Boolean).join(", ")}</span></div>`).join("")}
+      ${senza.length>60?`<p class="muted">…e altre ${senza.length-60}.</p>`:""}</details></div>`:""}`;
+}
+
 let chRef=null;
 async function rDash(){
   const all = await calcTutti();
   let T={totale:0,interno:0,terzisti:0,ettari:0,budget:0,fermo:0,ettariTot:0};
   let scadAll=[];
-  for(const {sito,D,R} of all){ scadenzeSito(sito.id,D,R).forEach(i=>scadAll.push(Object.assign({sito:sito.nome},i))); }
+  for(const {sito,D,R} of all){ scadenzeSito(sito.id,D,R).forEach(i=>scadAll.push(Object.assign({sito:nomeSito(sito)},i))); }
   const ordS={scaduto:0,'5':1,'10':2,'20':3,nd_tempo:4,ok:5,completato:6,nd:7};
   scadAll.sort((a,b)=>(ordS[a.stato]-ordS[b.stato])||((a.rim??1e9)-(b.rim??1e9)));
   for(const {sito,R} of all){const c=R.costi;T.totale+=c.totale;T.interno+=c.interno;T.terzisti+=c.terzisti;T.ettari+=R.ettari;T.budget+=c.budgetTot;T.fermo+=R.gg_fermo;T.ettariTot+=(+sito.ettari_totali||0);}
   // consolidamento
-  const cons = all.map(({sito,R})=>`<tr><td>${esc(sito.nome)}</td>
+  const cons = all.map(({sito,R})=>`<tr><td>${esc(nomeSito(sito))}</td>
     <td>${Math.round(R.avz*100)}%</td><td>${R.ettari.toLocaleString("it-IT",{maximumFractionDigits:1})}</td>
     <td>${eur(R.costi.interno)}</td><td>${eur(R.costi.terzisti)}</td>
     <td title="materiali interni e preventivi maturati">${eur(R.costi.totale)}</td><td>${eur(R.costi.budgetTot)}</td></tr>`).join("");
   // categorie presenti in almeno un sito (per heatmap avanzamento sito×categoria)
-  const catAvz = {}; // sito_id -> {cat_id: avz}
-  all.forEach(({sito,R})=>{catAvz[sito.id]={};R.perCat.forEach(pc=>catAvz[sito.id][pc.categoria_id]=pc.avz);});
-  let catCols = DB.categorie.filter(c=>all.some(({sito})=>catAvz[sito.id][c.id]!==undefined));
-  if(!catCols.length) catCols = DB.categorie; // nessun intervento attivo: mostra comunque la griglia
+  const catAvz = {}; // sito_id -> {id: avz}
+  const catBud = {};
+  all.forEach(({sito,R})=>{catAvz[sito.id]={};catBud[sito.id]={};
+    vistaPer(R).forEach(pc=>{catAvz[sito.id][pc.id]=pc.avz;catBud[sito.id][pc.id]=pc.budget;});});
+  let catCols = vistaCols().filter(c=>all.some(({sito})=>catAvz[sito.id][c.id]!==undefined));
+  if(!catCols.length) catCols = vistaCols();
   const heatCell=f=>{ if(f===undefined) return `<td style="background:#E6E8E1;color:var(--mut)">—</td>`;
     const v=Math.round(f*100); const bg=f>=0.75?"#1F5C2E":f>=0.5?"#4E8A3A":f>=0.25?"#8CBF66":f>0?"#CFE3B4":"#EEE";
     const col=f>=0.5?"#fff":"#1A2418"; return `<td style="background:${bg};color:${col};text-align:center;font-weight:700">${v}%</td>`;};
   const heat = `<table class="grid"><tr><th>Sito</th>${catCols.map(c=>`<th title="${esc(c.nome)}" style="text-align:center">${esc(c.nome.slice(0,9))}</th>`).join("")}</tr>
-    ${all.map(({sito})=>`<tr><td>${esc(sito.nome)}</td>${catCols.map(c=>heatCell(catAvz[sito.id][c.id])).join("")}</tr>`).join("")}</table>`;
+    ${all.map(({sito})=>`<tr><td>${esc(nomeSito(sito))}</td>${catCols.map(c=>heatCell(catAvz[sito.id][c.id])).join("")}</tr>`).join("")}</table>`;
+  // budget per colonna della vista
+  const budCol = catCols.map(c=>({nome:c.nome, budget:all.reduce((s2,{sito})=>s2+(catBud[sito.id][c.id]||0),0),
+    avz:(()=>{let b=0,bs=0;all.forEach(({sito,R})=>{const v=vistaPer(R).find(x=>x.id===c.id);if(v){b+=v.budget;bs+=v.budget*v.avz;}});return b>0?bs/b:0;})()}));
+  const budTotAll = budCol.reduce((s2,x)=>s2+x.budget,0);
+  const tabBud = `<table class="grid"><tr><th>${VISTA==="perizia"?"Categoria perizia":"Categoria"}</th><th>Budget</th><th>% sul totale</th><th>Avanz.</th></tr>
+    ${budCol.filter(x=>x.budget>0).sort((a,b)=>b.budget-a.budget).map(x=>`<tr><td>${esc(x.nome)}</td><td>${eur(x.budget)}</td>
+      <td>${budTotAll?Math.round(x.budget/budTotAll*100):0}%</td><td>${Math.round(x.avz*100)}%</td></tr>`).join("")}
+    <tr><td><b>TOTALE</b></td><td><b>${eur(budTotAll)}</b></td><td><b>100%</b></td><td></td></tr></table>`;
   // EFFICIENZA (indicatori onesti nel nuovo modello)
-  const eff=all.map(({sito,R})=>({nome:sito.nome,avz:R.avz,eurHa:R.ettari>0?R.costi.totale/R.ettari:null,fermo:R.gg_fermo}));
+  const eff=all.map(({sito,R})=>({nome:nomeSito(sito),avz:R.avz,eurHa:R.ettari>0?R.costi.totale/R.ettari:null,fermo:R.gg_fermo}));
   const haV=eff.map(e=>e.eurHa).filter(v=>v!=null); const haMin=Math.min(...haV,0),haMax=Math.max(...haV,1);
   const fMax=Math.max(1,...eff.map(e=>e.fermo));
   const C={ott:"#1F5C2E",buono:"#8CBF66",att:"#E8A33D",crit:"#C0392B"};
@@ -635,24 +1036,36 @@ async function rDash(){
      <div class="k"><b>${T.ettari.toLocaleString("it-IT",{maximumFractionDigits:1})}/${T.ettariTot}</b><span>Ettari completati</span></div>
      <div class="k"><b>${eur(T.budget)}</b><span>Budget materiali/preventivi</span></div>
    </div>
-   ${renderScadenze(scadAll,"Scadenze portfolio (gantt a scadenze)",true,!isReadOnly())}
-   <div class="card"><h2>Consolidamento 7 siti</h2><div class="scroll-x">
+   ${segnalazioni(all)}
+   <div class="switch">
+     <button class="${VISTA==="categorie"?"on":""}" onclick="setVista('categorie')">Per lavorazione</button>
+     <button class="${VISTA==="perizia"?"on":""}" onclick="setVista('perizia')">Per categoria perizia</button>
+   </div>
+   <div class="card"><h2>Budget e avanzamento — ${VISTA==="perizia"?"categorie perizia":"categorie di lavorazione"}</h2>
+     <div class="scroll-x">${tabBud}</div>
+     <p class="muted" style="margin-top:8px">Gli avanzamenti sono pesati sui budget: una voce da 300.000 € conta più di una da 3.000 €.</p></div>
+   ${renderScadenzeRaggruppate(scadAll,!isReadOnly())}
+   <div class="card"><h2>Consolidamento ${DB.siti.length} siti</h2><div class="scroll-x">
      <table class="grid"><tr><th>Sito</th><th>Avz.</th><th>Ettari</th><th>Interno</th><th>Conto terzi</th><th>Totale</th><th>Budget</th></tr>${cons}</table>
    </div><p class="muted" style="margin-top:8px">Il totale include ore/macchine/gasolio; il budget è solo materiali e preventivi.</p></div>
-   <div class="card"><h2>Heatmap avanzamento (sito × categoria)</h2><div class="scroll-x">${heat}</div></div>
+   <div class="card"><h2>Heatmap avanzamento (sito × ${VISTA==="perizia"?"categoria perizia":"categoria"})</h2><div class="scroll-x">${heat}</div></div>
    <div class="card"><h2>Efficienza dei siti a confronto</h2>
      <p class="muted" style="margin-bottom:12px">Indicatori confrontabili tra siti. Verde = buono, rosso = critico. €/ha e giorni fermo: colore relativo al portfolio (più basso = meglio).</p>
      <div class="scroll-x"><div id="eff-box">${effHead}${effBody}</div></div>
      <div class="efflegend"><span><span class="sw" style="background:#1F5C2E"></span>ottimo</span><span><span class="sw" style="background:#8CBF66"></span>buono</span><span><span class="sw" style="background:#E8A33D"></span>attenzione</span><span><span class="sw" style="background:#C0392B"></span>critico</span><span><span class="sw" style="background:#E6E8E1"></span>n/d</span></div>
    </div>
    ${isReadOnly()?"":`<div class="card"><h2>Esporta dati (CSV)</h2><div class="row2">
-     ${["categorie","interventi","sito_interventi","sottovoci","sito_categorie","avanzamenti","avanz_piante","ore_uomo","macchine_giorno","gasolio","ritardi"].map(t=>`<button class="btn btn-o btn-sm" data-csv="${t}" style="margin-bottom:8px">${t.replace(/_/g," ")}</button>`).join("")}
-     <button class="btn btn-g btn-sm" id="csv-consol" style="margin-bottom:8px">consolidamento</button></div></div>`}`;
+     ${["categorie","categorie_perizia","interventi","sito_interventi","sottovoci","sito_categorie","avanzamenti","avanz_piante","ore_uomo","macchine_giorno","gasolio","ritardi"].map(t=>`<button class="btn btn-o btn-sm" data-csv="${t}" style="margin-bottom:8px">${t.replace(/_/g," ")}</button>`).join("")}
+     <button class="btn btn-g btn-sm" id="csv-consol" style="margin-bottom:8px">consolidamento interventi</button></div></div>`}`;
   $$("[data-csv]").forEach(b=>b.onclick=()=>exportCsv(b.dataset.csv));
   if($("#csv-consol"))$("#csv-consol").onclick=()=>{
-    const rows=[["sito","avanzamento_pct","ettari_completati","costo_interno","costo_conto_terzi","costo_totale","budget"]];
-    all.forEach(({sito,R})=>rows.push([sito.nome,Math.round(R.avz*100),R.ettari.toFixed(2),R.costi.interno,R.costi.terzisti,R.costi.totale,R.costi.budgetTot]));
-    dlCsv("consolidamento.csv",rows.map(r=>r.join(",")).join("\n"));
+    const rows=[["sito","lotto","categoria","categoria_perizia","intervento","modalita","priorita","budget","avanzamento_pct","costo_maturato","da_verificare","dati_mancanti"]];
+    all.forEach(({sito,R})=>R.perInt.forEach(p=>rows.push([
+      sito.nome, p.lotto, catNome(p.categoria_id), pzNome(p.perizia_id), p.nome, p.modalita, p.priorita||"",
+      Math.round(p.budgetEff), Math.round(p.avz*100), Math.round(p.costoInt),
+      p.daVerificare?"SI":"", p.mancanti.join("; ")
+    ].map(v=>`"${String(v).replace(/"/g,'""')}"`))));
+    dlCsv("consolidamento_interventi.csv",rows.map(r=>r.join(",")).join("\n"));
   };
 }
 async function exportCsv(table){
@@ -706,7 +1119,7 @@ async function rCompila(){
   $("#pane-compila").innerHTML = `
   <div class="card"><h2><span class="n">1</span>Giornata</h2>
     <div class="row2">
-      <div class="field"><label>Data</label><input type="date" id="c-data" value="${oggi()}"></div>
+      <div class="field"><label>Data</label><input type="date" id="c-data" ${DATA_ATTR} value="${oggi()}"></div>
       <div class="field"><label>Compilatore</label><input id="c-comp" value="${esc(P.nome)}"></div>
     </div></div>
   <div class="card"><h2><span class="n">2</span>Avanzamento</h2>
@@ -720,7 +1133,10 @@ async function rCompila(){
   </div>
   <div class="card"><h2><span class="n">4</span>Macchine <span class="muted">— obbligatorio</span></h2>
     <label class="chk"><input type="checkbox" id="c-mg-zero"> Nessuna macchina presente oggi</label>
-    <div id="c-mg-list">${DB.macchine.map(m=>`<div class="mg-row dyn-row" data-ma="${m.id}" style="grid-template-columns:1.4fr auto auto">
+    ${(()=>{const cs=(DB.siti.find(x=>x.id===sito)||{}).comune_id; const cn=(DB.comuni.find(c=>c.id===cs)||{}).nome;
+      return cs ? `<p class="muted">Macchine di <b>${esc(cn)}</b>, il comune di questo sito.</p>`
+                : `<p class="muted"><span class="flag-y">⚠️</span> Il sito non ha un comune assegnato: si vedono tutte le macchine. Impostalo in Setup → Siti.</p>`;})()}
+    <div id="c-mg-list">${macchinePerSito(sito).map(m=>`<div class="mg-row dyn-row" data-ma="${m.id}" style="grid-template-columns:1.4fr auto auto">
       <b style="align-self:center;font-size:13px">${esc(m.nome)}</b>
       <label class="chk2"><input type="checkbox" class="mg-pres"> presente</label>
       <label class="chk2"><input type="checkbox" class="mg-usata"> usata</label></div>`).join("")}</div>
@@ -753,12 +1169,14 @@ async function rCompila(){
 async function inviaCompilazione(){
   $("#c-err").style.display="none";
   const sito=CC.sito, data=$("#c-data").value, comp=$("#c-comp").value.trim()||P.nome;
+  if(data && !dataValida(data)) return err("#c-err","Data non valida: controlla l'anno.");
   if(!data) return err("#c-err","Indica la data.");
   const ouZero=$("#c-ou-zero").checked, mgZero=$("#c-mg-zero").checked;
   const ouRows=$$("#c-ou-list .dyn-row");
   if(!ouZero && ouRows.length===0) return err("#c-err","Aggiungi le ore personale o spunta «Nessuna ora personale oggi».");
   const mgPres=$$("#c-mg-list .mg-pres").some(c=>c.checked);
-  if(!mgZero && !mgPres) return err("#c-err","Indica le macchine presenti o spunta «Nessuna macchina presente oggi».");
+  const mgNessuna=$$("#c-mg-list .mg-row").length===0;
+  if(!mgZero && !mgPres && !mgNessuna) return err("#c-err","Indica le macchine presenti o spunta «Nessuna macchina presente oggi».");
   if(!await confermaSito(sito,data)) return;
   await sb.from("compilazioni").upsert({sito_id:sito,data,compilatore:comp},{onConflict:"sito_id,data"});
   for(const r of $$("#pane-compila .sv-av")){
@@ -796,7 +1214,7 @@ function rGasolio(){
   $("#pane-gasolio").innerHTML=`
   <div class="card"><h2>⛽ Gasolio</h2>
     <p class="muted">Dichiarazione giornaliera obbligatoria per il sito.</p>
-    <div class="field"><label>Data</label><input type="date" id="g-data" value="${oggi()}"></div>
+    <div class="field"><label>Data</label><input type="date" id="g-data" ${DATA_ATTR} value="${oggi()}"></div>
     <button class="btn btn-g" id="g-zero" style="width:100%">Nessun rifornimento oggi</button>
     <hr style="margin:16px 0;border:none;border-top:1px solid #E3E7DD">
     <div class="row2">
@@ -808,6 +1226,7 @@ function rGasolio(){
   </div>`;
   const gsito=()=>sitoCorrente();
   $("#g-zero").onclick=async()=>{
+    if(!dataValida($("#g-data").value)) return toast("Data non valida: controlla l'anno.");
     if(!await confermaSito(gsito(),$("#g-data").value)) return;
     const {error}=await sb.from("gasolio").insert({sito_id:gsito(),data:$("#g-data").value,litri:0,operatore:$("#g-op").value.trim()||P.nome});
     if(error)return toast("Errore di salvataggio");toast("Registrato: nessun rifornimento ✓");
@@ -816,62 +1235,13 @@ function rGasolio(){
     $("#g-err").style.display="none";
     const litri=+$("#g-litri").value||0;
     if(litri<=0)return err("#g-err","Inserisci i litri, oppure usa «Nessun rifornimento oggi».");
+    if(!dataValida($("#g-data").value)) return toast("Data non valida: controlla l'anno.");
     if(!await confermaSito(gsito(),$("#g-data").value)) return;
     const {error}=await sb.from("gasolio").insert({sito_id:gsito(),data:$("#g-data").value,litri,operatore:$("#g-op").value.trim()||P.nome});
     if(error)return toast("Errore di salvataggio");toast("Rifornimento registrato ✓");$("#g-litri").value="";
   };
 }
 
-
-/* ====================== GANTT VISIVO PER SITO ====================== */
-let GANTT_SITO=null;
-function ganttSiti(){ return (isSuper()||isReadOnly()) ? DB.siti : DB.siti.filter(s=>s.id===P.sito_id); }
-function rGantt(){
-  const siti=ganttSiti();
-  const sito = GANTT_SITO || (siti[0]&&siti[0].id) || P.sito_id;
-  const selHtml = siti.length>1
-    ? `<div class="field"><label>Sito</label><select id="g-sito">${siti.map(s=>`<option value="${s.id}" ${s.id===sito?"selected":""}>${esc(s.nome)}</option>`).join("")}</select></div>`
-    : (siti[0]?`<p class="muted" style="margin-bottom:8px">📍 ${esc(siti[0].nome)}</p>`:"");
-  $("#pane-gantt").innerHTML=`<div class="card"><h2>📅 Gantt del sito</h2>${selHtml}<div id="gantt-body"><p class="muted">Carico\u2026</p></div></div>`;
-  if($("#g-sito")) $("#g-sito").onchange=e=>{GANTT_SITO=+e.target.value; rGantt();};
-  renderGanttBody(sito);
-}
-async function renderGanttBody(sito){
-  const body=$("#gantt-body");
-  const D=await datiSito(sito); const R=calcSito(sito,D);
-  const s=DB.siti.find(x=>x.id===sito)||{};
-  const avvio=s.data_avvio;
-  const items=scadenzeSito(sito,D,R).filter(i=>i.scadenza);
-  if(!avvio){ body.innerHTML=`<p class="muted">Imposta l'<b>avvio lavori</b> del sito nel Setup per disegnare il gantt.</p>`; return; }
-  if(!items.length){ body.innerHTML=`<p class="muted">Nessun intervento attivo con scadenza in questo sito. Attiva gli interventi e imposta le scadenze nel Setup.</p>`; return; }
-  const D0=d=>new Date(d+"T00:00:00").getTime(), day=86400000;
-  const start=D0(avvio), today=D0(oggi());
-  let end=Math.max(today, ...items.map(i=>D0(i.scadEff||i.scadenza)));
-  let span=(end-start)||day; end=end+span*0.06; span=end-start;
-  const fr=t=>Math.min(Math.max((t-start)/span,0),1);
-  const tf=fr(today)*100;
-  const dIt=iso=>{const[a,m,g]=iso.split("-");return `${g}/${m}`;};
-  items.sort((a,b)=>D0(a.scadEff||a.scadenza)-D0(b.scadEff||b.scadenza));
-  const rows=items.map(i=>{
-    const st=STATI[i.stato]||STATI.nd;
-    const sc=i.scadEff||i.scadenza;
-    const wf=fr(D0(sc))*100;
-    const fill=wf*(i.avz||0);
-    return `<div class="g-row">
-      <div class="g-label" title="${esc(i.nome)}">${esc(i.nome)} <span class="g-pct">${Math.round((i.avz||0)*100)}%</span></div>
-      <div class="g-track">
-        <div class="g-bar" style="width:${wf}%"></div>
-        <div class="g-fill" style="width:${fill}%;background:${st.c}"></div>
-        <div class="g-cap" style="left:${wf}%">${dIt(sc)}</div>
-        <div class="g-today" style="left:${tf}%"></div>
-      </div></div>`;
-  }).join("");
-  body.innerHTML=`<div class="gantt-wrap"><div class="gantt">
-    <div class="g-axis"><span class="g-a0">${dIt(avvio)}</span><span class="g-aoggi" style="left:${tf}%">oggi</span></div>
-    <div class="g-rows">${rows}</div>
-  </div></div>
-  <p class="muted" style="font-size:11px;margin-top:8px">Ogni barra va dall'avvio lavori alla scadenza (rettificata con le proroghe); la parte colorata \u00e8 l'avanzamento, la linea verticale \u00e8 oggi.</p>`;
-}
 
 /* ====================== SETUP (Blocco 3) ====================== */
 async function rSetup(){
@@ -895,6 +1265,7 @@ function svRow(id,nome){
     <button class="x sv-del">×</button></div>`;
 }
 
+let CAT_SEL=null, LOTTO_SEL=null, NUOVA_RIGA=null;
 const SETUP = {
  /* ---- Siti e parametri ---- */
  async siti(){
@@ -904,11 +1275,14 @@ const SETUP = {
    <input type="number" step="0.01" id="par-pg" value="${DB.par?.prezzo_gasolio??0}"></div>
    <button class="btn btn-p" id="par-save">Salva parametri</button></div>
    <div class="card"><h2>Siti — ettari e avvio lavori</h2>
-   <p class="muted">La data di avvio lavori è la base per calcolare il tempo residuo alle scadenze degli interventi.</p>
-   ${data.map(s=>`<div class="dyn-row" style="grid-template-columns:1.2fr .7fr 1fr" data-id="${s.id}">
+   <p class="muted">La data di avvio lavori è la base per calcolare il tempo residuo alle scadenze. La <b>sigla</b> è il nome breve usato in dashboard, Gantt e segnalazioni, dove lo spazio è poco: in compilazione e nella conferma resta sempre il nome completo. Il <b>comune</b> decide quali macchine si vedono in compilazione: solo quelle dello stesso comune.</p>
+   ${data.map(s=>`<div class="dyn-row" style="grid-template-columns:1.1fr .55fr .9fr .6fr .9fr" data-id="${s.id}">
      <b style="align-self:center">${esc(s.nome)}</b>
-     <div><label>Ettari</label><input type="number" class="s-ha" value="${s.ettari_totali}"></div>
-     <div><label>Avvio lavori</label><input type="date" class="s-avvio" value="${s.data_avvio||""}"></div>
+     <div><label>Sigla</label><input class="s-br" value="${esc(s.nome_breve||"")}" placeholder="${esc(s.nome.slice(0,6))}"></div>
+     <div><label>Comune ${s.comune_id?'':'<span class="flag-y">⚠️</span>'}</label><select class="s-com"><option value="">—</option>${
+       DB.comuni.map(c=>`<option value="${c.id}" ${s.comune_id===c.id?"selected":""}>${esc(c.nome)}</option>`).join("")}</select></div>
+     <div><label>Ettari ${s.ettari_totali===null||s.ettari_totali===undefined?'<span class="flag-y">⚠️</span>':''}</label><input type="number" step="0.01" class="s-ha" value="${s.ettari_totali??''}"></div>
+     <div><label>Avvio lavori</label><input type="date" class="s-avvio" ${DATA_ATTR} value="${esc(s.data_avvio||"")}"></div>
    </div>`).join("")}
    <button class="btn btn-p" id="s-save">Salva siti</button></div>`;
   $("#par-save").onclick=async()=>{
@@ -917,80 +1291,235 @@ const SETUP = {
     if(error)return toast("Errore di salvataggio");
     DB.par.prezzo_gasolio=v;toast("Parametri salvati ✓")};
   $("#s-save").onclick=async()=>{
+    const badS=dateErrate($$("#setup-body .s-avvio"));
+    if(badS.length){ badS[0].scrollIntoView({block:"center"}); return toast("Data di avvio non valida: usa un anno tra "+ANNO_MIN+" e "+ANNO_MAX+". Niente salvato."); }
     for(const r of $$("#setup-body [data-id]"))
-      await sb.from("siti").update({ettari_totali:+r.querySelector(".s-ha").value,data_avvio:r.querySelector(".s-avvio").value||null}).eq("id",+r.dataset.id);
-    toast("Siti salvati ✓");DB.siti=(await sb.from("siti").select("*").order("id")).data||DB.siti;
+      await sb.from("siti").update({ettari_totali:r.querySelector(".s-ha").value===""?null:+r.querySelector(".s-ha").value,data_avvio:r.querySelector(".s-avvio").value||null,nome_breve:r.querySelector(".s-br").value.trim()||null,comune_id:+r.querySelector(".s-com").value||null}).eq("id",+r.dataset.id);
+    toast("Siti salvati ✓");DB.siti=(await sb.from("siti").select("*").order("id")).data||DB.siti;DB.siti.forEach(x=>pulisciDate(x,["data_avvio"]));
   };
  },
  async operai(){ anag("operai","Operai",[["nome","Nome",null],["tariffa_ora","€/ora","number"]]) },
- async macchine(){ anag("macchine","Macchine — elenco unico aziendale",[["nome","Nome",null],["tariffa_giorno","€/giorno","number"]]) },
+ async macchine(){ anag("macchine","Macchine — elenco unico aziendale",[["nome","Nome",null],["comune_id","Comune","select:comuni"],["tariffa_giorno","€/giorno","number"]]) },
 
  /* ---- Interventi e sotto-voci (cuore della gerarchia) ---- */
  async interventi(){
   const sid=+($("#i-sito")?.value||DB.siti[0].id);
-  const cat=+($("#i-cat")?.value||DB.categorie[0].id);
+  const cat=CAT_SEL ?? +($("#i-cat")?.value||DB.categorie[0].id);
+  const flt=LOTTO_SEL ?? ($("#i-lotto")?.value||"");
+  CAT_SEL=null; LOTTO_SEL=null;
   const {data:siAll}=await sb.from("sito_interventi").select("*").eq("sito_id",sid);
   const siIds=(siAll||[]).map(x=>x.id);
   let svAll=[];
   if(siIds.length){const r=await sb.from("sottovoci").select("*").in("sito_intervento_id",siIds).order("ordine");svAll=r.data||[];}
-  const intsCat=DB.interventi.filter(i=>i.categoria_id===cat);
-  const rows=intsCat.map(intv=>{
-    const si=(siAll||[]).find(x=>x.intervento_id===intv.id)||{};
-    const attivo=!!si.attivo, mod=si.modalita||intv.modalita||"in_house";
-    const svs=svAll.filter(s=>s.sito_intervento_id===si.id);
-    const isP=intv.tipo==="piante";
-    return `<div class="card int-card" data-int="${intv.id}" data-si="${si.id||""}" style="padding:12px">
-      <label class="int-head"><input type="checkbox" class="i-attivo" ${attivo?"checked":""}> <b>${esc(intv.nome)}</b>
-        ${isP?'<span class="tag">piante</span>':''}</label>
-      <div class="i-body ${attivo?"":"hide"}">
+  const lotti=DB.lotti.map(l=>l.nome);
+  const tutte=(siAll||[]).filter(x=>!x.annullato);
+  const righe=(siAll||[]).filter(x=>{
+    const iv=DB.interventi.find(i=>i.id===x.intervento_id);
+    return iv && iv.categoria_id===cat && (!flt || (x.lotto||"Intero sito")===flt);
+  }).sort((x,y)=>(x.lotto||"").localeCompare(y.lotto||"")||x.intervento_id-y.intervento_id);
+  const V = v => (v===null||v===undefined)?"":v;
+  const cards=righe.map(si=>{
+    const intv=DB.interventi.find(i=>i.id===si.intervento_id)||{};
+    const isP=intv.tipo==="piante", attivo=!!si.attivo, ann=!!si.annullato;
+    const miss=mancanti(si,intv);
+    const svs=svAll.filter(x=>x.sito_intervento_id===si.id);
+    const lot=si.lotto||"Intero sito";
+    const cls=[ann?"annull":"", si.da_verificare?"has-r":(miss.length?"has-y":""), si.id===NUOVA_RIGA?"appena":""].join(" ");
+    return `<div class="card int-card ${cls}" data-si="${si.id}" data-int="${intv.id}" style="padding:12px">
+      <label class="int-head"><input type="checkbox" class="i-attivo" ${attivo?"checked":""} ${ann?"disabled":""}>
+        <b>${esc(intv.nome)}</b>
+        <span class="lotto-tag ${lot!=="Intero sito"?"urg":""}">${esc(lot)}</span>
+        ${isP?'<span class="tag">piante</span>':''}
+        ${si.da_verificare?'<span class="flag-r">🚩 da verificare</span>':''}
+        ${(!ann&&miss.length)?`<span class="flag-y">⚠️ ${miss.length} da inserire</span>`:''}
+        ${ann?'<span class="flag-r">annullata</span>':''}</label>
+      ${si.nota_verifica?`<p class="miss" style="color:#C0392B">${esc(si.nota_verifica)}</p>`:''}
+      ${(!ann&&miss.length)?`<p class="miss">Da inserire: <b>${miss.join(", ")}</b></p>`:''}
+      <div class="i-body ${attivo&&!ann?"":"hide"}">
         <div class="row2" style="margin-top:8px">
+          <div><label>Lotto / perimetro</label><select class="i-lot">
+            ${DB.lotti.map(l=>`<option ${lot===l.nome?"selected":""}>${esc(l.nome)}</option>`).join("")}</select></div>
           <div><label>Modalità</label><select class="i-mod">
-            <option value="in_house" ${mod==="in_house"?"selected":""}>In house</option>
-            <option value="conto_terzi" ${mod==="conto_terzi"?"selected":""}>Conto terzi</option></select></div>
+            <option value="da_definire" ${si.modalita==="da_definire"?"selected":""}>— da definire —</option>
+            <option value="in_house" ${si.modalita==="in_house"?"selected":""}>In house</option>
+            <option value="conto_terzi" ${si.modalita==="conto_terzi"?"selected":""}>Conto terzi (terzista)</option></select></div>
           ${isP
-            ? `<div><label>Piante previste</label><input type="number" class="i-pp" value="${si.piante_previste||""}"></div>
-               <div><label>Costo €/pianta</label><input type="number" step="0.01" class="i-cu" value="${si.costo_unitario||""}"></div>`
-            : `<div><label>Budget € (materiali o preventivo terzista)</label><input type="number" class="i-bud" value="${si.budget||0}"></div>`}
-          <div><label>Scadenza (deadline)</label><input type="date" class="i-scad" value="${si.scadenza||""}"></div>
+            ? `<div><label>Piante previste</label><input type="number" class="i-pp" value="${V(si.piante_previste)}"></div>
+               <div><label>Costo € per pianta</label><input type="number" step="0.01" class="i-cu" value="${V(si.costo_unitario)}"></div>`
+            : `<div><label>Unità di misura</label><input class="i-um" value="${esc(V(si.unita_misura))}" placeholder="ha, ml, mq, cad…"></div>
+               <div><label>Quantità</label><input type="number" step="0.01" class="i-qt" value="${V(si.quantita)}"></div>
+               <div><label>Costo unitario €</label><input type="number" step="0.01" class="i-cuv" value="${V(si.costo_unitario_voce)}"></div>
+               <div><label>Budget €</label><input type="number" step="0.01" class="i-bud" value="${V(si.budget)}"></div>`}
+          <div><label>Priorità</label><select class="i-pri">
+            ${["Alta","Media","Bassa"].map(p=>`<option ${si.priorita===p?"selected":""}>${p}</option>`).join("")}</select></div>
+          <div><label>Scadenza</label><input type="date" class="i-scad" ${DATA_ATTR} value="${V(si.scadenza)}"></div>
+          <div><label>Durata (giorni)</label><input type="number" min="1" class="i-dur" value="${V(si.durata_giorni)}"></div>
+          <div><label>Inizio previsto</label><input type="date" class="i-ini" ${DATA_ATTR} value="${V(si.data_inizio)}" ${si.dipende_da?"disabled":""}></div>
+        </div>
+        ${isP?`<p class="muted" style="margin-top:6px;font-size:11.5px">Si misura in piante: unità di misura e quantità sono implicite. Budget = piante × costo per pianta = <b>${eur((+si.piante_previste||0)*(+si.costo_unitario||0))}</b></p>`:""}
+        <div style="margin-top:10px"><label>Note</label>
+          <textarea class="i-note" rows="2" placeholder="annotazioni libere su questa lavorazione">${esc(V(si.note))}</textarea></div>
+        <div style="margin-top:8px">
+          <label class="chk"><input type="checkbox" class="i-dip-on" ${si.dipende_da?"checked":""}> Dipende da un'altra lavorazione</label>
+          <div class="i-dip-box ${si.dipende_da?"":"hide"}">
+            <select class="i-dip"><option value="">— scegli la lavorazione che deve precedere —</option>
+            ${tutte.filter(x=>x.id!==si.id).map(x=>{
+              const iv=DB.interventi.find(i=>i.id===x.intervento_id)||{};
+              return `<option value="${x.id}" ${si.dipende_da===x.id?"selected":""}>${esc(iv.nome)}${
+                (x.lotto&&x.lotto!=="Intero sito")?" · "+esc(x.lotto):""}</option>`;}).join("")}
+            </select>
+            <p class="muted" style="margin-top:5px;font-size:11.5px">Inizierà il giorno dopo la fine di quella lavorazione. La data di inizio qui sopra viene ignorata.</p>
+          </div>
         </div>
         ${isP?"":`<div style="margin-top:10px">
-          <label class="muted">Sotto-voci (col C) — la quantità = numero di sotto-voci; il budget si ripartisce tra esse</label>
-          <div class="sv-list">${svs.map(s=>svRow(s.id,s.nome)).join("")}</div>
+          <label class="muted">Sotto-voci</label>
+          <div class="sv-list">${svs.map(x=>svRow(x.id,x.nome)).join("")}</div>
           <button class="add sv-add">+ Aggiungi sotto-voce</button></div>`}
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <button class="btn btn-o btn-sm i-ann">${ann?"Ripristina lavorazione":"Cancella lavorazione"}</button>
+        ${si.da_verificare?'<button class="btn btn-o btn-sm i-risolvi">Risolvi 🚩</button>':''}
       </div></div>`;
   }).join("");
+  const addOpts=DB.interventi.filter(i=>i.categoria_id===cat)
+    .map(i=>`<option value="${i.id}">${esc(i.nome)}</option>`).join("");
   $("#setup-body").innerHTML=`<div class="card"><h2>Interventi e sotto-voci</h2>
     <div class="row2">
-      <div><label>Sito</label><select id="i-sito">${DB.siti.map(s=>`<option value="${s.id}" ${s.id===sid?"selected":""}>${esc(s.nome)}</option>`).join("")}</select></div>
+      <div><label>Sito</label><select id="i-sito">${DB.siti.map(x=>`<option value="${x.id}" ${x.id===sid?"selected":""}>${esc(x.nome)}</option>`).join("")}</select></div>
       <div><label>Categoria</label><select id="i-cat">${DB.categorie.map(c=>`<option value="${c.id}" ${c.id===cat?"selected":""}>${esc(c.nome)}</option>`).join("")}</select></div>
+      <div><label>Lotto</label><select id="i-lotto"><option value="">— tutti —</option>
+        ${lotti.map(l=>`<option ${flt===l?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
     </div>
-    <p class="muted">Attiva gli interventi presenti in questo sito (gli altri non contano nell'avanzamento). Imposta budget e modalità, ed espandi le sotto-voci della colonna C.</p></div>
-    ${rows||'<div class="card"><p class="muted">Nessun intervento in questa categoria.</p></div>'}
+    <p class="muted">🚩 = cifre da verificare · ⚠️ = dati ancora da inserire. Il cartello giallo sparisce quando tutti i campi sono compilati (anche con 0) oppure la lavorazione è cancellata.</p></div>
+    ${cards||'<div class="card"><p class="muted">Nessun intervento attivato in questa categoria per questo sito.</p></div>'}
+    <div class="card"><h2>Aggiungi lavorazione a questo sito</h2>
+      <div class="row2">
+        <div><label>Intervento</label><select id="add-int">${addOpts}</select></div>
+        <div><label>Lotto</label><select id="add-lot">${DB.lotti.map(l=>`<option>${esc(l.nome)}</option>`).join("")}</select></div>
+      </div>
+      <button class="btn btn-g btn-sm" id="add-go" style="margin-top:10px">+ Aggiungi al sito</button>
+      <p class="muted" style="margin-top:8px">Sceglie tra le lavorazioni già in anagrafica. Compare qui sotto con i campi da compilare.</p></div>
+    <div class="card"><h2>Crea una lavorazione nuova in anagrafica</h2>
+      <p class="muted">Se non esiste nell'elenco. Una volta creata è disponibile per tutti i siti.</p>
+      <div class="row2" style="margin-top:8px">
+        <div><label>Nome</label><input id="new-nome" placeholder="es. Acquisto piante"></div>
+        <div><label>Categoria</label><select id="new-cat">${DB.categorie.map(c=>`<option value="${c.id}" ${c.id===cat?"selected":""}>${esc(c.nome)}</option>`).join("")}</select></div>
+        <div><label>Categoria perizia</label><select id="new-pz">${DB.perizie.map(p=>`<option value="${p.id}">${esc(p.nome)}</option>`).join("")}</select></div>
+        <div><label>Si misura</label><select id="new-tipo">
+          <option value="fasce">a fasce (25/50/75/100)</option>
+          <option value="piante">a numero di piante</option></select></div>
+      </div>
+      <button class="btn btn-o btn-sm" id="new-go" style="margin-top:10px">+ Crea e aggiungi al sito</button></div>
     <button class="btn btn-p" id="i-save">Salva categoria</button>`;
   $("#i-sito").onchange=()=>SETUP.interventi();
   $("#i-cat").onchange=()=>SETUP.interventi();
+  $("#i-lotto").onchange=()=>SETUP.interventi();
   $$(".i-attivo").forEach(ch=>ch.onchange=()=>ch.closest(".int-card").querySelector(".i-body").classList.toggle("hide",!ch.checked));
+  // budget = quantità x costo unitario (auto, sovrascrivibile)
+  $$(".int-card").forEach(card=>{
+    const qt=card.querySelector(".i-qt"), cu=card.querySelector(".i-cuv"), bd=card.querySelector(".i-bud");
+    if(qt&&cu&&bd){ const calc=()=>{ if(qt.value!==""&&cu.value!=="") bd.value=(+qt.value*+cu.value).toFixed(2); };
+      qt.oninput=calc; cu.oninput=calc; }
+  });
+  $$(".i-dip-on").forEach(ch=>ch.onchange=()=>{
+    const card=ch.closest(".int-card");
+    card.querySelector(".i-dip-box").classList.toggle("hide",!ch.checked);
+    const ini=card.querySelector(".i-ini"); if(ini) ini.disabled=ch.checked;
+    if(!ch.checked) card.querySelector(".i-dip").value="";
+  });
   function bindDel(){$$(".sv-del").forEach(x=>x.onclick=()=>x.closest(".sv-row").remove());}
   $$(".sv-add").forEach(b=>b.onclick=()=>{b.previousElementSibling.insertAdjacentHTML("beforeend",svRow("",""));bindDel();});
   bindDel();
+  $$(".i-ann").forEach(b=>b.onclick=async()=>{
+    const card=b.closest(".int-card"), id=+card.dataset.si;
+    const era=card.classList.contains("annull");
+    if(!era && !await confermaTesto("Cancellare questa lavorazione? Esce dai conti e dagli avvisi, ma resta tracciata nel registro.")) return;
+    const {error}=await sb.from("sito_interventi").update({annullato:!era, attivo:era?true:false}).eq("id",id);
+    if(error) return toast("Errore");
+    toast(era?"Lavorazione ripristinata ✓":"Lavorazione cancellata ✓"); SETUP.interventi();
+  });
+  $$(".i-risolvi").forEach(b=>b.onclick=async()=>{
+    const id=+b.closest(".int-card").dataset.si;
+    const {error}=await sb.from("sito_interventi").update({da_verificare:false}).eq("id",id);
+    if(error) return toast("Errore"); toast("Segnalazione risolta ✓"); SETUP.interventi();
+  });
+  async function aggiungiAlSito(intId, lotto){
+    const {data,error}=await sb.from("sito_interventi")
+      .insert({sito_id:sid,intervento_id:intId,lotto,attivo:true}).select().single();
+    if(error){
+      toast(error.code==="23505"
+        ? "Questa lavorazione esiste già su «"+lotto+"»: cambia lotto"
+        : "Errore nell'aggiunta");
+      return null;
+    }
+    // porto la vista sulla riga appena creata, altrimenti resta nascosta dai filtri
+    const iv=DB.interventi.find(i=>i.id===intId);
+    if(iv) CAT_SEL=iv.categoria_id;
+    LOTTO_SEL=lotto; NUOVA_RIGA=data.id;
+    toast("Lavorazione aggiunta ✓");
+    await SETUP.interventi();
+    const el=document.querySelector(`.int-card[data-si="${data.id}"]`);
+    if(el){ el.scrollIntoView({behavior:"smooth",block:"center"}); el.classList.add("appena"); }
+    return data.id;
+  }
+  $("#add-go").onclick=()=>aggiungiAlSito(+$("#add-int").value, $("#add-lot").value);
+  $("#new-go").onclick=async()=>{
+    const nome=$("#new-nome").value.trim();
+    if(!nome) return toast("Indica il nome della lavorazione");
+    if(DB.interventi.some(i=>i.nome.toLowerCase()===nome.toLowerCase()))
+      return toast("Esiste già una lavorazione con questo nome");
+    const {data,error}=await sb.from("interventi").insert({
+      categoria_id:+$("#new-cat").value, categoria_perizia_id:+$("#new-pz").value,
+      nome, modalita:"da_definire", tipo:$("#new-tipo").value,
+      ordine:(DB.interventi.reduce((m,i)=>Math.max(m,i.ordine||0),0)+1)}).select().single();
+    if(error) return toast("Errore nella creazione");
+    // l'anagrafica in memoria si aggiorna subito: la voce compare ovunque
+    DB.interventi.push(data);
+    DB.interventi.sort((a,b)=>(a.categoria_id-b.categoria_id)||(a.ordine-b.ordine));
+    toast("«"+nome+"» aggiunta all'anagrafica ✓");
+    await aggiungiAlSito(data.id, $("#add-lot")?.value || DB.lotti[0].nome);
+  };
   $("#i-save").onclick=async()=>{
+    const N=el=>{ if(!el) return null; return el.value===""?null:+el.value; };
+    const badI=dateErrate($$(".int-card:not(.annull) .i-scad, .int-card:not(.annull) .i-ini:not([disabled])"));
+    if(badI.length){
+      const nome=(DB.interventi.find(i=>i.id===+badI[0].closest(".int-card").dataset.int)||{}).nome||"";
+      badI[0].scrollIntoView({block:"center"});
+      return toast("Data non valida su «"+nome+"»: usa un anno tra "+ANNO_MIN+" e "+ANNO_MAX+". Niente salvato.");
+    }
     for(const card of $$(".int-card")){
-      const intId=+card.dataset.int, intv=DB.interventi.find(i=>i.id===intId);
-      const attivo=card.querySelector(".i-attivo").checked;
-      const rec={sito_id:sid,intervento_id:intId,attivo,modalita:card.querySelector(".i-mod").value,scadenza:card.querySelector(".i-scad").value||null};
-      if(intv.tipo==="piante"){rec.piante_previste=+card.querySelector(".i-pp").value||0;rec.costo_unitario=+card.querySelector(".i-cu").value||0;rec.budget=0;}
-      else rec.budget=+card.querySelector(".i-bud").value||0;
-      const {data:up}=await sb.from("sito_interventi").upsert(rec,{onConflict:"sito_id,intervento_id"}).select().single();
-      const siId=(up&&up.id)||+card.dataset.si||null;
-      if(intv.tipo!=="piante" && siId){
+      if(card.classList.contains("annull")) continue;
+      const id=+card.dataset.si, intv=DB.interventi.find(i=>i.id===+card.dataset.int);
+      const g=c=>card.querySelector(c);
+      const rec={attivo:g(".i-attivo").checked, lotto:g(".i-lot").value,
+        modalita:g(".i-mod").value, priorita:g(".i-pri").value, scadenza:g(".i-scad").value||null,
+        durata_giorni:N(g(".i-dur")), data_inizio:g(".i-ini").value||null,
+        note:g(".i-note").value.trim()||null,
+        dipende_da: g(".i-dip-on").checked ? (+g(".i-dip").value||null) : null};
+      if(rec.dipende_da){
+        const prova=tutte.map(x=>x.id===id?{...x,dipende_da:rec.dipende_da}:x);
+        if(creaCiclo(prova,id,rec.dipende_da)){
+          toast("Dipendenza circolare su "+intv.nome+": non salvata"); rec.dipende_da=null;
+        } else rec.data_inizio=null;
+      }
+      if(intv.tipo==="piante"){
+        rec.piante_previste=N(g(".i-pp")); rec.costo_unitario=N(g(".i-cu"));
+        rec.unita_misura="pianta"; rec.quantita=rec.piante_previste; rec.budget=null;
+      } else {
+        rec.unita_misura=g(".i-um").value.trim()||null; rec.quantita=N(g(".i-qt"));
+        rec.costo_unitario_voce=N(g(".i-cuv")); rec.budget=N(g(".i-bud"));
+      }
+      const {error}=await sb.from("sito_interventi").update(rec).eq("id",id);
+      if(error){ toast("Errore su "+intv.nome); continue; }
+      if(intv.tipo!=="piante"){
         const present=[];
         for(const r of card.querySelectorAll(".sv-row")){
           const nome=r.querySelector(".sv-nome").value.trim(); if(!nome)continue;
           const svid=r.dataset.svid;
           if(svid){await sb.from("sottovoci").update({nome}).eq("id",+svid);present.push(+svid);}
-          else{const {data:ins}=await sb.from("sottovoci").insert({sito_intervento_id:siId,nome}).select().single();if(ins)present.push(ins.id);}
+          else{const {data:ins}=await sb.from("sottovoci").insert({sito_intervento_id:id,nome}).select().single();if(ins)present.push(ins.id);}
         }
-        const existing=(await sb.from("sottovoci").select("id").eq("sito_intervento_id",siId)).data||[];
+        const existing=(await sb.from("sottovoci").select("id").eq("sito_intervento_id",id)).data||[];
         for(const e of existing) if(!present.includes(e.id)) await sb.from("sottovoci").delete().eq("id",e.id);
       }
     }
@@ -1028,35 +1557,64 @@ const SETUP = {
 };
 
 async function anag(table,titolo,campi,perSito=false){
-  const {data}=await sb.from(table).select("*").order("id");
+  const {data}=await sb.from(table).select("*").eq("attivo",true).order("id");
+  // campo generico: testo, numero, oppure tendina su una lista master ("select:comuni")
+  const campo=(k,l,t,v)=>{
+    if(t&&t.startsWith("select:")){
+      const lista=DB[t.slice(7)]||[];
+      return `<select class="an-${k}"><option value="">— ${esc(l)} —</option>${
+        lista.map(o=>`<option value="${o.id}" ${v===o.id?"selected":""}>${esc(o.nome)}</option>`).join("")}</select>`;
+    }
+    return `<input class="an-${k}" type="${t||"text"}" value="${esc(v??"")}" placeholder="${esc(l)}">`;
+  };
+  const cols=(perSito?"1fr ":"")+campi.map(([k,l,t])=>t==="number"?".7fr":"1fr").join(" ")+" auto";
   $("#setup-body").innerHTML=`<div class="card"><h2>${titolo}</h2>
-   <div id="an-list">${(data||[]).map(r=>`<div class="dyn-row" style="grid-template-columns:${perSito?"1fr ":""}1.2fr .8fr auto" data-id="${r.id}">
+   <div id="an-list">${(data||[]).map(r=>`<div class="dyn-row" style="grid-template-columns:${cols}" data-id="${r.id}">
      ${perSito?`<select class="an-sito">${DB.siti.map(s=>`<option value="${s.id}" ${s.id===r.sito_id?"selected":""}>${esc(s.nome)}</option>`).join("")}</select>`:""}
-     ${campi.map(([k,l,t])=>`<input class="an-${k}" type="${t||"text"}" value="${esc(r[k])}" placeholder="${l}">`).join("")}
+     ${campi.map(([k,l,t])=>campo(k,l,t,r[k])).join("")}
      <button class="x an-off" title="disattiva">×</button></div>`).join("")}</div>
    <button class="add" id="an-add">+ Aggiungi</button>
    <button class="btn btn-p" id="an-save" style="margin-top:10px">Salva</button></div>`;
   $("#an-add").onclick=()=>{$("#an-list").insertAdjacentHTML("beforeend",
-    `<div class="dyn-row" style="grid-template-columns:${perSito?"1fr ":""}1.2fr .8fr auto" data-id="">
+    `<div class="dyn-row" style="grid-template-columns:${cols}" data-id="">
      ${perSito?`<select class="an-sito">${DB.siti.map(s=>`<option value="${s.id}">${esc(s.nome)}</option>`).join("")}</select>`:""}
-     ${campi.map(([k,l,t])=>`<input class="an-${k}" type="${t||"text"}" placeholder="${l}">`).join("")}
+     ${campi.map(([k,l,t])=>campo(k,l,t,null)).join("")}
      <button class="x an-off">×</button></div>`);bindOff()};
   function bindOff(){$$(".an-off").forEach(x=>x.onclick=async()=>{
     const row=x.parentNode,id=row.dataset.id;
-    if(id) await sb.from(table).update({attivo:false}).eq("id",+id);
+    if(id){ await sb.from(table).update({attivo:false}).eq("id",+id);
+      DB[table]=(DB[table]||[]).filter(x=>x.id!==+id); }
     row.remove()})}
   bindOff();
   $("#an-save").onclick=async()=>{
+    const scartati=[], senzaCampo=[];
     for(const r of $$("#an-list .dyn-row")){
       const rec={};
-      for(const [k] of campi){const v=r.querySelector(".an-"+k).value;rec[k]=isNaN(+v)||v===""?v:+v}
+      for(const [k,,t] of campi){
+        const v=r.querySelector(".an-"+k).value;
+        if(t&&t.startsWith("select:")) rec[k]=v===""?null:+v;
+        else if(t==="number") rec[k]=v===""?0:+v;
+        else rec[k]=v;
+      }
       if(perSito)rec.sito_id=+r.querySelector(".an-sito").value;
-      if(!rec[campi[0][0]])continue;
+      const nome=String(rec[campi[0][0]]??"").trim();
+      if(!nome)continue;
+      // le tendine su liste master sono obbligatorie: senza, la voce non sarebbe visibile a nessun sito
+      const vuoto=campi.find(([k,,t])=>t&&t.startsWith("select:")&&rec[k]==null);
+      if(vuoto){ senzaCampo.push(nome+" (manca "+vuoto[1].toLowerCase()+")"); continue; }
       const id=r.dataset.id;
-      if(id)await sb.from(table).update(rec).eq("id",+id);
-      else await sb.from(table).insert(rec);
+      if(id){ await sb.from(table).update(rec).eq("id",+id); }
+      else {
+        // un nome uguale a una voce già attiva sarebbe un doppione
+        const gia=(data||[]).some(x=>String(x[campi[0][0]]??"").trim().toLowerCase()===nome.toLowerCase());
+        if(gia){ scartati.push(nome); continue; }
+        await sb.from(table).insert(rec);
+      }
     }
-    toast("Salvato ✓");
+    const avvisi=[];
+    if(scartati.length)   avvisi.push("già in elenco: "+scartati.join(", "));
+    if(senzaCampo.length) avvisi.push("non salvate: "+senzaCampo.join(", "));
+    toast(avvisi.length ? "Salvato, ma "+avvisi.join(" · ") : "Salvato ✓");
     const fresh=await sb.from(table).select("*").eq("attivo",true).order("nome");
     DB[table]=fresh.data||[];
     anag(table,titolo,campi,perSito)};
