@@ -210,24 +210,71 @@ table.grid td:first-child{text-align:left;font-weight:600}
 .lotto-tag{font-size:10px;font-weight:800;background:#E3E7DD;color:var(--forest-d);padding:2px 7px;
   border-radius:10px;text-transform:uppercase;letter-spacing:.03em}
 .lotto-tag.urg{background:#C0392B;color:#fff}
-.gt-head{display:grid;grid-template-columns:1.9fr 3.4fr;gap:10px;font-size:10px;font-weight:800;
-  color:var(--mut);text-transform:uppercase;letter-spacing:.04em;padding:0 0 6px;border-bottom:1px solid var(--line)}
-.gt-row{display:grid;grid-template-columns:1.9fr 3.4fr;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid #F0F2EC}
-.gt-row:last-child{border-bottom:none}
-.gt-nome{font-size:12.5px;font-weight:700}
-.gt-sub{font-size:10.5px;color:var(--mut);margin-top:1px}
-.gt-track{position:relative;height:26px;background:#F2F4EE;border-radius:6px}
-.gt-bar{position:absolute;top:4px;height:18px;border-radius:5px;opacity:.35}
-.gt-done{position:absolute;top:4px;height:18px;border-radius:5px}
-.gt-dl{position:absolute;top:-2px;width:2px;height:30px;background:#8E2820}
-.gt-dl::after{content:"scad.";position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:800;color:#8E2820}
-.gt-today{position:absolute;top:-2px;width:2px;height:30px;background:var(--ink)}
-.gt-today::after{content:"oggi";position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:700;color:var(--ink)}
-.gt-pct{position:absolute;right:6px;top:5px;font-size:10px;font-weight:800;color:var(--mut)}
-.gt-al{font-size:11px;font-weight:700;margin-top:3px}
-.gt-scale{display:flex;justify-content:space-between;font-size:9.5px;color:var(--mut);padding-top:6px}
-.gt-dep{font-size:10.5px;color:var(--moss);margin-top:1px}
-@media(max-width:620px){.gt-head,.gt-row{grid-template-columns:1fr}.gt-head div:last-child{display:none}}
+.wrap.wide{max-width:1500px}
+.gt-tools{padding:14px 16px}
+.gt-tit{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.gt-ctl{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.gt-ctl select{padding:8px 10px;font-size:14px}
+.gt-leg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:11.5px;color:var(--mut);align-items:center}
+.gt-leg span{display:inline-flex;align-items:center;gap:5px}
+.lg-b{display:inline-block;position:relative;width:26px;height:11px;border:1px solid;border-radius:2px}
+.lg-b i{position:absolute;left:0;top:3px;height:3px;width:55%}
+.lg-s{display:inline-block;width:24px;height:5px;background:#2F3A2C}
+.lg-o{display:inline-block;width:0;height:13px;border-left:2px dashed var(--ink)}
+.gt-sum{cursor:pointer;font-weight:800;color:var(--forest-d);font-size:14px}
+.gt-nota{font-size:11.5px;margin:6px 2px 14px}
+.gp{--lw:590px;--rh:30px;position:relative;overflow:auto;max-height:calc(100vh - 250px);min-height:180px;
+  border:1px solid #C9CFC2;border-radius:10px;background:#fff;margin-bottom:6px}
+.gp-in{position:relative}
+.gp-head{position:sticky;top:0;z-index:8;display:flex;height:44px;background:#EEF1EA;border-bottom:1px solid #B9C0B1}
+.gp-lh{position:sticky;left:0;z-index:9;display:flex;align-items:flex-end;width:var(--lw);flex-shrink:0;background:#EEF1EA;border-right:2px solid #B9C0B1;
+  font-size:10.5px;font-weight:800;color:var(--mut);padding-bottom:6px}
+.gp-th{position:relative;flex-shrink:0;height:44px;overflow:hidden}
+.gp-th .t1,.gp-th .t2{position:absolute;height:22px;display:flex;align-items:center;white-space:nowrap;overflow:hidden;box-sizing:border-box;border-left:1px solid #D0D6C9}
+.gp-th .t1{top:0;padding-left:5px;font-size:11px;font-weight:700;color:var(--ink)}
+.gp-th .t2{top:22px;justify-content:center;font-size:10px;color:var(--mut);border-top:1px solid #D0D6C9}
+.gp-th .t2.fest{background:#E1E5DB}
+.gp-th .t-oggi{position:absolute;top:24px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;z-index:2}
+.gp-body{position:relative}
+.gp-bg{position:absolute;top:0;bottom:0;left:var(--lw);pointer-events:none}
+.gp-bg .ln{position:absolute;top:0;bottom:0;border-left:1px solid #EEF0EA}
+.gp-bg .fe{position:absolute;top:0;bottom:0;background:#F4F6F1}
+.gp-bg .oggi{position:absolute;top:0;bottom:0;border-left:2px dashed var(--ink);opacity:.55}
+.gp-svg{position:absolute;top:0;left:var(--lw);pointer-events:none;z-index:3;overflow:visible}
+.gp-r{position:relative;display:flex;height:var(--rh);border-bottom:1px solid #EEF0EA}
+.gp-l{position:sticky;left:0;z-index:5;display:flex;align-items:center;width:var(--lw);flex-shrink:0;background:#fff;border-right:2px solid #B9C0B1;font-size:12.5px}
+.gp-l>div,.gp-lh>div{padding:0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-sizing:border-box}
+.c-id{width:36px;flex-shrink:0;text-align:right;color:var(--mut);font-size:11px}
+.c-ind{width:24px;flex-shrink:0;text-align:center;padding:0!important}
+.c-nome{flex:1;min-width:0}
+.c-dur{width:58px;flex-shrink:0;text-align:right}
+.c-ini,.c-fin{width:70px;flex-shrink:0;text-align:right}
+.c-pred{width:46px;flex-shrink:0;text-align:center}
+.c-pct{width:56px;flex-shrink:0;text-align:right}
+.gp-r.task .c-nome{padding-left:24px}
+.gp-r.sum{cursor:pointer}
+.gp-r.sum .gp-l{background:#F3F6EF;font-weight:800;color:var(--forest-d)}
+.gp-r.sum .gp-t{background:#F8FAF5}
+.gp-r:hover .gp-l{background:#E8F1DD}
+.gp-t{position:relative;flex-shrink:0;height:100%;z-index:2}
+.gb{position:absolute;top:8px;height:13px;border:1px solid;border-radius:2px;box-sizing:border-box;overflow:hidden}
+.gb i{position:absolute;left:0;top:3px;height:5px}
+.gs{position:absolute;top:10px;height:6px;background:#2F3A2C}
+.gs::before,.gs::after{content:"";position:absolute;top:6px;border-top:5px solid #2F3A2C}
+.gs::before{left:0;border-right:5px solid transparent}
+.gs::after{right:0;border-left:5px solid transparent}
+.gdl{position:absolute;top:-1px;transform:translateX(-50%);font-size:10px;line-height:1;color:#C0392B;z-index:3}
+.gl{font-size:9.5px;font-weight:800;background:#FADBD8;color:#9A2B20;padding:1px 5px;border-radius:8px;margin-left:4px}
+.gi{display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 3px;border-radius:8px;font-size:10.5px;font-weight:900;color:#fff;cursor:help}
+.gi-r{background:#C0392B}.gi-y{background:#D8912A}.gi-ok{background:#8CBF66}.gi-n{background:#9AA39A}
+@media(max-width:760px){
+  .gp{--lw:212px;max-height:calc(100vh - 210px)}
+  .gp-r.task .c-nome{padding-left:12px}
+  .c-dur,.c-ini,.c-fin,.c-pred{display:none}
+  .c-id{width:28px}.c-pct{width:44px}
+  .gt-ctl{grid-template-columns:1fr 1fr}
+  .gl{display:none}
+}
 .sg-tot{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
 .sg-tot span{background:#EEF1EA;border-radius:8px;padding:6px 10px;font-size:12px;color:var(--mut)}
 .sg-tot b{color:var(--forest);font-size:14px}
@@ -391,6 +438,7 @@ function show(k){
   CURRENT_TAB=k;
   $$(".tab").forEach(b=>b.classList.toggle("on",b.dataset.t===k));
   ["compila","gasolio","sito","gantt","dash","setup"].forEach(p=>$("#pane-"+p).classList.toggle("hide",p!==k));
+  $(".wrap").classList.toggle("wide",k==="gantt");
   renderSitoBar(k==="compila"||k==="gasolio");
   ({compila:rCompila,gasolio:rGasolio,sito:rSito,gantt:rGantt,dash:rDash,setup:rSetup})[k]();
 }
@@ -882,18 +930,38 @@ async function rSito(){
    </div>`;
 }
 
-/* ====================== GANTT ====================== */
-let GT_GRUPPO="sito", GT_LOTTO="";
-window.setGantt = (k,v) => { if(k==="g") GT_GRUPPO=v; else GT_LOTTO=v; rGantt(); };
+/* ====================== GANTT (stile Project) ====================== */
+let GT_GRUPPO="sito", GT_LOTTO="", GT_SCALA="auto", GT_RIGHE=null, GT_MOD=null;
+const GT_CHIUSI=new Set();
+window.setGantt = (k,v) => { if(k==="g") GT_GRUPPO=v; else if(k==="l") GT_LOTTO=v; else if(k==="s") GT_SCALA=v; disegnaGantt(); };
+window.gtToggle = k => { GT_CHIUSI.has(k)?GT_CHIUSI.delete(k):GT_CHIUSI.add(k); disegnaGantt(true); };
+const GT_CRIT=["impossibile","tardi","ciclo"];
+const GT_COL={ok:"#3F7F3A",stretto:"#D8912A",tardi:"#C0392B",impossibile:"#8E2820",ciclo:"#8E2820",fatto:"#8CBF66",noscad:"#7F8A7A",nodurata:"#7F8A7A"};
+const MESI=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+const MESI_L=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+const gtData = iso => { if(!iso) return ""; const[a,m,g]=iso.split("-"); return `${g}/${m}/${a.slice(2)}`; };
+const gtLun = iso => addGG(iso, -((toD(iso).getUTCDay()+6)%7));
+const gtFineMese = iso => { const a=+iso.slice(0,4), m=+iso.slice(5,7); return toIso(new Date(Date.UTC(a,m,0))); };
+const gtHexA = (hex,a) => hex+Math.round(a*255).toString(16).padStart(2,"0");
+function gtAllarme(r){
+  const st=r.st, p=r.p;
+  if(r.si._err_scadenza) return `Scadenza non valida (${r.si._err_scadenza}): correggila nel Setup`;
+  if(st.k==="impossibile") return `Finisce il ${gtData(p.fine)}, ${p.ritardo} ${p.ritardo===1?"giorno":"giorni"} dopo la scadenza`;
+  if(st.k==="tardi")  return st.disp<0
+    ? `Scadenza superata da ${-st.disp} ${st.disp===-1?"giorno":"giorni"}, servono ancora ${st.residua} gg`
+    : `Servono ancora ${st.residua} gg, ne restano ${st.disp}: ${st.scoperto} ${st.scoperto===1?"giorno":"giorni"} di scoperto`;
+  if(st.k==="stretto")return `Margine stretto: ${st.residua} gg necessari su ${st.disp} disponibili`;
+  if(st.k==="ciclo")  return `Dipendenza circolare: correggila nel Setup`;
+  if(st.k==="noscad") return `Scadenza da inserire`;
+  return "";
+}
 
 async function rGantt(){
+  if(!GT_RIGHE) $("#pane-gantt").innerHTML=`<div class="card"><p class="muted">Carico il Gantt…</p></div>`;
   const siti = isSuper()||isReadOnly() ? DB.siti : DB.siti.filter(x=>x.id===P.sito_id);
   const dati=[];
   for(const s of siti){ const D=await datiSito(s.id); dati.push({sito:s,D,R:calcSito(s.id,D)}); }
-  const oggiStr=oggi();
-  // righe con la pianificazione risolta
-  let righe=[];
-  const lotti=new Set();
+  const oggiStr=oggi(), righe=[], lotti=new Set();
   for(const {sito,D,R} of dati){
     const attive=D.sito_interventi.filter(x=>x.attivo&&!x.annullato);
     const plan=pianifica(attive);
@@ -902,85 +970,297 @@ async function rGantt(){
       const p=plan.get(si.id)||{};
       const avz=(R.perInt.find(x=>x.si_id===si.id)||{avz:0}).avz;
       lotti.add(si.lotto||"Intero sito");
-      righe.push({si,intv,sito,p,avz,lotto:si.lotto||"Intero sito",
-        st:statoGantt(p,avz,si.scadenza,oggiStr)});
+      righe.push({si,intv,sito,p,avz,lotto:si.lotto||"Intero sito",st:statoGantt(p,avz,si.scadenza,oggiStr)});
     }
   }
-  if(GT_LOTTO) righe=righe.filter(r=>r.lotto===GT_LOTTO);
-  const pian = righe.filter(r=>r.p.inizio && r.p.fine && r.si.scadenza);
-  const senza = righe.filter(r=>!(r.p.inizio && r.p.fine && r.si.scadenza));
-  const allarmi = pian.filter(r=>["impossibile","tardi","ciclo"].includes(r.st.k));
-  // finestra temporale: da oggi (o dal primo inizio) alla fine piu' lontana
-  const dts=[oggiStr,...pian.map(r=>r.p.inizio),...pian.map(r=>r.p.fine),...pian.map(r=>r.si.scadenza)].filter(d=>d && toD(d));
-  const t0 = dts.length?dts.reduce((a,b)=>a<b?a:b):oggiStr;
-  const t1 = dts.length?dts.reduce((a,b)=>a>b?a:b):addGG(oggiStr,30);
-  const span = Math.max(diffGG(t1,t0),1);
-  const pos = iso => Math.min(Math.max(diffGG(iso,t0)/span*100,0),100);
-  const dIt = iso => { const[a,m,g]=iso.split("-"); return `${g}/${m}`; };
-
-  const riga = r => {
-    const st=r.st, x=pos(r.p.inizio), w=Math.max(pos(r.p.fine)-x,1.2);
-    const dep = r.si.dipende_da
-      ? `<div class="gt-dep">↳ dopo «${esc(r.p.predNome||"?")}»${r.p.predMancante?' <span class="flag-y">⚠️ predecessore rimosso</span>':''}</div>` : "";
-    let al="";
-    if(st.k==="impossibile") al=`⚠ Finisce il ${dIt(r.p.fine)}, ${r.p.ritardo} ${r.p.ritardo===1?"giorno":"giorni"} dopo la scadenza`;
-    else if(st.k==="tardi")  al=`⚠ Servono ancora ${st.residua} gg, ne restano ${st.disp} — ${st.scoperto} ${st.scoperto===1?"giorno":"giorni"} di scoperto`;
-    else if(st.k==="stretto")al=`Margine stretto: ${st.residua} gg necessari su ${st.disp} disponibili`;
-    else if(st.k==="ciclo")  al=`⚠ Dipendenza circolare: correggila nel Setup`;
-    return `<div class="gt-row">
-      <div><div class="gt-nome">${esc(r.intv.nome)}</div>
-        <div class="gt-sub">${r.p.durata} gg · ${dIt(r.p.inizio)}→${dIt(r.p.fine)} · ${esc(r.si.priorita||"")}${
-          r.lotto!=="Intero sito"?` · <span class="lotto-tag urg">${esc(r.lotto)}</span>`:""}</div>${dep}</div>
-      <div><div class="gt-track">
-        <div class="gt-bar" style="left:${x}%;width:${w}%;background:${st.c}"></div>
-        <div class="gt-done" style="left:${x}%;width:${(w*r.avz).toFixed(1)}%;background:${st.c}"></div>
-        <span class="gt-pct">${Math.round(r.avz*100)}%</span>
-        <span class="gt-today" style="left:${pos(oggiStr)}%"></span>
-        <span class="gt-dl" style="left:${pos(r.si.scadenza)}%"></span></div>
-        ${al?`<div class="gt-al" style="color:${st.c}">${al}</div>`:""}</div></div>`;
-  };
-  const scala = `<div class="gt-scale"><span>${dIt(t0)}</span><span>${dIt(addGG(t0,Math.round(span/2)))}</span><span>${dIt(t1)}</span></div>`;
-  // raggruppamento
-  const chiave = r => GT_GRUPPO==="perizia"
-    ? ((DB.perizie.find(x=>x.id===r.intv.categoria_perizia_id)||{}).nome||"non classificato")
-    : nomeSito(r.sito);
-  const gruppi={};
-  pian.forEach(r=>(gruppi[chiave(r)]=gruppi[chiave(r)]||[]).push(r));
-  const ordSt={ciclo:0,impossibile:1,tardi:2,stretto:3,ok:4,fatto:5};
-  const blocchi=Object.entries(gruppi)
-    .sort((a,b)=>b[1].filter(r=>["impossibile","tardi","ciclo"].includes(r.st.k)).length
-                -a[1].filter(r=>["impossibile","tardi","ciclo"].includes(r.st.k)).length)
-    .map(([k,v])=>{
-      v.sort((a,b)=>(ordSt[a.st.k]-ordSt[b.st.k])||a.p.inizio.localeCompare(b.p.inizio));
-      const nAl=v.filter(r=>["impossibile","tardi","ciclo"].includes(r.st.k)).length;
-      return `<div class="card"><h2>${esc(k)} ${nAl?`<span class="flag-r">${nAl} in allarme</span>`:""}</h2>
-        <div class="gt-head"><div>Lavorazione</div><div>${dIt(t0)} → ${dIt(t1)}</div></div>
-        ${v.map(riga).join("")}${scala}</div>`;
-    }).join("");
-  const lottiOpt=[...lotti].sort().map(l=>`<option ${GT_LOTTO===l?"selected":""}>${esc(l)}</option>`).join("");
-  $("#pane-gantt").innerHTML=`
-   <div class="card"><h2>📅 Gantt</h2>
-     <div class="row2">
-       <div><label>Raggruppa per</label><select onchange="setGantt('g',this.value)">
-         <option value="sito" ${GT_GRUPPO==="sito"?"selected":""}>Sito</option>
-         <option value="perizia" ${GT_GRUPPO==="perizia"?"selected":""}>Categoria perizia</option></select></div>
-       <div><label>Lotto</label><select onchange="setGantt('l',this.value)">
-         <option value="">— tutti —</option>${lottiOpt}</select></div>
-     </div>
-     <p class="muted">Barra piena = avanzamento. Segno nero = oggi, segno rosso = scadenza. L'allarme confronta i giorni ancora necessari con quelli rimasti.</p></div>
-   ${(()=>{const n=righe.filter(r=>r.si._err_scadenza||r.si._err_data_inizio).length;
-      return n?`<div class="banner banner-alert">📅 ${n===1?"1 lavorazione ha una data non valida":n+" lavorazioni hanno una data non valida"} (anno fuori da ${ANNO_MIN}–${ANNO_MAX}): ${n===1?"resta fuori":"restano fuori"} dal Gantt finché non la correggi nel Setup. Dettaglio in fondo, tra le non pianificate.</div>`:"";})()}
-   ${allarmi.length?`<div class="banner banner-alert">⏰ ${allarmi.length} ${allarmi.length===1?"lavorazione non sta":"lavorazioni non stanno"} nei tempi</div>`:""}
-   ${blocchi||'<div class="card"><p class="muted">Nessuna lavorazione pianificabile: servono durata, data di inizio e scadenza. Impostale nel Setup.</p></div>'}
-   ${senza.length?`<div class="card"><details><summary style="cursor:pointer;font-weight:800;color:var(--forest-d);font-size:14px">
-      ⚠️ ${senza.length} ${senza.length===1?"lavorazione non pianificata":"lavorazioni non pianificate"} — dati mancanti</summary>
-      <p class="muted" style="margin:8px 0">Compaiono qui finché non hanno durata, data di inizio e scadenza valide. Le date in rosso hanno un refuso: correggile nel Setup.</p>
-      ${senza.slice(0,60).map(r=>`<div class="sg-row"><span class="sg-n">${esc(r.intv.nome)} <span class="muted">· ${esc(nomeSito(r.sito))}</span></span>
-        <span class="sg-t">${[!r.p.durata?"durata":null,
-          r.si._err_data_inizio?`<b style="color:var(--red)">data inizio non valida (${esc(r.si._err_data_inizio)})</b>`:(!r.p.inizio?"data inizio":null),
-          r.si._err_scadenza?`<b style="color:var(--red)">scadenza non valida (${esc(r.si._err_scadenza)})</b>`:(!r.si.scadenza?"scadenza":null)].filter(Boolean).join(", ")}</span></div>`).join("")}
-      ${senza.length>60?`<p class="muted">…e altre ${senza.length-60}.</p>`:""}</details></div>`:""}`;
+  GT_RIGHE={righe,lotti};
+  disegnaGantt();
 }
+
+function modelloGantt(){
+  const oggiStr=oggi();
+  let righe=GT_RIGHE.righe; if(GT_LOTTO) righe=righe.filter(r=>r.lotto===GT_LOTTO);
+  const pian=righe.filter(r=>r.p.inizio && r.p.fine);
+  const senza=righe.filter(r=>!(r.p.inizio && r.p.fine));
+  const perizia = r => DB.perizie.find(x=>x.id===r.intv.categoria_perizia_id);
+  const chiave = r => GT_GRUPPO==="perizia" ? ((perizia(r)||{}).nome||"Non classificato") : nomeSito(r.sito);
+  const ordine = r => GT_GRUPPO==="perizia" ? ((perizia(r)||{}).ordine ?? 999) : r.sito.id;
+  const gm=new Map();
+  for(const r of pian){ const k=chiave(r); if(!gm.has(k)) gm.set(k,{nome:k,ord:ordine(r),righe:[]}); gm.get(k).righe.push(r); }
+  const gruppi=[...gm.values()].sort((a,b)=>(a.ord-b.ord)||a.nome.localeCompare(b.nome));
+  let id=0;
+  for(const g of gruppi){
+    g.righe.sort((a,b)=>a.p.inizio.localeCompare(b.p.inizio)||String(a.intv.nome).localeCompare(String(b.intv.nome)));
+    g.id=++id;
+    g.inizio=g.righe.map(r=>r.p.inizio).reduce((a,b)=>a<b?a:b);
+    g.fine=g.righe.map(r=>r.p.fine).reduce((a,b)=>a>b?a:b);
+    const dt=g.righe.reduce((s,r)=>s+(+r.p.durata||0),0);
+    g.avz=dt? g.righe.reduce((s,r)=>s+(+r.p.durata||0)*r.avz,0)/dt : 0;
+    g.nAl=g.righe.filter(r=>GT_CRIT.includes(r.st.k)).length;
+    for(const r of g.righe) r.id=++id;
+  }
+  const idDi=new Map(pian.map(r=>[r.si.id,r]));
+  // finestra temporale e scala
+  const dts=[oggiStr,...pian.flatMap(r=>[r.p.inizio,r.p.fine,r.si.scadenza])].filter(d=>d&&toD(d));
+  let t0=dts.reduce((a,b)=>a<b?a:b), t1=dts.reduce((a,b)=>a>b?a:b);
+  const spanGrezzo=diffGG(t1,t0)+1;
+  const scala = GT_SCALA!=="auto" ? GT_SCALA : spanGrezzo<=50?"giorni" : spanGrezzo<=330?"settimane":"mesi";
+  if(scala==="giorni"){ t0=gtLun(addGG(t0,-2)); t1=addGG(gtLun(addGG(t1,3)),6); }
+  else if(scala==="settimane"){ t0=gtLun(addGG(t0,-3)); t1=addGG(gtLun(addGG(t1,10)),6); }
+  else { t0=t0.slice(0,8)+"01"; t1=gtFineMese(addGG(gtFineMese(t1),1)); }
+  const pxg={giorni:26,settimane:6,mesi:3.4}[scala];
+  const nGiorni=diffGG(t1,t0)+1, W=Math.round(nGiorni*pxg);
+  // unità della scala: basso (celle) e alto (intestazione)
+  const kB = iso => scala==="giorni"?iso : scala==="settimane"?gtLun(iso) : iso.slice(0,7);
+  const kA = iso => scala==="giorni"?gtLun(iso) : scala==="settimane"?iso.slice(0,7) : iso.slice(0,4);
+  const basso=[], alto=[];
+  for(let i=0,d=t0;i<nGiorni;i++,d=addGG(d,1)){
+    const b=basso[basso.length-1], a=alto[alto.length-1];
+    if(!b||b.k!==kB(d)) basso.push({k:kB(d),a:d,gg:0,fest:[0,6].includes(toD(d).getUTCDay())}); basso[basso.length-1].gg++;
+    if(!a||a.k!==kA(d)) alto.push({k:kA(d),a:d,gg:0}); alto[alto.length-1].gg++;
+  }
+  basso.forEach(u=>{ const [y,m,g]=u.a.split("-"); u.b=addGG(u.a,u.gg);
+    u.l = scala==="mesi" ? MESI[+m-1] : String(+g); });
+  alto.forEach(u=>{ const [y,m,g]=u.a.split("-");
+    u.l = scala==="giorni" ? `${+g} ${MESI[+m-1]} '${y.slice(2)}` : scala==="settimane" ? `${MESI_L[+m-1]} ${y}` : y; });
+  return {oggiStr,righe,pian,senza,gruppi,idDi,t0,t1,scala,pxg,W,basso,alto,
+          x: iso => diffGG(iso,t0)*pxg};
+}
+
+function disegnaGantt(mantieniScroll){
+  if(!GT_RIGHE) return;
+  const vecchio=$("#gp"), scrollPrima = vecchio ? {l:vecchio.scrollLeft,t:vecchio.scrollTop} : null;
+  const M=GT_MOD=modelloGantt(), RH=30;
+  const lottiOpt=[...GT_RIGHE.lotti].sort().map(l=>`<option ${GT_LOTTO===l?"selected":""}>${esc(l)}</option>`).join("");
+  const sel=(v,x)=>v===x?"selected":"";
+  const nErr=M.righe.filter(r=>r.si._err_scadenza||r.si._err_data_inizio).length;
+  const allarmi=M.pian.filter(r=>GT_CRIT.includes(r.st.k)||r.st.k==="stretto");
+  const nCrit=M.pian.filter(r=>GT_CRIT.includes(r.st.k)).length + M.senza.filter(r=>r.p.ciclo).length;
+
+  // ---- righe visibili (riepiloghi + attività) ----
+  const vis=[];
+  for(const g of M.gruppi){ vis.push({sum:g}); if(!GT_CHIUSI.has(g.nome)) g.righe.forEach(r=>vis.push({r})); }
+  const idx=new Map(); vis.forEach((v,i)=>{ if(v.r) idx.set(v.r.si.id,i); });
+
+  const cellaInd = r => {
+    const t=esc(gtAllarme(r));
+    if(GT_CRIT.includes(r.st.k)||r.si._err_scadenza) return `<span class="gi gi-r" title="${t}">!</span>`;
+    if(r.st.k==="stretto") return `<span class="gi gi-y" title="${t}">!</span>`;
+    if(r.st.k==="fatto") return `<span class="gi gi-ok" title="Completata">✓</span>`;
+    if(r.st.k==="noscad") return `<span class="gi gi-n" title="${t}">?</span>`;
+    return "";
+  };
+  const righeHtml = vis.map(v=>{
+    if(v.sum){ const g=v.sum, chiuso=GT_CHIUSI.has(g.nome);
+      const x=M.x(g.inizio), w=Math.max(M.x(g.fine)+M.pxg-x,4);
+      return `<div class="gp-r sum" onclick="gtToggle(${esc(JSON.stringify(g.nome))})" title="${chiuso?"Espandi":"Comprimi"}">
+        <div class="gp-l"><div class="c-id">${g.id}</div><div class="c-ind">${g.nAl?`<span class="gi gi-r" title="${g.nAl} in allarme">${g.nAl}</span>`:""}</div>
+          <div class="c-nome">${chiuso?"▸":"▾"} ${esc(g.nome)}</div><div class="c-dur">${diffGG(g.fine,g.inizio)+1} gg</div>
+          <div class="c-ini">${gtData(g.inizio)}</div><div class="c-fin">${gtData(g.fine)}</div><div class="c-pred"></div>
+          <div class="c-pct">${Math.round(g.avz*100)}%</div></div>
+        <div class="gp-t" style="width:${M.W}px"><div class="gs" style="left:${x}px;width:${w}px"></div></div></div>`;
+    }
+    const r=v.r, c=GT_COL[r.st.k]||GT_COL.ok;
+    const x=M.x(r.p.inizio), w=Math.max(M.x(r.p.fine)+M.pxg-x,3), pct=Math.round(r.avz*100);
+    const pred=r.si.dipende_da ? M.idDi.get(r.si.dipende_da) : null;
+    const predTxt = pred ? String(pred.id) : (r.si.dipende_da ? `<span title="${esc(r.p.predNome||"predecessore fuori vista")}">↗</span>` : "");
+    const al=gtAllarme(r);
+    const tip=esc(`${r.intv.nome} · ${nomeSito(r.sito)}\n${r.p.durata} gg · ${gtData(r.p.inizio)} → ${gtData(r.p.fine)}${r.si.scadenza?` · scadenza ${gtData(r.si.scadenza)}`:""}\nAvanzamento ${pct}% · ${r.st.l}${r.lotto!=="Intero sito"?" · "+r.lotto:""}${al?"\n"+al:""}`);
+    const scad = r.si.scadenza && toD(r.si.scadenza) ? `<span class="gdl" style="left:${M.x(r.si.scadenza)+M.pxg}px" title="Scadenza ${gtData(r.si.scadenza)}">▼</span>` : "";
+    return `<div class="gp-r task">
+      <div class="gp-l"><div class="c-id">${r.id}</div><div class="c-ind">${cellaInd(r)}</div>
+        <div class="c-nome" title="${tip}">${esc(r.intv.nome)}${GT_GRUPPO==="perizia"?` <span class="muted" style="font-size:11px">· ${esc(nomeSito(r.sito))}</span>`:""}${r.lotto!=="Intero sito"?` <span class="gl">${esc(r.lotto)}</span>`:""}</div>
+        <div class="c-dur">${r.p.durata} gg</div><div class="c-ini">${gtData(r.p.inizio)}</div><div class="c-fin">${gtData(r.p.fine)}</div>
+        <div class="c-pred">${predTxt}</div><div class="c-pct">${pct}%</div></div>
+      <div class="gp-t" style="width:${M.W}px">
+        <div class="gb" style="left:${x}px;width:${w}px;border-color:${c};background:${gtHexA(c,.28)}" title="${tip}"><i style="width:${pct}%;background:${c}"></i></div>
+        ${scad}</div></div>`;
+  }).join("");
+
+  // ---- sfondo: griglia, festivi, oggi ----
+  const H=vis.length*RH;
+  let px=0; const bg=M.basso.map(u=>{ const l=px; px+=u.gg*M.pxg;
+    return (M.scala==="giorni"&&u.fest?`<div class="fe" style="left:${l}px;width:${u.gg*M.pxg}px"></div>`:"")+`<div class="ln" style="left:${l}px"></div>`; }).join("");
+  const xOggi=M.x(M.oggiStr)+M.pxg/2;
+  // ---- frecce di dipendenza ----
+  const frecce=[];
+  vis.forEach((v,i)=>{ if(!v.r||!v.r.si.dipende_da) return;
+    const j=idx.get(v.r.si.dipende_da); if(j===undefined) return;
+    const pr=vis[j].r, xe=M.x(pr.p.fine)+M.pxg, xs=M.x(v.r.p.inizio);
+    const ya=j*RH+RH/2, xa=Math.max(xe+6, xs+6);
+    const yb = j<i ? i*RH+7 : i*RH+RH-7;
+    frecce.push(`<path d="M${xe},${ya} H${xa} V${yb}" />`);
+  });
+
+  // ---- intestazione della scala ----
+  let pa=0; const alto=M.alto.map(u=>{ const l=pa; pa+=u.gg*M.pxg; return `<div class="t1" style="left:${l}px;width:${u.gg*M.pxg}px">${esc(u.l)}</div>`; }).join("");
+  let pb=0; const basso=M.basso.map(u=>{ const l=pb; pb+=u.gg*M.pxg; return `<div class="t2${M.scala==="giorni"&&u.fest?" fest":""}" style="left:${l}px;width:${u.gg*M.pxg}px">${u.gg*M.pxg>=14?esc(u.l):""}</div>`; }).join("");
+
+  const nonPian = M.senza.length ? `<div class="card"><details><summary class="gt-sum">⚠️ ${M.senza.length} ${M.senza.length===1?"lavorazione non pianificata":"lavorazioni non pianificate"} — dati mancanti</summary>
+      <p class="muted" style="margin:8px 0">Per entrare nel Gantt servono durata e data di inizio (o un predecessore già pianificato). Le date in rosso hanno un refuso: correggile nel Setup.</p>
+      ${M.senza.slice(0,80).map(r=>{
+        const pred=r.si.dipende_da?GT_RIGHE.righe.find(x=>x.si.id===r.si.dipende_da):null;
+        const cosa=[r.p.ciclo?`<b style="color:var(--red)">dipendenza circolare</b>`:null,
+          !r.p.durata&&!r.p.ciclo?"durata":null,
+          r.si._err_data_inizio?`<b style="color:var(--red)">data inizio non valida (${esc(r.si._err_data_inizio)})</b>`:null,
+          !r.p.inizio&&!r.p.ciclo&&!r.si._err_data_inizio ? (pred?`attende «${esc(pred.intv.nome)}»`:"data inizio") : null,
+          r.si._err_scadenza?`<b style="color:var(--red)">scadenza non valida (${esc(r.si._err_scadenza)})</b>`:null].filter(Boolean).join(", ");
+        return `<div class="sg-row"><span class="sg-n">${esc(r.intv.nome)} <span class="muted">· ${esc(nomeSito(r.sito))}</span></span><span class="sg-t">${cosa}</span></div>`;}).join("")}
+      ${M.senza.length>80?`<p class="muted">…e altre ${M.senza.length-80}.</p>`:""}</details></div>` : "";
+  const elencoAllarmi = allarmi.length ? `<div class="card"><details ${nCrit?"open":""}><summary class="gt-sum">⏰ ${allarmi.length} ${allarmi.length===1?"lavorazione da tenere d'occhio":"lavorazioni da tenere d'occhio"}</summary>
+      ${allarmi.sort((a,b)=>GT_CRIT.indexOf(b.st.k)-GT_CRIT.indexOf(a.st.k)).map(r=>`<div class="sg-row"><span class="sg-n"><span class="muted">${r.id}</span> ${esc(r.intv.nome)} <span class="muted">· ${esc(nomeSito(r.sito))}</span></span>
+        <span class="sg-t" style="color:${GT_COL[r.st.k]};font-weight:700">${esc(gtAllarme(r))}</span></div>`).join("")}</details></div>` : "";
+
+  $("#pane-gantt").innerHTML=`
+   <div class="card gt-tools">
+     <div class="gt-tit"><h2 style="margin:0">📅 Gantt</h2>
+       <button class="btn btn-o btn-sm" id="gt-xls" onclick="esportaGanttExcel()">⬇ Esporta in Excel</button></div>
+     <div class="gt-ctl">
+       <div><label>Raggruppa per</label><select onchange="setGantt('g',this.value)">
+         <option value="sito" ${sel(GT_GRUPPO,"sito")}>Sito</option><option value="perizia" ${sel(GT_GRUPPO,"perizia")}>Categoria perizia</option></select></div>
+       <div><label>Lotto</label><select onchange="setGantt('l',this.value)"><option value="">— tutti —</option>${lottiOpt}</select></div>
+       <div><label>Scala</label><select onchange="setGantt('s',this.value)">
+         <option value="auto" ${sel(GT_SCALA,"auto")}>Automatica (${M.scala})</option><option value="giorni" ${sel(GT_SCALA,"giorni")}>Giorni</option>
+         <option value="settimane" ${sel(GT_SCALA,"settimane")}>Settimane</option><option value="mesi" ${sel(GT_SCALA,"mesi")}>Mesi</option></select></div>
+     </div>
+     <div class="gt-leg">
+       <span><i class="lg-b" style="border-color:${GT_COL.ok};background:${gtHexA(GT_COL.ok,.28)}"><i style="background:${GT_COL.ok}"></i></i>attività e avanzamento</span>
+       <span><i class="lg-b" style="border-color:${GT_COL.stretto};background:${gtHexA(GT_COL.stretto,.28)}"></i>margine stretto</span>
+       <span><i class="lg-b" style="border-color:${GT_COL.tardi};background:${gtHexA(GT_COL.tardi,.28)}"></i>in ritardo</span>
+       <span><i class="lg-s"></i>riepilogo</span><span><b style="color:#C0392B">▼</b> scadenza</span>
+       <span><i class="lg-o"></i>oggi</span><span>↳ dipendenza</span>
+     </div>
+   </div>
+   ${nErr?`<div class="banner banner-alert">📅 ${nErr===1?"1 lavorazione ha una data non valida":nErr+" lavorazioni hanno una data non valida"} (anno fuori da ${ANNO_MIN}–${ANNO_MAX}). Finché non la correggi nel Setup quella data non viene considerata: dettaglio nelle righe con <span class="gi gi-r">!</span> o tra le non pianificate.</div>`:""}
+   ${vis.length ? `<div class="gp" id="gp"><div class="gp-in" style="width:calc(var(--lw) + ${M.W}px)">
+     <div class="gp-head">
+       <div class="gp-lh"><div class="c-id">#</div><div class="c-ind"></div><div class="c-nome">Lavorazione</div><div class="c-dur">Durata</div>
+         <div class="c-ini">Inizio</div><div class="c-fin">Fine</div><div class="c-pred">Pred.</div><div class="c-pct">Avanz.</div></div>
+       <div class="gp-th" style="width:${M.W}px">${alto}${basso}<span class="t-oggi" style="left:${xOggi}px">oggi</span></div>
+     </div>
+     <div class="gp-body" style="height:${H}px">
+       <div class="gp-bg" style="width:${M.W}px">${bg}<div class="oggi" style="left:${xOggi}px"></div></div>
+       <svg class="gp-svg" width="${M.W}" height="${H}"><defs><marker id="gp-ar" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 z" fill="#3E4A3B"/></marker></defs>
+         <g fill="none" stroke="#3E4A3B" stroke-width="1.1" marker-end="url(#gp-ar)">${frecce.join("")}</g></svg>
+       ${righeHtml}
+     </div></div></div>
+     <p class="muted gt-nota">Tocca una riga di riepilogo per comprimerla. Passa sopra una barra per i dettagli. La colonna «Pred.» indica il numero della lavorazione da cui dipende.</p>`
+   : `<div class="card"><p class="muted">Nessuna lavorazione pianificabile: servono durata e data di inizio. Impostale nel Setup.</p></div>`}
+   ${elencoAllarmi}${nonPian}`;
+  const gp=$("#gp");
+  if(gp){ if(mantieniScroll&&scrollPrima){ gp.scrollLeft=scrollPrima.l; gp.scrollTop=scrollPrima.t; }
+          else gp.scrollLeft=Math.max(0, xOggi-160); }
+}
+
+/* ---- esportazione Excel (ExcelJS caricato solo quando serve) ---- */
+function caricaExcelJS(){
+  if(window.ExcelJS) return Promise.resolve();
+  return new Promise((ok,ko)=>{ const s=document.createElement("script");
+    s.src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"; s.onload=ok; s.onerror=()=>ko(new Error("ExcelJS")); document.head.appendChild(s); });
+}
+window.esportaGanttExcel = async () => {
+  const M=GT_MOD; if(!M) return;
+  const btn=$("#gt-xls"), testo=btn.textContent; btn.disabled=true; btn.textContent="Preparo il file…";
+  try{ await caricaExcelJS(); }
+  catch(e){ btn.disabled=false; btn.textContent=testo; return toast("Modulo Excel non raggiungibile: controlla la connessione e riprova"); }
+  try{
+    const ARGB=h=>"FF"+h.replace("#","").toUpperCase();
+    const chiaro=(h,f)=>{ const n=parseInt(h.slice(1),16), c=[n>>16,(n>>8)&255,n&255].map(v=>Math.round(v+(255-v)*f)); return "#"+c.map(v=>v.toString(16).padStart(2,"0")).join(""); };
+    const fill=h=>({type:"pattern",pattern:"solid",fgColor:{argb:ARGB(h)}});
+    const dataXl=iso=>iso&&toD(iso)?toD(iso):null;
+    const riga=(ws,n)=>ws.getRow(n);
+    const wb=new ExcelJS.Workbook(); wb.creator="Halaesa · Controllo OS"; wb.created=new Date();
+    const filtri=`Raggruppamento: ${GT_GRUPPO==="perizia"?"categoria perizia":"sito"} · Lotto: ${GT_LOTTO||"tutti"} · Scala: ${M.scala}`;
+
+    /* Foglio 1 — Gantt */
+    const ws=wb.addWorksheet("Gantt",{views:[{state:"frozen",xSplit:2,ySplit:4,showGridLines:false}]});
+    const fisse=[["#",5],["Lavorazione",38],["Durata (gg)",8],["Inizio",10],["Fine",10],["Scadenza",10],["Pred.",6],["Avanz.",7],["Stato",15]];
+    const NF=fisse.length, wU={giorni:2.8,settimane:3.4,mesi:4.6}[M.scala];
+    fisse.forEach(([,w],i)=>ws.getColumn(i+1).width=w);
+    M.basso.forEach((u,i)=>ws.getColumn(NF+1+i).width=wU);
+    ws.getCell(1,1).value="Halaesa — Gantt delle Operazioni Straordinarie"; ws.getCell(1,1).font={bold:true,size:14,color:{argb:ARGB("#1F5C2E")}};
+    ws.getCell(2,1).value=`Esportato il ${gtData(oggi())} · ${filtri}`; ws.getCell(2,1).font={size:9,color:{argb:ARGB("#6B7565")}};
+    // intestazione scala (riga 3 alto, riga 4 basso) + colonne fisse
+    let col=NF+1;
+    for(const a of M.alto){
+      const n=M.basso.filter(u=>u.a>=a.a && u.a<addGG(a.a,a.gg)).length; if(!n) continue;
+      if(n>1) ws.mergeCells(3,col,3,col+n-1);
+      const c=ws.getCell(3,col); c.value=a.l; c.font={bold:true,size:9}; c.alignment={horizontal:"left"}; c.fill=fill("#E3E7DD");
+      c.border={left:{style:"thin",color:{argb:ARGB("#B9C0B1")}}}; col+=n;
+    }
+    const hdr=riga(ws,4); hdr.height=18;
+    fisse.forEach(([t],i)=>{ const c=hdr.getCell(i+1); c.value=t; c.font={bold:true,color:{argb:"FFFFFFFF"},size:9}; c.fill=fill("#1F5C2E"); c.alignment={vertical:"middle",horizontal:i===1?"left":"center"}; });
+    const iOggi=M.basso.findIndex(u=>M.oggiStr>=u.a && M.oggiStr<u.b);
+    M.basso.forEach((u,i)=>{ const c=hdr.getCell(NF+1+i); c.value=u.l; c.font={size:8,color:{argb:ARGB(i===iOggi?"#5B3D0E":"#1A2418")},bold:i===iOggi};
+      c.fill=fill(i===iOggi?"#E8A33D":(M.scala==="giorni"&&u.fest?"#D5DACF":"#EEF1EA")); c.alignment={horizontal:"center"}; });
+    for(let i=1;i<=NF;i++) ws.getCell(3,i).fill=fill("#E3E7DD");
+    // righe
+    let rn=5;
+    const bordoOggi={left:{style:"dashed",color:{argb:ARGB("#1A2418")}}};
+    for(const g of M.gruppi){
+      const r=riga(ws,rn++);
+      r.values=[g.id,g.nome,diffGG(g.fine,g.inizio)+1,dataXl(g.inizio),dataXl(g.fine),null,null,g.avz,g.nAl?`${g.nAl} in allarme`:""];
+      r.font={bold:true,size:10};
+      for(let i=1;i<=NF;i++) r.getCell(i).fill=fill("#E9EFE2");
+      M.basso.forEach((u,i)=>{ const c=r.getCell(NF+1+i);
+        if(g.inizio<u.b && g.fine>=u.a) c.fill=fill("#2F3A2C");
+        if(i===iOggi) c.border=bordoOggi; });
+      for(const t of g.righe){
+        const x=riga(ws,rn++), colr=GT_COL[t.st.k]||GT_COL.ok, pred=t.si.dipende_da?M.idDi.get(t.si.dipende_da):null;
+        x.values=[t.id,"   "+t.intv.nome+(GT_GRUPPO==="perizia"?" · "+nomeSito(t.sito):"")+(t.lotto!=="Intero sito"?` [${t.lotto}]`:""),t.p.durata,dataXl(t.p.inizio),dataXl(t.p.fine),dataXl(t.si.scadenza),pred?pred.id:null,t.avz,t.si._err_scadenza?"scadenza non valida":t.st.l];
+        x.font={size:10}; x.getCell(9).font={size:10,bold:GT_CRIT.includes(t.st.k)||!!t.si._err_scadenza,color:{argb:ARGB(t.si._err_scadenza?"#C0392B":colr)}};
+        const al=gtAllarme(t); if(al) x.getCell(9).note=al;
+        const fineAvz=addGG(t.p.inizio,Math.round((+t.p.durata||0)*t.avz));
+        M.basso.forEach((u,i)=>{ const c=x.getCell(NF+1+i);
+          const dentro=t.p.inizio<u.b && t.p.fine>=u.a;
+          if(dentro) c.fill=fill(t.avz>0 && u.a<fineAvz ? colr : chiaro(colr,.62));
+          else if(M.scala==="giorni"&&u.fest) c.fill=fill("#F1F3EE");
+          if(t.si.scadenza && t.si.scadenza>=u.a && t.si.scadenza<u.b){ c.value="▼"; c.font={bold:true,size:8,color:{argb:ARGB(dentro?"#FFFFFF":"#C0392B")}}; c.alignment={horizontal:"center"}; }
+          if(i===iOggi) c.border=bordoOggi; });
+      }
+    }
+    for(let n=5;n<rn;n++){ const r=riga(ws,n); r.height=17;
+      [4,5,6].forEach(i=>r.getCell(i).numFmt="dd/mm/yy"); r.getCell(8).numFmt="0%";
+      for(let i=1;i<=NF;i++){ r.getCell(i).border={bottom:{style:"hair",color:{argb:ARGB("#C9CFC2")}}};
+        r.getCell(i).alignment={vertical:"middle",horizontal:i===2?"left":"center"}; } }
+    rn++;
+    const leg=[["#3F7F3A","Avanzamento fatto"],[chiaro("#3F7F3A",.62),"Parte da fare"],["#D8912A","Margine stretto"],["#C0392B","In ritardo / non ci sta"],["#2F3A2C","Riepilogo"]];
+    leg.forEach(([h,t],i)=>{ const r=riga(ws,rn+i); r.getCell(1).fill=fill(h); r.getCell(2).value=t; r.getCell(2).font={size:9}; });
+    const r2=riga(ws,rn+leg.length); r2.getCell(1).value="▼"; r2.getCell(1).font={color:{argb:ARGB("#C0392B")},bold:true}; r2.getCell(1).alignment={horizontal:"center"};
+    r2.getCell(2).value="Scadenza · colonna arancio in intestazione = oggi"; r2.getCell(2).font={size:9};
+    ws.pageSetup={orientation:"landscape",paperSize:8,fitToPage:true,fitToWidth:1,fitToHeight:0,printTitlesRow:"3:4",
+                  margins:{left:.3,right:.3,top:.4,bottom:.4,header:.2,footer:.2}};
+
+    /* Foglio 2 — Elenco (tabella filtrabile) */
+    const we=wb.addWorksheet("Elenco",{views:[{state:"frozen",ySplit:1}]});
+    const cols=[["Sito",20],["Categoria perizia",18],["Lavorazione",36],["Lotto",14],["Priorità",10],["Durata (gg)",10],["Inizio",11],["Fine",11],["Scadenza",11],
+      ["Predecessore",30],["Avanzamento",12],["Stato",18],["Gg necessari",12],["Gg disponibili",13],["Nota",46],["Dati mancanti",34]];
+    we.columns=cols.map(([h,w])=>({header:h,width:w}));
+    const h1=we.getRow(1); h1.font={bold:true,color:{argb:"FFFFFFFF"}}; h1.fill=fill("#1F5C2E"); h1.height=20; h1.alignment={vertical:"middle"};
+    const tutte=[...M.pian.slice().sort((a,b)=>a.id-b.id), ...M.senza];
+    for(const t of tutte){
+      const pred=t.si.dipende_da?GT_RIGHE.righe.find(x=>x.si.id===t.si.dipende_da):null;
+      const pian=!!(t.p.inizio&&t.p.fine);
+      const manca=pian?(t.si.scadenza?"":(t.si._err_scadenza?"scadenza non valida":"scadenza")):t.p.ciclo?"dipendenza circolare":[!t.p.durata?"durata":null,
+        t.si._err_data_inizio?"data inizio non valida ("+t.si._err_data_inizio+")":(!t.p.inizio?(pred?"attende il predecessore":"data inizio"):null)].filter(Boolean).join(", ");
+      const r=we.addRow([nomeSito(t.sito),((DB.perizie.find(x=>x.id===t.intv.categoria_perizia_id)||{}).nome)||"",t.intv.nome,t.lotto,t.si.priorita||"",
+        t.p.durata??null,dataXl(t.p.inizio),dataXl(t.p.fine),dataXl(t.si.scadenza),pred?pred.intv.nome:"",t.avz,
+        pian?(t.si._err_scadenza?"scadenza non valida":t.st.l):"non pianificata",t.st.residua??null,t.st.disp??null,gtAllarme(t)+(t.si._err_scadenza?` Scadenza non valida (${t.si._err_scadenza}).`:""),manca]);
+      [7,8,9].forEach(i=>r.getCell(i).numFmt="dd/mm/yy"); r.getCell(11).numFmt="0%";
+      if(pian) r.getCell(12).font={color:{argb:ARGB(GT_COL[t.st.k]||"#1A2418")},bold:GT_CRIT.includes(t.st.k)};
+      else r.getCell(12).font={color:{argb:ARGB("#6B7565")},italic:true};
+    }
+    we.autoFilter={from:{row:1,column:1},to:{row:Math.max(1,tutte.length+1),column:cols.length}};
+
+    const buf=await wb.xlsx.writeBuffer();
+    const blob=new Blob([buf],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+    const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=`Halaesa_Gantt_${oggi()}.xlsx`;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+    toast("Excel scaricato ✓");
+  } catch(e){ console.error(e); toast("Errore nella creazione del file Excel"); }
+  btn.disabled=false; btn.textContent=testo;
+};
+
 
 let chRef=null;
 async function rDash(){
